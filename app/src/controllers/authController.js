@@ -50,7 +50,8 @@ exports.post_signin = function (req, res) {
                 data: {
                     id: user._id,
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    isAdmin: user.isAdmin
                 },
                 token: token
             });

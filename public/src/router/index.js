@@ -1,3 +1,4 @@
+
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -6,10 +7,12 @@ import Signup from '@/components/auth/Signup'
 import Signin from '@/components/auth/Signin'
 import Users from '@/components/users/Users'
 import Books from '../components/books/Books'
-import Listing from '@/components/books/Listing'
+import BooksListing from '@/components/books/Listing'
 import InsertBook from '@/components/books/InsertBook'
 import BookDetails from '@/components/books/BookDetails'
 import EditBook from '@/components/books/EditBook'
+import ContactUs from '@/components/contact/ContactUs'
+import MessagesListing from '@/components/contact/Listing'
 import NotFound from '@/components/NotFound'
 
 Vue.use(Router);
@@ -63,7 +66,7 @@ const router = new Router({
         {
             path: '/books/listing',
             name: 'booksList',
-            component: Listing,
+            component: BooksListing,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
@@ -88,6 +91,22 @@ const router = new Router({
             path: '/book/:id',
             name: 'bookDetails',
             component: BookDetails,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/contact-us',
+            name: 'contactUs',
+            component: ContactUs,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/messages',
+            name: 'messages',
+            component: MessagesListing,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
