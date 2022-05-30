@@ -6,7 +6,7 @@
                 <h5>{{selectedBook.author}}</h5>
                 <div class="main-info">
                     <div class="bookImage">
-                        <img src="./hp.jpg" alt="">
+                        <img :src="selectedBook.imageUrl" alt="">
                     </div>
                     <div class="book-info">
                         <p>{{selectedBook.description}}</p>

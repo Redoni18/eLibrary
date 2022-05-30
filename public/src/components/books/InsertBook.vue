@@ -78,6 +78,31 @@
                                     </div>
 
                                     <div class="form-group row">
+
+                                        <label for="imageUrl" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Image Url</label>
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            <input type="text" class="form-control form-control-sm" id="imageUrl" name="imageUrl" placeholder="Or provide an image url"
+                                                   v-model="imageUrl"
+                                                   v-validate="'required|min:2'"
+                                                   :class="{'imageUrl': true, 'is-invalid': errors.has('imageUrl') }"/>
+                                            <small v-show="errors.has('imageUrl')" class="help is-danger">{{ errors.first('imageUrl') }}</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+
+                                        <label for="isbn" class="col-sm-3 col-md-3 col-lg-3 col-form-label">ISBN</label>
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            <input type="number" class="form-control form-control-sm" id="isbn" name="isbn" placeholder="Enter ISBN number..."
+                                                   v-model="isbn"
+                                                   v-validate="'required|min:2|max:13'"
+                                                   :class="{'isbn': true, 'is-invalid': errors.has('isbn') }">
+                                            <small v-show="errors.has('isbn')" class="help is-danger">{{ errors.first('isbn') }}</small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
                                         <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-3">
                                             <button type="submit" class="btn btn-primary">Insert Book</button>
                                         </div>
@@ -96,7 +121,7 @@
 <script>
     import { mapActions } from 'vuex'
     export default {
-        name: 'Signup',
+        name: 'InsertBook',
 
         data() {
             return {
@@ -104,7 +129,9 @@
                 bookAuthor: null,
                 bookDescription: null,
                 bookYear: null,
-                bookCover: null
+                bookCover: null,
+                imageUrl: null,
+                isbn: null
             }
         },
 
@@ -123,7 +150,9 @@
                             author: this.bookAuthor,
                             description: this.bookDescription,
                             year: this.bookYear,
-                            image: this.bookCover
+                            image: this.bookCover,
+                            imageUrl: this.imageUrl,
+                            isbn: this.isbn
                         });
 
                         return true;
@@ -155,5 +184,8 @@
     }
     .card-header {
         margin-bottom: 20px;
+    }
+    .signup_container{
+        margin-bottom: 15px;
     }
 </style>

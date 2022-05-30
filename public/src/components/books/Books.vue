@@ -3,7 +3,7 @@
         <h2 class="title">{{pageTitle}}</h2>
         <div class="row">
                 
-                <book @changePage="changePage(book._id)" v-for="book in books" :key="book._id" :title="book.title" :description="book.description" :author="book.author" :year="book.year">
+                <book @changePage="changePage(book._id)" v-for="book in books" :key="book._id" :title="book.title" :description="book.description" :author="book.author" :year="book.year" :imageUrl="book.imageUrl">
 
                 </book>
         </div>
@@ -40,31 +40,6 @@
                 books: 'getBooks'
             })
         },
-
-        // data() {
-        //     return {
-        //         books: [
-        //             {
-        //                 title: "Harry Potter 1",
-        //                 desc: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-        //                 author: "Elon Musk",
-        //                 year: "1969"
-        //             },
-        //             {
-        //                 title: "Harry Potter 2",
-        //                 desc: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-        //                 author: "Elon Musk",
-        //                 year: "1970"
-        //             },
-        //             {
-        //                 title: "Harry Potter 3",
-        //                 desc: "Some quick example text to build on the card title and make up the bulk of the card's content.",
-        //                 author: "Elon Musk",
-        //                 year: "1971"
-        //             },
-        //         ]
-        //     }
-        // },
     }
 </script>
 
@@ -74,6 +49,10 @@
         text-align: center;
         margin-bottom: 20px;
         margin-top: 30px;
+    }
+
+    .row{
+        margin: auto;
     }
 
     

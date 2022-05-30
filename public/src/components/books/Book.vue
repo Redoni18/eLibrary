@@ -1,13 +1,22 @@
 <template>
 
-    <div class="card" @click="sendEvent">
-      <img src="./hp.jpg" alt="Avatar" style="width:100%">
-      <div class="container">
-        <h3>{{title}}</h3>
-        <p>{{author}}</p>
-        <p>{{description}}</p>
-        <p>{{year}}</p>
-      </div>
+    <div class="book-card" @click="sendEvent">
+      <b-card
+        :title="title"
+        :img-src="imageUrl"
+        img-alt="Image"
+        img-top
+        tag="article"
+        img-height="250"
+        style="max-width: 20rem;min-width: 20rem;"
+        class="mb-2"
+      >
+        <b-card-text>
+          {{description}}
+        </b-card-text>
+
+        <b-button href="#" variant="primary">Read More</b-button>
+      </b-card>
     </div>
 </template>
 
@@ -16,7 +25,7 @@
     export default {
         name: 'Book',
 
-        props: ['title', 'description', 'author', 'year'],
+        props: ['title', 'description', 'author', 'year', 'imageUrl'],
 
         methods: {
           sendEvent(){
@@ -28,33 +37,18 @@
 
 
 <style scoped>
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 21%;
-  margin: 10px auto;
-  background: #f1f1f1;
+.book-card{
+  margin: 10px;
 }
 
-.card:hover {
-  cursor: pointer;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.container {
-  padding: 2px 16px;
-}
-
-@media only screen and (max-width: 800px) {
-  .card {
-    width: 40%;
+@media only screen and (max-width: 1050px){
+  .book-card{
     margin: 10px auto;
   }
 }
 
-@media only screen and (max-width: 600px) {
-  .card {
-    width: 60%;
+@media only screen and (max-width: 995px){
+  .book-card{
     margin: 10px auto;
   }
 }

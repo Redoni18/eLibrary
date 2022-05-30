@@ -20,7 +20,9 @@ exports.post_book = function (req, res) {
         author: req.body.author,
         description: req.body.description,
         year: req.body.year,
-        image: req.body.image
+        image: req.body.image,
+        imageUrl: req.body.imageUrl,
+        isbn: req.body.isbn
     });
 
     newBook.save();
@@ -33,6 +35,8 @@ exports.post_book = function (req, res) {
             description: newBook.description,
             year: newBook.year,
             image: newBook.image,
+            imageUrl: newBook.imageUrl,
+            isbn: newBook.isbn
         },
     });
 }
@@ -47,7 +51,9 @@ exports.edit_book = function (req, res) {
         author: req.body.author,
         description: req.body.description,
         year: req.body.year,
-        image: req.body.image
+        image: req.body.image,
+        imageUrl: req.body.imageUrl,
+        isbn: req.body.isbn
     }
 
     Book.findByIdAndUpdate(req.body._id, {$set: updatedBook}, {new: true}, (err, doc) => {

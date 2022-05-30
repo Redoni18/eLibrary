@@ -1,6 +1,5 @@
 <template>
 <div>
-
 <div class="form-group row" v-if="toggleButtons">
     <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-9">
         <router-link :to="{name: 'editBook', params: {id: rowId}}"> <button type="submit" class="btn btn-primary">Edit Book</button></router-link>
@@ -39,25 +38,29 @@ export default {
     name: 'Listing',
     data(){
       return {
+        user: JSON.parse(window.localStorage.getItem('user')),
         toggleButtons: false,
         rowId: null,
         columns: [
           {
             label: 'Title',
             field: 'title',
-            tooltip: 'A simple tooltip',
+            tooltip: 'Click on a specific row that you want to edit or delete!',
           },
           {
             label: 'Author',
             field: 'author',
+            tooltip: 'Click on a specific row that you want to edit or delete!',
           },
           {
             label: 'Description',
             field: 'description',
+            tooltip: 'Click on a specific row that you want to edit or delete!',
           },
           {
             label: 'Year',
             field: 'year',
+            tooltip: 'Click on a specific row that you want to edit or delete!',
           },
           {
             label: '',
@@ -75,8 +78,11 @@ export default {
     }),
 
     onRowClick(params){
-      this.toggleButtons = !this.toggleButtons
-      this.rowId = params.row._id
+      if(this.user.data.isAdmin){
+        this.toggleButtons = !this.toggleButtons
+        this.rowId = params.row._id
+      }
+      return
     },
     
     async removeBook(id) {
@@ -95,7 +101,7 @@ export default {
 
     computed: {
         books() {
-            return this.$store.state.books.books
+          return this.$store.state.books.books
         }
     },
 }

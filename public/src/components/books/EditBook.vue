@@ -78,6 +78,30 @@
                                     </div>
 
                                     <div class="form-group row">
+
+                                        <label for="imageUrl" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Image Url</label>
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            <textarea type="text" class="form-control form-control-sm" id="imageUrl" name="imageUrl" placeholder="Or provide an image url"
+                                                   v-model="selectedBook.imageUrl"
+                                                   v-validate="'required|min:2|max:150'"
+                                                   :class="{'imageUrl': true, 'is-invalid': errors.has('imageUrl') }"></textarea>
+                                            <small v-show="errors.has('imageUrl')" class="help is-danger">{{ errors.first('imageUrl') }}</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+
+                                        <label for="isbn" class="col-sm-3 col-md-3 col-lg-3 col-form-label">ISBN</label>
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            <input type="number" class="form-control form-control-sm" id="isbn" name="isbn" placeholder="Enter ISBN number"
+                                                   v-model="selectedBook.isbn"
+                                                   v-validate="'required|min:2|max:13'"
+                                                   :class="{'isbn': true, 'is-invalid': errors.has('isbn') }">
+                                            <small v-show="errors.has('isbn')" class="help is-danger">{{ errors.first('isbn') }}</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
                                         <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-3">
                                             <button type="submit" class="btn btn-primary">Update Book</button>
                                         </div>
@@ -126,7 +150,9 @@ export default {
                         author: this.selectedBook.author,
                         description: this.selectedBook.description,
                         year: this.selectedBook.year,
-                        image: this.selectedBook.image
+                        image: this.selectedBook.image,
+                        imageUrl: this.selectedBook.imageUrl,
+                        isbn: this.selectedBook.isbn
                     });
                     return true;
                 }
@@ -157,5 +183,8 @@ export default {
     .card-header {
         margin-bottom: 20px;
     }
-</style>
 
+    .signup_container{
+        margin-bottom: 15px;
+    }
+</style>

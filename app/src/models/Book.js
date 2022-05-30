@@ -23,6 +23,14 @@ const bookSchema = new Schema({
         type: String,
         required: true
     },
+    imageUrl: {
+        type: String,
+        required: true
+    },
+    isbn: {
+        type: Number,
+        required: true
+    }
 });
 
 
