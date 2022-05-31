@@ -20,6 +20,30 @@ const schema = new Schema({
         type: Boolean,
         default: false
     },
+    bio:{
+        type: String,
+        required: false,
+    },
+    birthday: {
+        type: String,
+        required: false,
+    },
+    city: {
+        type: String,
+        required: false,
+    },
+    social1: {
+        type: String,
+        required: false
+    },
+    social2: {
+        type: String,
+        required: false
+    },
+    social3: {
+        type: String,
+        required: false
+    },
     createdAt: {
         type : Date,
         default : Date.now

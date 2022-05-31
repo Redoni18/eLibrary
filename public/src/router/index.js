@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -13,6 +12,8 @@ import BookDetails from '@/components/books/BookDetails'
 import EditBook from '@/components/books/EditBook'
 import ContactUs from '@/components/contact/ContactUs'
 import MessagesListing from '@/components/contact/Listing'
+import UserProfile from '@/components/user-profile/UserProfile'
+import EditProfile from '@/components/user-profile/EditProfile'
 import NotFound from '@/components/NotFound'
 
 Vue.use(Router);
@@ -107,6 +108,22 @@ const router = new Router({
             path: '/messages',
             name: 'messages',
             component: MessagesListing,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/editProfile/:id',
+            name: 'editprofile',
+            component: EditProfile,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/userProfile/:id',
+            name: 'userprofile',
+            component: UserProfile,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }

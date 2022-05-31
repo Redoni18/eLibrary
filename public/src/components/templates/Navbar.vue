@@ -38,6 +38,7 @@
                     {{ user.data.name }}
                 </a>
                 <div class="dropdown-menu mr-1">
+                    <router-link class="dropdown-item" :to="{name: 'userprofile', params: {id: user.data.id}}">My Profile</router-link>
                     <a class="dropdown-item" href="#" v-on:click="out">SignOut</a>
                 </div>
             </div>
@@ -130,7 +131,7 @@
                 })
             },
             mounted() {
-                console.log(this.user)
+                console.log('test', this.user)
             },
     
             methods: {

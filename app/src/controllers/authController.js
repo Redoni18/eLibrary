@@ -22,6 +22,7 @@ exports.post_signup = function (req, res) {
 
     res.json({
         data: {
+            id: user._id,
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin
@@ -30,6 +31,47 @@ exports.post_signup = function (req, res) {
     });
 };
 
+exports.edit_profile = function (req, res) {
+
+    let updatedInfo = {
+        name: req.body.name,
+        email: req.body.email,
+        bio: req.body.bio,
+        city: req.body.city,
+        birthday: req.body.birthday,
+        social1: req.body.social1,
+        social2: req.body.social2,
+        social3: req.body.social3
+    }
+
+
+    User.findByIdAndUpdate(req.body._id, {$set: updatedInfo}, {new: true}, (err, doc) => {
+        if(!err){
+            res.send(doc)
+        }else{
+            console.log('Error while updating book')
+        }
+    })
+};
+
+exports.get_profile = function (req, res) {
+    let id = req.params.id;
+
+    try {
+        User.findById({ _id: id }).exec(function (err, user) {
+            if (user) {
+                res.send(user);
+            } 
+        });
+      } catch (error) {
+        if ([400, 403, 404].includes(error.code)) {
+          return res.status(error.code).send(error.message);
+        }
+    
+        console.error(error);
+        return res.status(500).send(error.message);
+      }
+};
 
 
 exports.post_signin = function (req, res) {
@@ -51,6 +93,12 @@ exports.post_signin = function (req, res) {
                     id: user._id,
                     name: user.name,
                     email: user.email,
+                    bio: user.bio,
+                    city: user.city,
+                    birthday: user.birthday,
+                    social1: user.social1,
+                    social2: user.social2,
+                    social3: user.social3,
                     isAdmin: user.isAdmin
                 },
                 token: token
