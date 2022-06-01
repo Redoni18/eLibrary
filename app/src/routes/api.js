@@ -26,7 +26,7 @@ const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const bookController = require('../controllers/bookController');
 const messageController = require('../controllers/messagesController');
-
+const reviewsController = require('../controllers/reviewsController');
 
 /**
  * Routes
@@ -53,6 +53,13 @@ router.delete('/api/messages/delete/:id', messageController.delete_message);
 
 router.get('/api/users', userController.get_users);
 router.get('/api/unique/:email', userController.get_unique);
+
+
+router.post('/api/addReview', reviewsController.add_review);
+router.get('/api/reviews/:id', reviewsController.reviews);
+router.put('/api/editReview/:id', reviewsController.edit_review);
+router.delete('/api/review/delete/:id', reviewsController.delete_review);
+router.get('/api/review/:id', reviewsController.get_review)
 
 
 module.exports = router;
