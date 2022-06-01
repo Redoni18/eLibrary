@@ -1,10 +1,9 @@
 const mongoose = require('../database/db')
 const Schema = mongoose.Schema
-const { uuid } = require('uuidv4');
 const reviewSchema = new Schema({
     reviewId: {
         type: String,
-        default: uuid()
+        default: `book-${Math.floor(Math.random * 30)}-${Math.floor(Math.random() * 40)}-${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}`
     },
     bookId: {
         type: String,
