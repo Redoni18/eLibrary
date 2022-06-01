@@ -15,6 +15,9 @@ import MessagesListing from '@/components/contact/Listing'
 import UserProfile from '@/components/user-profile/UserProfile'
 import EditProfile from '@/components/user-profile/EditProfile'
 import NotFound from '@/components/NotFound'
+import AddReview from '@/components/reviews/AddReview.vue'
+import Reviews from '@/components/reviews/Reviews.vue'
+import Review from '@/components/reviews/Review.vue'
 
 Vue.use(Router);
 
@@ -126,6 +129,33 @@ const router = new Router({
             component: UserProfile,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/review/add/:id/:book/:author',
+            name: 'AddReview',
+            component: AddReview,
+            props: true,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/reviews/:id/:book/:author',
+            name: 'Reviews',
+            component: Reviews,
+            props: true,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/review/:book/:bookId/:id',
+            name: 'Review',
+            component: Review,
+            props: true,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
             }
         },
         {

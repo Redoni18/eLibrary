@@ -15,27 +15,44 @@
                 </div>
             </div>
         </div>
+             <div class="book-details__right-column">
+            <div class="right-column__reviews-container">
+                 <b-card title="Reviews" :sub-title="`${selectedBook.title} Reviews`">
+                            <b-card  v-for="(review,index) in reviews" v-if="index < 3" :key="index" :title="review.book" :sub-title="`Reviewed by: ${review.username}`">
+                                <p>{{review.review}}</p>
+                            </b-card>
+                        <router-link :to="`/reviews/${selectedBook._id}/${selectedBook.title}/${selectedBook.author}`" class="card-link">Check out Reviews</router-link>
+                        <router-link :to="`/review/add/${selectedBook._id}/${selectedBook.title}/${selectedBook.author}`"><b-badge pill variant="primary">Add a review</b-badge></router-link>
+                    </b-card>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import axios from 'axios'
+import { mapActions, mapGetters  } from 'vuex'
 export default {
     name: "Book Details",
     data() {
         return {
             selectedBook: {},
+            reviews: {}
         }
     },
 
     async mounted(){
         const response = await this.getBook(this.bookId)
         this.selectedBook = response.data
+        let reviews = await axios.get(`http://localhost:8000/api/reviews/${response.data._id}/`).then(response => { this.reviews = response.data})
     },
     computed: {
         bookId() {
             return this.$route.params.id
         },
+             ...mapGetters({
+                user: 'getUser'
+        })
     },
 
     methods: {
@@ -105,5 +122,13 @@ img {
     width: 100%;
     padding: 0;
   }
+}
+.book-details__right-column{
+    display: flex;
+    margin: auto;
+}
+.right-column__reviews-container{
+    width: 500px;
+    height: 400px;
 }
 </style>
