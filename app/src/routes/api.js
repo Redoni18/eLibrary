@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 const auth = require("../helper/auth");
@@ -27,6 +28,7 @@ const userController = require('../controllers/userController');
 const bookController = require('../controllers/bookController');
 const messageController = require('../controllers/messagesController');
 const reviewsController = require('../controllers/reviewsController');
+const userTypeController = require('../controllers/userTypeController')
 
 /**
  * Routes
@@ -48,6 +50,13 @@ router.get('/api/messages', messageController.get_messages)
 router.post('/api/postMessage', messageController.post_messages)
 router.get('/api/messages/:id', messageController.get_message)
 router.delete('/api/messages/delete/:id', messageController.delete_message);
+
+
+router.get('/api/userTypes', userTypeController.get_userTypes)
+router.post('/api/createUserType', userTypeController.post_userType)
+router.put('/api/editUserType/:id', userTypeController.edit_userType)
+router.delete('/api/deleteUserType/:id', userTypeController.delete_userType)
+router.get('/api/userType/:id', userTypeController.get_userType)
 
 
 

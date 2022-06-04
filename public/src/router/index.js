@@ -18,6 +18,9 @@ import NotFound from '@/components/NotFound'
 import AddReview from '@/components/reviews/AddReview.vue'
 import Reviews from '@/components/reviews/Reviews.vue'
 import Review from '@/components/reviews/Review.vue'
+import UserTypesListing from '@/components/userTypes/Listing'
+import CreateUserType from '@/components/userTypes/CreateUserType'
+import EditUserType from '@/components/userTypes/EditUserType'
 
 Vue.use(Router);
 
@@ -154,6 +157,30 @@ const router = new Router({
             name: 'Review',
             component: Review,
             props: true,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/userTypes',
+            name: 'UserTypes',
+            component: UserTypesListing,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/insertUserType',
+            name: 'InsertUserType',
+            component: CreateUserType,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/userTypes/editUserType/:id',
+            name: 'EditUserType',
+            component: EditUserType,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }

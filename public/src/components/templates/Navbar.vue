@@ -25,6 +25,14 @@
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/books/create'})">Insert Book</router-link>
             </div>
           </li>
+          <li class="nav-item dropdown" v-if="user.authenticated && user.data.isAdmin">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Settings
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/userTypes'})">User Types</router-link>
+            </div>
+          </li>
           <li class="nav-item active" v-if="user.authenticated">
             <router-link v-if="!user.data.isAdmin" class="nav-link" :to="({path: '/contact-us'})">Contact Us</router-link>
             <router-link v-else class="nav-link" :to="({path: '/messages'})">Messages</router-link>
@@ -35,7 +43,7 @@
     
             <div v-if="user.authenticated">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                    {{ user.data.name }}
+                    <b-avatar variant="primary" v-if="user.authenticated" :text="user.data.name.slice(0, 2)" size="2rem"></b-avatar> 
                 </a>
                 <div class="dropdown-menu mr-1">
                     <router-link class="dropdown-item" :to="{name: 'userprofile', params: {id: user.data.id}}">My Profile</router-link>
