@@ -28,8 +28,8 @@ const userController = require('../controllers/userController');
 const bookController = require('../controllers/bookController');
 const messageController = require('../controllers/messagesController');
 const reviewsController = require('../controllers/reviewsController');
-const userTypeController = require('../controllers/userTypeController')
-
+const userTypeController = require('../controllers/userTypeController');
+const categoriesController = require('../controllers/categoriesController');
 /**
  * Routes
  */
@@ -71,4 +71,9 @@ router.delete('/api/review/delete/:id', reviewsController.delete_review);
 router.get('/api/review/:id', reviewsController.get_review)
 
 
+router.post('/api/category/add', categoriesController.add_categories);
+router.get('/api/categories', categoriesController.get_categories);
+router.get('/api/category/:id', categoriesController.get_category);
+router.put('/api/category/edit/:id', categoriesController.edit_category);
+router.delete('/api/category/delete/:id', categoriesController.delete_category);
 module.exports = router;
