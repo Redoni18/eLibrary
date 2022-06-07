@@ -28,7 +28,8 @@ const userController = require('../controllers/userController');
 const bookController = require('../controllers/bookController');
 const messageController = require('../controllers/messagesController');
 const reviewsController = require('../controllers/reviewsController');
-const userTypeController = require('../controllers/userTypeController')
+const userTypeController = require('../controllers/userTypeController');
+const locationController = require('../controllers/locationController')
 
 /**
  * Routes
@@ -70,5 +71,11 @@ router.put('/api/editReview/:id', reviewsController.edit_review);
 router.delete('/api/review/delete/:id', reviewsController.delete_review);
 router.get('/api/review/:id', reviewsController.get_review)
 
+
+router.get('/api/locations', locationController.get_locations)
+router.post('/api/addLocation', locationController.post_location)
+router.put('/api/editLocation/:id', locationController.edit_location)
+router.delete('/api/deleteLocation/:id', locationController.delete_location)
+router.get('/api/location/:id', locationController.get_location)
 
 module.exports = router;

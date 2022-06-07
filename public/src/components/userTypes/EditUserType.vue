@@ -76,6 +76,7 @@
                     if (result) {
                         await axios.put(`http://localhost:8000/api/editUserType/${this.userTypeId}`, {_id: this.userTypeId, userType: this.typeUser})
                         this.typeUser = null
+                        this.$router.push({path:"/userTypes"})
                         return true;
                     }
                 });

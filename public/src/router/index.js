@@ -21,6 +21,9 @@ import Review from '@/components/reviews/Review.vue'
 import UserTypesListing from '@/components/userTypes/Listing'
 import CreateUserType from '@/components/userTypes/CreateUserType'
 import EditUserType from '@/components/userTypes/EditUserType'
+import LocationsListing from '@/components/locations/Listing'
+import AddLocation from '@/components/locations/AddLocation'
+import EditLocation from '@/components/locations/EditLocation'
 
 Vue.use(Router);
 
@@ -181,6 +184,30 @@ const router = new Router({
             path: '/userTypes/editUserType/:id',
             name: 'EditUserType',
             component: EditUserType,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/locations',
+            name: 'Locations',
+            component: LocationsListing,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/addLocation',
+            name: 'AddLocation',
+            component: AddLocation,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/locations/editLocation/:id',
+            name: 'EditLocation',
+            component: EditLocation ,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }
