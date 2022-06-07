@@ -86,7 +86,6 @@ export default {
             });
         },
         async removeUserType(id) {
-            console.log('id', id)
             if(window.confirm("Are you sure you want to delete this book?")){
                 await axios.delete(`http://localhost:8000/api/deleteUserType/${id}`)
                 this.toggleButtons = false

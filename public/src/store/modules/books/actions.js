@@ -14,7 +14,6 @@ export const getBooks = ({ commit } ) => {
     return axios.get('http://localhost:8000/api/books').then((response) => {
         commit('storeBooks', response.data)
 
-        console.log(response.data)
 
         return Promise.resolve(response);
     })

@@ -40,7 +40,6 @@ export default {
             this.editedReview = ''
         },
          async callApi(review){
-             console.log('review:', review.reviewId)
              let rev = axios.put(`http://localhost:8000/api/editReview/${review._id}`,  { id: review._id, bookId: review.bookId, review: this.editedReview},).then(response => { 
              })
             // call an api 

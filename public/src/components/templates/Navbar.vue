@@ -142,7 +142,6 @@
                 })
             },
             mounted() {
-                console.log('test', this.user)
             },
     
             methods: {

@@ -39,7 +39,6 @@ export default {
          async generateCategory() {
             const category = { title: this.title, description: this.description}
              await axios.post('http://localhost:8000/api/category/add', category).then(response => {
-                console.log('response:', response)
                 this.$router.push('/categories')
             })
         }

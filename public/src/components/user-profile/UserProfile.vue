@@ -84,11 +84,9 @@ export default {
         }),
     },
     created() {
-        console.log(this.userId)
     },
     async mounted(){
         const response = await this.get_profile(this.userId)
-        console.log(this.userId)
         this.selectedUser = response.data
     },
 
