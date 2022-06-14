@@ -63,6 +63,7 @@
                     if (result) {
                         await axios.post("http://localhost:8000/api/createUserType", {userType: this.typeUser})
                         this.typeUser = null
+                        this.$router.push({path:"/userTypes"})
                         return true;
                     }
                 });
