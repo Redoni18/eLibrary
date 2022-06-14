@@ -24,6 +24,10 @@ import EditUserType from '@/components/userTypes/EditUserType'
 import LocationsListing from '@/components/locations/Listing'
 import AddLocation from '@/components/locations/AddLocation'
 import EditLocation from '@/components/locations/EditLocation'
+import Categories from '@/components/categories/Categories.vue'
+import AddCategories from '@/components/categories/AddCategories.vue'
+import Category from '@/components/categories/Category.vue'
+
 
 Vue.use(Router);
 
@@ -216,6 +220,31 @@ const router = new Router({
             path: '*',
             name: 'notfound',
             component: NotFound
+        },
+        {
+            path: '/categories',
+            name: 'Categories',
+            component: Categories,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/categories/add',
+            name: 'AddCategories',
+            component: AddCategories,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/category/:id',
+            name: 'Category',
+            component: Category,
+            props: true,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to,from,next)
+            }
         }
     ]
 })

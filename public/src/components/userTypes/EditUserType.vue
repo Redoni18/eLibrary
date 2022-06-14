@@ -69,7 +69,6 @@
             async fetchUserType(){
                 const response = await axios.get(`http://localhost:8000/api/userType/${this.userTypeId}`)
                 this.typeUser = response.data.userType
-                console.log(this.typeUser)
             },
             async editUserType() {
                 this.$validator.validateAll().then( async (result) => {

@@ -86,7 +86,6 @@ export default {
     },
     
     async removeBook(id) {
-      console.log('id', id)
       if(window.confirm("Are you sure you want to delete this book?")){
         await axios.delete(`http://localhost:8000/api/books/delete/${id}`)
         this.toggleButtons = false

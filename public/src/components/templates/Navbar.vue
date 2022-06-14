@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar_container">
+    <div class="navbar_container" v-once>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#/">eLibrary</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +24,9 @@
               <router-link class="dropdown-item" :to="({path: '/books/listing'})">Listing</router-link>
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/books/create'})">Insert Book</router-link>
             </div>
+          </li>
+             <li class="nav-item">
+            <router-link class="nav-link" to="/categories">Categories</router-link>
           </li>
           <li class="nav-item dropdown" v-if="user.authenticated && user.data.isAdmin">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -140,7 +143,6 @@
                 })
             },
             mounted() {
-                console.log('test', this.user)
             },
     
             methods: {

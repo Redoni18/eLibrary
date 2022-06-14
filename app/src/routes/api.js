@@ -30,6 +30,7 @@ const messageController = require('../controllers/messagesController');
 const reviewsController = require('../controllers/reviewsController');
 const userTypeController = require('../controllers/userTypeController');
 const locationController = require('../controllers/locationController')
+const categoriesController = require('../controllers/categoriesController');
 
 /**
  * Routes
@@ -71,11 +72,16 @@ router.put('/api/editReview/:id', reviewsController.edit_review);
 router.delete('/api/review/delete/:id', reviewsController.delete_review);
 router.get('/api/review/:id', reviewsController.get_review)
 
-
 router.get('/api/locations', locationController.get_locations)
 router.post('/api/addLocation', locationController.post_location)
 router.put('/api/editLocation/:id', locationController.edit_location)
 router.delete('/api/deleteLocation/:id', locationController.delete_location)
 router.get('/api/location/:id', locationController.get_location)
+
+router.post('/api/category/add', categoriesController.add_categories);
+router.get('/api/categories', categoriesController.get_categories);
+router.get('/api/category/:id', categoriesController.get_category);
+router.put('/api/category/edit/:id', categoriesController.edit_category);
+router.delete('/api/category/delete/:id', categoriesController.delete_category);
 
 module.exports = router;

@@ -50,7 +50,7 @@ export default{
         async submit(){
             const review = {bookId:this.$route.params.id,book: this.$route.params.book, author: this.$route.params.author, review: this.review, username: this.user.data.name}
              await axios.post(`http://localhost:8000/api/addReview/`, review).then((response) => {
-                console.log('response:', response)
+
                 this.$router.push(`/book/${this.$route.params.id}`)
             })
         }
