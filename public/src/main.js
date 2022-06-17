@@ -6,6 +6,7 @@ import store from './store'
 import path from 'path'
 import VueGoodTablePlugin from 'vue-good-table';
 import 'vue-good-table/dist/vue-good-table.css'
+import 'vue-select/dist/vue-select.css';
 import { unique } from './validation/unique'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -13,6 +14,9 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // Import Bootstrap and BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import vSelect from 'vue-select'
+
+Vue.component('v-select', vSelect) 
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)

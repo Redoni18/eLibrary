@@ -11,19 +11,23 @@
                     <div class="book-info">
                         <p>{{selectedBook.description}}</p>
                         <p>Year published: {{selectedBook.year}}</p>
+                        <b-badge v-for="category in selectedBook.categories" pill :key="category.id" variant="primary" class="ml-2">{{category.title}}</b-badge>
                     </div>
+
                 </div>
             </div>
         </div>
-             <div class="book-details__right-column">
+        <div class="book-details__right-column">
             <div class="right-column__reviews-container">
-                 <b-card title="Reviews" :sub-title="`${selectedBook.title} Reviews`">
-                            <b-card  v-for="(review,index) in reviews" v-if="index < 3" :key="index" :title="review.book" :sub-title="`Reviewed by: ${review.username}`">
+                <b-card title="Reviews" :sub-title="`${selectedBook.title} Reviews`">
+                        <div v-for="(review,index) in reviews" :key="index">
+                            <b-card class="mt-3" v-if="index < 3" :title="review.book" :sub-title="`Reviewed by: ${review.username}`">
                                 <p>{{review.review}}</p>
                             </b-card>
-                        <router-link :to="`/reviews/${selectedBook._id}/${selectedBook.title}/${selectedBook.author}`" class="card-link">Check out Reviews</router-link>
-                        <router-link :to="`/review/add/${selectedBook._id}/${selectedBook.title}/${selectedBook.author}`"><b-badge pill variant="primary">Add a review</b-badge></router-link>
-                    </b-card>
+                        </div>
+                    <router-link :to="`/reviews/${selectedBook._id}/${selectedBook.title}/${selectedBook.author}`" class="card-link">Check out Reviews</router-link>
+                    <router-link :to="`/review/add/${selectedBook._id}/${selectedBook.title}/${selectedBook.author}`"><b-badge pill variant="primary">Add a review</b-badge></router-link>
+                </b-card>
             </div>
         </div>
     </div>

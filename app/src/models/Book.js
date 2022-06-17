@@ -30,7 +30,11 @@ const bookSchema = new Schema({
     isbn: {
         type: Number,
         required: true
-    }
+    },
+    categories: [{ 
+        type: mongoose.Schema.Types.Mixed, 
+        ref: 'categories' 
+    }]
 });
 
 

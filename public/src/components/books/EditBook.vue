@@ -102,6 +102,27 @@
                                     </div>
 
                                     <div class="form-group row">
+
+                                        <label for="categories" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Category</label>
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            <v-select multiple  v-model="selectedBook.categories" :options="allCategories" label="title">
+                                                <template #search="{attributes, events}">
+                                                    <input
+                                                    id="categories" 
+                                                    name="categories"
+                                                    :required="!selectedBook.categories.length"
+                                                    :placeholder="!selectedBook.categories.length ? 'Select a category...' : ''"
+                                                    class="vs__search"
+                                                    :class="{'categories': true, 'is-invalid': errors.has('categories') }"
+                                                    v-bind="attributes"
+                                                    v-on="events"
+                                                    />
+                                                </template>
+                                            </v-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
                                         <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-3">
                                             <button type="submit" class="btn btn-primary">Update Book</button>
                                         </div>
@@ -117,23 +138,36 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { mapActions } from 'vuex'
 export default {
     data(){
         return {
-            selectedBook: {}
+            selectedBook: {},
+            categories: []
         }
     },
     computed: {
         bookId() {
             return this.$route.params.id
         },
+        allCategories() {
+            return this.categories
+        }
     },
     async mounted(){
         const response = await this.getBook(this.bookId)
         this.selectedBook = response.data
+        await this.getCategories()
     },
     methods: {
+        async getCategories(){
+            const response = await axios.get('http://localhost:8000/api/categories')
+            console.log(response)
+            for(let i = 0;i<response.data.length;i++){
+                this.categories.push(response.data[i])
+            }
+        },
         ...mapActions({
             updateBook: 'updateBook',
             getBook: 'getBook'
@@ -152,7 +186,8 @@ export default {
                         year: this.selectedBook.year,
                         image: this.selectedBook.image,
                         imageUrl: this.selectedBook.imageUrl,
-                        isbn: this.selectedBook.isbn
+                        isbn: this.selectedBook.isbn,
+                        categories: this.selectedBook.categories
                     });
                     return true;
                 }
