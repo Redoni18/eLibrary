@@ -27,7 +27,9 @@ import EditLocation from '@/components/locations/EditLocation'
 import Categories from '@/components/categories/Categories.vue'
 import AddCategories from '@/components/categories/AddCategories.vue'
 import Category from '@/components/categories/Category.vue'
-
+import Memberships from '@/components/memberships/Memberships.vue'
+import AddMembership from '@/components/memberships/AddMembership.vue'
+import EditMembership from '@/components/memberships/EditMembership.vue'
 
 Vue.use(Router);
 
@@ -245,7 +247,31 @@ const router = new Router({
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to,from,next)
             }
-        }
+        },
+        {
+            path: '/memberships',
+            name: 'Memberships',
+            component: Memberships,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/addMembership',
+            name: 'AddMembership',
+            component: AddMembership,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/memberships/editMembership/:id',
+            name: 'EditMembership',
+            component: EditMembership ,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
     ]
 })
 
