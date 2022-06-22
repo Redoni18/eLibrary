@@ -24,6 +24,7 @@
               <router-link class="dropdown-item" :to="({path: '/books/listing'})">Listing</router-link>
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/books/create'})">Insert Book</router-link>
             </div>
+           </li>
           <li class="nav-item dropdown" v-if="user.authenticated && user.data.isAdmin">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Settings
@@ -32,6 +33,7 @@
                 <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/categories'})">Categories</router-link>
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/userTypes'})">User Types</router-link>
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/locations'})">Locations</router-link>
+              <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/memberships'})">Memberships</router-link>
             </div>
           </li>
           <li class="nav-item active" v-if="user.authenticated">
