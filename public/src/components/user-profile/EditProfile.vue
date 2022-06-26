@@ -10,7 +10,10 @@
                 label-cols-sm="2"
                 label-align-sm="left"                
             >
-                <b-form-input v-model="currentUser.name" id="name"></b-form-input>
+                <b-form-input v-validate="'required|min:2|max:20'" v-model="currentUser.name" id="name" name="name" 
+                    :class="{'name': true, 'is-invalid': errors.has('name') }">
+                </b-form-input>
+                    <small v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</small>
             </b-form-group>
 
             <b-form-group
@@ -19,8 +22,35 @@
                 label-cols-sm="2"
                 label-align-sm="left"
             >
-                <b-form-input v-model="currentUser.email" id="email"></b-form-input>
+                <b-form-input type="email" v-model="currentUser.email" id="email" name="email"
+                    v-validate="'required|email|unique'"
+                    :class="{'email': true, 'is-invalid': errors.has('email') }">
+                ></b-form-input>
+                <small v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</small>
             </b-form-group>
+
+            <b-form-group
+                label="User Type: "
+                label-for="userType"
+                label-cols-sm="2"
+                label-align-sm="left"
+            >
+                <v-select v-model="currentUser.userType" :options="allUserTypes" label="userType">
+                    <template #search="{attributes, events}">
+                        <input
+                        id="userType" 
+                        name="userType"
+                        :required="!currentUser.userType"
+                        :placeholder="!currentUser.userType ? 'Select user type...' : ''"
+                        class="vs__search"
+                        :class="{'userType': true, 'is-invalid': errors.has('userType') }"
+                        v-bind="attributes"
+                        v-on="events"
+                        />
+                    </template>
+                </v-select>
+            </b-form-group>
+
 
             <b-form-group
                 label="Bio: "
@@ -68,17 +98,20 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { mapActions, mapGetters } from 'vuex'
 export default {
     data() {
       return {
           active: true,
-          currentUser: {}
+          currentUser: {},
+          userTypes: [],
       }
     },
     async mounted(){
         const data = await this.get_profile(this.userId);
         this.currentUser = data.data
+        await this.getUserTypes()
     },
     computed: {
         ...mapGetters({
@@ -87,6 +120,24 @@ export default {
         userId() {
             return this.$route.params.id
         },
+        allUserTypes(){
+            return this.userTypes
+        },
+        // invalidNameFeedback(){
+        //     if(this.currentUser.name.length > 2){
+        //         return ''
+        //     }else{
+        //         return "Name should not be empty"
+        //     }
+        // },
+
+        // invalidEmailFeedback(){
+        //     if(this.currentUser.email.length > 10){
+        //         return ''
+        //     }else{
+        //         return "Email should not be empty"
+        //     }
+        // }
     },
     methods: {
         ...mapActions({
@@ -94,25 +145,38 @@ export default {
             signOut: 'signOut',
             get_profile: "get_profile"
         }),
+        async getUserTypes(){
+                const response = await axios.get("http://localhost:8000/api/userTypes")
+                console.log(response)
+                for(let i = 0;i<response.data.length;i++){
+                    this.userTypes.push(response.data[i])
+                }
+            },
+        ...mapActions({
+            editProfile: 'editProfile',
+            signOut: 'signOut',
+            get_profile: "get_profile"
+        }),
         async saveProfile() {
-            if(this.currentUser.name.length > 2 && this.currentUser.email.length > 10){
+            await this.$validator.validateAll().then((result) => {
+                    if (result && this.currentUser.userType !== null) {
+                        this.editProfile({
+                            _id: this.userId,
+                            name: this.currentUser.name,
+                            email: this.currentUser.email,
+                            userType: this.currentUser.userType,
+                            bio: this.currentUser.bio,
+                            city: this.currentUser.city,
+                            birthday: this.currentUser.birthday,
+                            social1: this.currentUser.social1,
+                            social2: this.currentUser.social2,
+                            social3: this.currentUser.social3
+                        });
 
-                await this.editProfile({
-                    _id: this.userId,
-                    name: this.currentUser.name,
-                    email: this.currentUser.email,
-                    bio: this.currentUser.bio,
-                    city: this.currentUser.city,
-                    birthday: this.currentUser.birthday,
-                    social1: this.currentUser.social1,
-                    social2: this.currentUser.social2,
-                    social3: this.currentUser.social3
+                        this.getProfile()
+                    }
                 });
-            }else {
-                return
-            }
 
-            await this.getProfile()
         },
 
         async getProfile(){
