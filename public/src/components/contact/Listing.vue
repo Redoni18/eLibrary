@@ -1,11 +1,5 @@
 <template>
 <div>
-    <div class="form-group row" v-if="toggleButtons">
-    <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-9">
-        <button type="submit" class="btn btn-danger" @click="removeMessage(rowId)">Delete Message</button>
-
-    </div>
-  </div>
     <vue-good-table
         :columns="columns"
         :rows="messages"
@@ -19,9 +13,28 @@
             perPageDropdown: [5, 7, 10],
             dropdownAllowAll: false,
         }"
-        @on-row-click="onRowClick"
         >
-            
+          <template v-slot:table-row="props">
+            <span v-if="props.column.field === 'actions'">
+                <div class="more-options">
+                <b-dropdown id="dropdown-right" right text="Right align" variant="link" toggle-class="text-decoration-none text-secondary" no-caret class="m-2">
+                <template #button-content>
+                    <b-icon icon="three-dots"></b-icon>
+                </template>
+                <b-dropdown-item
+                @click="removeMessage(props.row._id)"
+                >
+                <span
+                    class="d-flex align-items-center"
+                >
+                    <b-icon icon="trash"></b-icon>
+                    <p class="p-0 m-0 ml-3">Delete</p>
+                </span>
+                </b-dropdown-item>
+            </b-dropdown>
+                </div>
+            </span>
+        </template>  
     </vue-good-table>
 </div>
 </template>
@@ -34,8 +47,6 @@ export default {
     data(){
         return {
             messages: [],
-            toggleButtons: false,
-            rowId: null,
             columns: [
                 {
                     label: 'Sender',
@@ -75,15 +86,10 @@ export default {
         ...mapActions({
             getUsers: 'getUsers'
         }),
-        onRowClick(params){
-            this.toggleButtons = !this.toggleButtons
-            this.rowId = params.row._id
-        },
         
         async removeMessage(id) {
             if(window.confirm("Are you sure you want to delete this book?")){
                 await axios.delete(`http://localhost:8000/api/messages/delete/${id}`)
-                this.toggleButtons = false
             }
             await this.getMessages()
         },
@@ -101,3 +107,16 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.more-options{
+  transition: 0.3s;
+}
+
+.more-options:hover{
+  border-radius: 5px;
+  background: rgb(230, 230, 230);
+  color:rgb(0, 0, 0);
+  transition: 0.3s;
+}
+</style>

@@ -1,14 +1,5 @@
 <template>
 <div>
-<div class="form-group row" v-if="toggleButtons">
-    <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-9">
-        <router-link :to="{name: 'editBook', params: {id: rowId}}"> <button type="submit" class="btn btn-primary">Edit Book</button></router-link>
-        <button type="submit" class="btn btn-danger" @click="removeBook(rowId)">Delete Book</button>
-
-    </div>
-  </div>
-
-
 <vue-good-table
     :columns="columns"
     :rows="books"
@@ -22,9 +13,38 @@
         perPageDropdown: [5, 7, 10],
         dropdownAllowAll: false,
     }"
-    @on-row-click="onRowClick"
     >
-        
+    <template v-if="user.data.isAdmin" v-slot:table-row="props">
+      <span v-if="props.column.field === 'actions'">
+        <div class="more-options">
+          <b-dropdown id="dropdown-right" right text="Right align" variant="link" toggle-class="text-decoration-none text-secondary" no-caret class="m-2">
+        <template #button-content>
+            <b-icon icon="three-dots"></b-icon>
+          </template>
+        <b-dropdown-item
+          @click="removeBook(props.row._id)"
+        >
+         <span
+            class="d-flex align-items-center"
+          >
+            <b-icon icon="trash"></b-icon>
+            <p class="p-0 m-0 ml-3">Delete</p>
+          </span>
+        </b-dropdown-item>
+        <b-dropdown-item
+            :to="{name: 'editBook', params: {id: props.row._id}}"
+        >
+            <span
+              class="d-flex align-items-center"
+            >
+              <b-icon icon="pen"></b-icon>
+              <p class="p-0 m-0 ml-3">Edit</p>
+            </span>
+          </b-dropdown-item>
+      </b-dropdown>
+        </div>
+      </span>
+  </template>
 </vue-good-table>
 
 </div>
@@ -39,8 +59,6 @@ export default {
     data(){
       return {
         user: JSON.parse(window.localStorage.getItem('user')),
-        toggleButtons: false,
-        rowId: null,
         columns: [
           {
             label: 'Title',
@@ -76,19 +94,10 @@ export default {
     ...mapActions({
         getBooks: 'getBooks',
     }),
-
-    onRowClick(params){
-      if(this.user.data.isAdmin){
-        this.toggleButtons = !this.toggleButtons
-        this.rowId = params.row._id
-      }
-      return
-    },
     
     async removeBook(id) {
       if(window.confirm("Are you sure you want to delete this book?")){
         await axios.delete(`http://localhost:8000/api/books/delete/${id}`)
-        this.toggleButtons = false
       }
       await this.getBooks()
     }
@@ -105,3 +114,16 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.more-options{
+  transition: 0.3s;
+}
+
+.more-options:hover{
+  border-radius: 5px;
+  background: rgb(230, 230, 230);
+  color:rgb(0, 0, 0);
+  transition: 0.3s;
+}
+</style>
