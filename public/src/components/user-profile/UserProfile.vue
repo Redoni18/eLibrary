@@ -10,7 +10,7 @@
                 label-cols-sm="2"
                 label-align-sm="left"                
             >
-                <b-form-input v-model="selectedUser.name" id="name"></b-form-input>
+                <b-form-input readonly v-model="selectedUser.name" id="name"></b-form-input>
             </b-form-group>
 
             <b-form-group
@@ -19,7 +19,17 @@
                 label-cols-sm="2"
                 label-align-sm="left"
             >
-                <b-form-input v-model="selectedUser.email" id="email"></b-form-input>
+                <b-form-input readonly v-model="selectedUser.email" id="email"></b-form-input>
+            </b-form-group>
+
+            <b-form-group
+                v-if="selectedUser.userType"
+                label="User Type: "
+                label-for="userType"
+                label-cols-sm="2"
+                label-align-sm="left"
+            >
+                <b-form-input readonly v-model="selectedUser.userType.userType" id="userType"></b-form-input>
             </b-form-group>
 
             <b-form-group
@@ -28,7 +38,7 @@
                 label-cols-sm="2"
                 label-align-sm="left"
             >
-                <b-form-textarea v-model="selectedUser.bio" placeholder="Write something about yourself..." rows="2" max-rows="3" id="bio"></b-form-textarea>
+                <b-form-textarea readonly v-model="selectedUser.bio" placeholder="Write something about yourself..." rows="2" max-rows="3" id="bio"></b-form-textarea>
             </b-form-group>
 
             <b-form-group
@@ -37,7 +47,7 @@
                 label-cols-sm="2"
                 label-align-sm="left"
             >
-                <b-form-input v-model="selectedUser.city" id="city"></b-form-input>
+                <b-form-input readonly v-model="selectedUser.city" id="city"></b-form-input>
             </b-form-group>
 
             <b-form-group
@@ -46,7 +56,7 @@
                 label-cols-sm="2"
                 label-align-sm="left"
             >
-                <b-form-input v-model="selectedUser.birthday" id="birthday" type="date"></b-form-input>
+                <b-form-input readonly v-model="selectedUser.birthday" id="birthday" type="date"></b-form-input>
             </b-form-group>
 
             <b-form-group
@@ -55,9 +65,9 @@
                 label-cols-sm="2"
                 label-align-sm="left"
             >
-                <b-form-input v-model="selectedUser.social1" class="mb-2" id="social1"></b-form-input>
-                <b-form-input v-model="selectedUser.social2" class="mb-2" id="social2"></b-form-input>
-                <b-form-input v-model="selectedUser.social3" class="mb-2" id="social3"></b-form-input>
+                <b-form-input readonly v-model="selectedUser.social1" class="mb-2" id="social1"></b-form-input>
+                <b-form-input readonly v-model="selectedUser.social2" class="mb-2" id="social2"></b-form-input>
+                <b-form-input readonly v-model="selectedUser.social3" class="mb-2" id="social3"></b-form-input>
             </b-form-group>
 
             <div class="d-flex justify-content-center align-items-start">

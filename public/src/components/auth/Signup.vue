@@ -45,6 +45,28 @@
 
                                     <div class="form-group row">
 
+                                        <label for="userType" class="col-sm-3 col-md-3 col-lg-3 col-form-label">User Type</label>
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            <v-select v-model="selectedUserType" :options="allUserTypes" label="userType">
+                                                <template #search="{attributes, events}">
+                                                    <input
+                                                    id="userType" 
+                                                    name="userType"
+                                                    :required="!selectedUserType"
+                                                    :placeholder="!selectedUserType ? 'Select user type...' : ''"
+                                                    class="vs__search"
+                                                    :class="{'userType': true, 'is-invalid': errors.has('userType') }"
+                                                    v-bind="attributes"
+                                                    v-on="events"
+                                                    />
+                                                </template>
+                                            </v-select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+
                                         <label for="password" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Password</label>
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="password" class="form-control form-control-sm" id="password" name="password" placeholder="Enter password"
@@ -83,7 +105,7 @@
 
 <script>
     import { mapActions } from 'vuex'
-
+    import axios from 'axios'
     export default {
         name: 'Signup',
 
@@ -93,11 +115,27 @@
                 email: null,
                 password: null,
 
-                signedIn: null
+                signedIn: null,
+                userTypes: [],
+                selectedUserType: null,
             }
         },
-
+        mounted(){
+            this.getUserTypes()
+        },
+        computed:{
+            allUserTypes(){
+                return this.userTypes
+            }
+        },
         methods: {
+            async getUserTypes(){
+                const response = await axios.get("http://localhost:8000/api/userTypes")
+                console.log(response)
+                for(let i = 0;i<response.data.length;i++){
+                    this.userTypes.push(response.data[i])
+                }
+            },
             ...mapActions({
                 signUp: 'signUp'
             }),
@@ -107,6 +145,7 @@
                         this.signUp({
                             name: this.name,
                             email: this.email,
+                            userType: this.selectedUserType,
                             password: this.password
                         });
 

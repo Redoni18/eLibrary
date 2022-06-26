@@ -11,6 +11,7 @@ exports.post_signup = function (req, res) {
     let user = new User({
         name: req.body.name,
         email: req.body.email,
+        userType: req.body.userType,
         password: hash_password,
         isAdmin: req.body.email.includes('@eLibrary') ? true : false
     });
@@ -25,6 +26,7 @@ exports.post_signup = function (req, res) {
             id: user._id,
             name: user.name,
             email: user.email,
+            userType: user.userType,
             isAdmin: user.isAdmin
         },
         token: token
@@ -36,6 +38,7 @@ exports.edit_profile = function (req, res) {
     let updatedInfo = {
         name: req.body.name,
         email: req.body.email,
+        userType: req.body.userType,
         bio: req.body.bio,
         city: req.body.city,
         birthday: req.body.birthday,

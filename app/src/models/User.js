@@ -12,6 +12,10 @@ const schema = new Schema({
         required: true,
         unique: true
     },
+    userType: { 
+        type: mongoose.Schema.Types.Mixed, 
+        ref: 'userTypeSchema' 
+    },
     password: {
         type : String,
         required : true

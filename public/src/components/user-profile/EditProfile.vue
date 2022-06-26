@@ -95,17 +95,22 @@ export default {
             get_profile: "get_profile"
         }),
         async saveProfile() {
-            await this.editProfile({
-                _id: this.userId,
-                name: this.currentUser.name,
-                email: this.currentUser.email,
-                bio: this.currentUser.bio,
-                city: this.currentUser.city,
-                birthday: this.currentUser.birthday,
-                social1: this.currentUser.social1,
-                social2: this.currentUser.social2,
-                social3: this.currentUser.social3
-            });
+            if(this.currentUser.name.length > 2 && this.currentUser.email.length > 10){
+
+                await this.editProfile({
+                    _id: this.userId,
+                    name: this.currentUser.name,
+                    email: this.currentUser.email,
+                    bio: this.currentUser.bio,
+                    city: this.currentUser.city,
+                    birthday: this.currentUser.birthday,
+                    social1: this.currentUser.social1,
+                    social2: this.currentUser.social2,
+                    social3: this.currentUser.social3
+                });
+            }else {
+                return
+            }
 
             await this.getProfile()
         },
