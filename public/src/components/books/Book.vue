@@ -8,8 +8,8 @@
         img-top
         tag="article"
         img-height="250"
-        style="max-width: 20rem;min-width: 20rem;"
-        class="mb-2"
+        style="max-width: 15rem;min-width: 15rem;object-fit: contain;"
+        class="mb-2 img-thumbnail"
       >
         <b-card-text>
           {{description}}
@@ -39,6 +39,13 @@
 <style scoped>
 .book-card{
   margin: 10px;
+  transition: 0.3s ease;
+}
+
+.book-card:hover{
+  cursor: pointer;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: 0.3s ease;
 }
 
 @media only screen and (max-width: 1050px){

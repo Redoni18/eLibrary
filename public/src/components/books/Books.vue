@@ -52,7 +52,8 @@
     }
 
     .row{
-        margin: auto;
+        display: flex;
+        justify-content: center;
     }
 
     
