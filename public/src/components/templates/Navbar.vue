@@ -54,9 +54,9 @@
 
     <!-- Sidebar -->
     <div class="sidebar-fixed position-fixed scrollable">
-      <a class="logo-wrapper"
+      <router-link class="logo-wrapper" to="/#"
         ><img alt="" class="img-fluid sidebar-logo" src="../../assets/logo.png"
-      /></a>
+      /></router-link>
       <mdb-list-group class="list-group-flush">
         <router-link :to="{path: '/'}" @click.native="activeItem = 1">
           <mdb-list-group-item
@@ -146,7 +146,7 @@
           </div>
         <mdb-list-group-item
             id="sidebar-item"
-            v-if="user.authenticated"
+            v-if="user.authenticated && user.data.isAdmin"
             @click.native="activeItem = 4; showSettingsDropdown = !showSettingsDropdown;"
             :action="true"
             :class="activeItem === 4 && 'active'"
@@ -205,14 +205,14 @@
             tag="a"
             href="https://mdbootstrap.com/docs/vue/getting-started/download/"
             target="_blank"
-            >Download MDB <mdb-icon icon="download" class="ml-2"
+            >Sign Up <mdb-icon icon="user-plus" class="ml-2"
           /></mdb-btn>
           <mdb-btn
             outline="white"
             tag="a"
             href="https://mdbootstrap.com/education/bootstrap/"
             target="_blank"
-            >Start free tutorial <mdb-icon icon="graduation-cap" class="ml-2"
+            >Sign In<mdb-icon icon="sign-in-alt" class="ml-2"
           /></mdb-btn>
         </div>
         <hr class="my4" />
@@ -227,8 +227,7 @@
           <a href="#"><mdb-icon fab icon="codepen" class="mr-3"/></a>
         </div>
         <p class="footer-copyright mb-0 py-3 text-center">
-          &copy; {{ new Date().getFullYear() }} Copyright:
-          <a href="https://mdbootstrap.com/docs/vue/"> MDBootstrap.com </a>
+          &copy; {{ new Date().getFullYear() }} Copyright: LabCourse Group
         </p>
       </ftr>
     </main>
