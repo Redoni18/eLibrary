@@ -64,7 +64,7 @@
           :class="activeItem === 1 && 'active'"
             :action="true"
             ><mdb-icon
-              icon="book"
+              icon="home"
               class="mr-3"
             /><p>Home</p></mdb-list-group-item
           >
@@ -72,14 +72,14 @@
         <mdb-list-group-item
             id="sidebar-item"
             v-if="user.authenticated"
-            @click.native="activeItem = 2; showDropdown = !showDropdown;"
+            @click.native="activeItem = 2; showProfileDropdown = !showProfileDropdown;"
             :action="true"
             :class="activeItem === 2 && 'active'"
             >
             <mdb-icon icon="user" class="mr-3" />
             <p class="ml-2">Profile</p>
           </mdb-list-group-item>
-          <div v-if="showDropdown" class="sidebar-submenu">
+          <div v-if="showProfileDropdown" class="sidebar-submenu">
             <router-link v-if="user.authenticated" :to="{name: 'userprofile', params: {id: user.data.id}}">
                 <mdb-list-group-item
                 id="sidebar-item"
@@ -95,22 +95,67 @@
                 >
             </router-link>
           </div>
-        <router-link to="/tables" @click.native="activeItem = 3">
-          <mdb-list-group-item
-          id="sidebar-item"
-            :action="true"
-            :class="activeItem === 3 && 'active'"
-            ><mdb-icon icon="table" class="mr-3" /><p>Tables</p></mdb-list-group-item
-          >
-        </router-link>
-        <router-link to="/maps" @click="activeItem = 4">
-          <mdb-list-group-item
+        <mdb-list-group-item
             id="sidebar-item"
             :action="true"
+            v-if="user.authenticated"
+            @click.native="activeItem = 3; showBooksDropdown = !showBooksDropdown;"
+            :class="activeItem === 3 && 'active'"
+            ><mdb-icon icon="book" class="mr-3" /><p>Books</p>
+        </mdb-list-group-item>
+        <div v-if="showBooksDropdown" class="sidebar-submenu">
+            <router-link v-if="user.authenticated" :to="{path: '/books/listing'}">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="list" class="mr-3" /><p>Listing</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/books/create'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="plus" class="mr-3" /><p>Insert Book</p></mdb-list-group-item
+                >
+            </router-link>
+          </div>
+        <mdb-list-group-item
+            id="sidebar-item"
+            @click.native="activeItem = 4; showSettingsDropdown = !showSettingsDropdown;"
+            :action="true"
             :class="activeItem === 4 && 'active'"
-            ><mdb-icon icon="map" class="mr-3" /><p>Maps</p></mdb-list-group-item
-          >
-        </router-link>
+            ><mdb-icon icon="cog" class="mr-3" /><p>Settings</p>
+        </mdb-list-group-item>
+            <div v-if="showSettingsDropdown" class="sidebar-submenu">
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/categories'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="puzzle-piece" class="mr-3" /><p>Categories</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/userTypes'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="user-cog" class="mr-3" /><p>User Types</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/locations'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="map-marked-alt" class="mr-3" /><p>Locations</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/memberships'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="user-plus" class="mr-3" /><p>Memberships</p></mdb-list-group-item
+                >
+            </router-link>
+          </div>
         <router-link to="/404" @click.native="activeItem = 5">
           <mdb-list-group-item
             id="sidebar-item"
@@ -198,7 +243,9 @@ export default {
   data() {
     return {
       activeItem: 1,
-      showDropdown: false,
+      showProfileDropdown: false,
+      showBooksDropdown: false,
+      showSettingsDropdown: false,
     };
   },
   mixins: [waves],

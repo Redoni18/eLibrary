@@ -16,6 +16,7 @@
     "bootstrap-vue": "^2.22.0",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "mdb-ui-kit": "^4.2.0",
+    "mdb-vue-ui-kit": "^1.14.0",
     "mdbvue": "^6.7.3",
     "moment": "^2.21.0",
     "npm": "^5.7.1",
