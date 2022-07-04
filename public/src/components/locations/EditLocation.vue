@@ -20,7 +20,13 @@
                                 <form method="post" @submit.prevent="editLocation">
 
                                     <div class="form-group row">
+                                        <label for="city" class="col-sm-3 col-md-3 col-lg-3 col-form-label">City: </label>
+                                        <div class="col-sm-9 col-md-9 col-lg-9"  style="text-align:center">
+                                            <span>{{city}}</span>
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group row">
                                         <label for="address" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Address: </label>
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="address" name="address" placeholder="Add new address"
@@ -62,10 +68,11 @@
 <script>
     import axios from 'axios'
     export default {
-        name: 'InsertLocation',
+        name: 'EditLocation',
 
         data() {
             return {
+                city: '',
                 locationAddress: '',
                 locationPhoneNumber: '',
             }
@@ -81,16 +88,17 @@
         methods: {
             async fetchLocation(){
                 const response = await axios.get(`http://localhost:8000/api/location/${this.locationId}`)
+                this.city = response.data.city
                 this.locationAddress = response.data.address
                 this.locationPhoneNumber = response.data.phoneNumber
             },
             async editLocation() {
                 this.$validator.validateAll().then( async (result) => {
                     if (result) {
-                        await axios.put(`http://localhost:8000/api/editLocation/${this.locationId}`, {_id: this.locationId, address: this.locationAddress, phoneNumber: this.locationPhoneNumber})
+                        await axios.put(`http://localhost:8000/api/editLocation/${this.locationId}`, {_id: this.locationId,city:this.city, address: this.locationAddress, phoneNumber: this.locationPhoneNumber})
                         this.locationAddress = null
                         this.locationPhoneNumber = null
-                        this.$router.push({path:"/locations"})
+                        this.$router.push({path:"/locations/listing"})
                         return true;
                     }
                 });

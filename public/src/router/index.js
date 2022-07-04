@@ -31,6 +31,9 @@ import Memberships from '@/components/memberships/Memberships.vue'
 import AddMembership from '@/components/memberships/AddMembership.vue'
 import EditMembership from '@/components/memberships/EditMembership.vue'
 
+import AddCountry from '@/components/countries/AddCountry.vue'
+import CountriesListing from '@/components/countries/Listing'
+
 Vue.use(Router);
 
 
@@ -195,7 +198,7 @@ const router = new Router({
             }
         },
         {
-            path: '/locations',
+            path: '/locations/listing',
             name: 'Locations',
             component: LocationsListing,
             beforeEnter: (to, from, next) => {
@@ -203,7 +206,7 @@ const router = new Router({
             }
         },
         {
-            path: '/addLocation',
+            path: '/locations/addLocation',
             name: 'AddLocation',
             component: AddLocation,
             beforeEnter: (to, from, next) => {
@@ -212,7 +215,7 @@ const router = new Router({
         },
         {
             path: '/locations/editLocation/:id',
-            name: 'EditLocation',
+            name: 'editLocation',
             component: EditLocation ,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
@@ -268,6 +271,22 @@ const router = new Router({
             path: '/memberships/editMembership/:id',
             name: 'EditMembership',
             component: EditMembership ,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/countries/addCountry',
+            name: 'AddCountry',
+            component: AddCountry,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/countries/listing',
+            name: 'Countries',
+            component: CountriesListing,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }

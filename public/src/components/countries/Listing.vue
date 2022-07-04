@@ -1,11 +1,11 @@
 <template>
 <div>
-<div class="mb-3">
-        <router-link type="submit" class="btn btn-primary" :to="{path: 'addLocation'}">Add location</router-link>
-</div>
-<vue-good-table
+    <div class="mb-3">
+        <router-link type="submit" class="btn btn-primary" :to="{path: 'addCountry'}">Add country</router-link>
+    </div>  
+    <vue-good-table
     :columns="columns"
-    :rows="locations"
+    :rows="countries"
     :search-options="{
         enabled: true
     }"
@@ -25,7 +25,7 @@
             <b-icon icon="three-dots"></b-icon>
           </template>
         <b-dropdown-item
-          @click="removeLocation(props.row._id)"
+          @click="removeCountry(props.row._id)"
         >
          <span
             class="d-flex align-items-center"
@@ -34,17 +34,7 @@
             <p class="p-0 m-0 ml-3">Delete</p>
           </span>
         </b-dropdown-item>
-        <b-dropdown-item
-            :to="{name: 'editLocation', params: {id: props.row._id}}"
-        >
-            <span
-              class="d-flex align-items-center"
-            >
-              <b-icon icon="pen"></b-icon>
-              <p class="p-0 m-0 ml-3">Edit</p>
-            </span>
-          </b-dropdown-item>
-      </b-dropdown>
+        </b-dropdown>
         </div>
       </span>
   </template>
@@ -56,27 +46,22 @@
 <script>
 import axios from 'axios'
 export default {
-    name: "LocationsListing",
+    name: "CountriesListing",
     data() {
         return {
             user: JSON.parse(window.localStorage.getItem('user')),
             toggleButtons: false,
             rowId: null,
-            locations: null,
+            countries: null,
             columns: [
                 {
-                    label: 'City',
-                    field: 'city',
+                    label: 'Name',
+                    field: 'name',
                     tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
-                    label: 'Address',
-                    field: 'address',
-                    tooltip: 'Click on a specific row that you want to edit or delete!',
-                },
-                {
-                    label: 'Phone number',
-                    field: 'phoneNumber',
+                    label: 'ISO Country Code',
+                    field: 'isoCountryCode',
                     tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
@@ -84,19 +69,20 @@ export default {
                     field: 'actions',
                     sortable: false,
                     width: '50px',
+                    
                 },
-            
             ],
         };
     },
     computed: {
-        allLocations() {
-            return this.locations
+        allCountries() {
+            return this.countries
         }
     },
 
     async mounted(){
-        await this.fetchLocations()
+        await this.fetchCountries()
+        
     },
 
     methods: {
@@ -107,23 +93,26 @@ export default {
             }
             return
         },
-        async fetchLocations(){
+        async fetchCountries(){
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
-                    const response = await axios.get("http://localhost:8000/api/locations")
-                    this.locations = response.data
+                    const response = await axios.get("http://localhost:8000/api/countries")
+                    this.countries = response.data
+                    console.log(this.countries)
                 }
             });
         },
-        async removeLocation(id) {
+        async removeCountry(id) {
             console.log('id', id)
-            if(window.confirm("Are you sure you want to remove this location?")){
-                await axios.delete(`http://localhost:8000/api/deleteLocation/${id}`)
+            if(window.confirm("Are you sure you want to remove this country?")){
+                await axios.delete(`http://localhost:8000/api/deleteCountry/${id}`)
                 this.toggleButtons = false
             }
-            await this.fetchLocations()
-        }
-    }
+            await this.fetchCountries()
+        },
+        
+    },
+    
 }
 </script>
 
