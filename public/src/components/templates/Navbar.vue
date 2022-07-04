@@ -55,7 +55,7 @@
     <!-- Sidebar -->
     <div class="sidebar-fixed position-fixed scrollable">
       <a class="logo-wrapper"
-        ><img alt="" class="img-fluid"
+        ><img alt="" class="img-fluid sidebar-logo" src="../../assets/logo.png"
       /></a>
       <mdb-list-group class="list-group-flush">
         <router-link :to="{path: '/'}" @click.native="activeItem = 1">
@@ -67,6 +67,31 @@
               icon="home"
               class="mr-3"
             /><p>Home</p></mdb-list-group-item
+          >
+        </router-link>
+        <router-link :to="{path: '/signin'}" @click.native="activeItem = 2">
+          <mdb-list-group-item
+          v-if="!user.authenticated"
+          id="sidebar-item"
+          :class="activeItem === 2 && 'active'"
+            :action="true"
+            ><mdb-icon
+              icon="sign-in-alt"
+              class="mr-3"
+            /><p>Sign In</p></mdb-list-group-item
+          >
+        </router-link>
+
+        <router-link :to="{path: '/signup'}" @click.native="activeItem = 3">
+          <mdb-list-group-item
+          v-if="!user.authenticated"
+          id="sidebar-item"
+          :class="activeItem === 3 && 'active'"
+            :action="true"
+            ><mdb-icon
+              icon="user-plus"
+              class="mr-3"
+            /><p>Sign Up</p></mdb-list-group-item
           >
         </router-link>
         <mdb-list-group-item
@@ -121,6 +146,7 @@
           </div>
         <mdb-list-group-item
             id="sidebar-item"
+            v-if="user.authenticated"
             @click.native="activeItem = 4; showSettingsDropdown = !showSettingsDropdown;"
             :action="true"
             :class="activeItem === 4 && 'active'"
@@ -156,16 +182,14 @@
                 >
             </router-link>
           </div>
-        <router-link to="/404" @click.native="activeItem = 5">
-          <mdb-list-group-item
-            id="sidebar-item"
-            :action="true"
-            :class="activeItem === 5 && 'active'"
-            ><mdb-icon
-              icon="exclamation"
-              class="mr-3"
-            /><p>404</p></mdb-list-group-item
-          >
+        <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/messages'})">
+            <mdb-list-group-item
+                id="sidebar-item"
+                @click.native="activeItem = 5"
+                :action="true"
+                :class="activeItem === 5 && 'active'"
+                ><mdb-icon icon="envelope" class="mr-3" /><p>Messages</p>
+            </mdb-list-group-item>
         </router-link>
       </mdb-list-group>
     </div>
@@ -354,11 +378,6 @@ main {
   padding-top: 0;
 }
 
-.sidebar-fixed .logo-wrapper img {
-  width: 100%;
-  padding: 2.5rem;
-}
-
 .sidebar-fixed .list-group-item {
     display: block !important;
   transition: background-color 0.3s;
@@ -404,5 +423,11 @@ transition: 1s;
     justify-content: flex-start !important;
     text-align: center !important;  
     margin: 0;
+}
+
+.logo-wrapper{
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 </style>
