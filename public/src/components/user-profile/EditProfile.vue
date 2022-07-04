@@ -23,7 +23,7 @@
                 label-align-sm="left"
             >
                 <b-form-input type="email" v-model="currentUser.email" id="email" name="email"
-                    v-validate="'required|email|unique'"
+                    v-validate="rules"
                     :class="{'email': true, 'is-invalid': errors.has('email') }">
                 ></b-form-input>
                 <small v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</small>
@@ -106,11 +106,13 @@ export default {
           active: true,
           currentUser: {},
           userTypes: [],
+          currentEmail: '',
       }
     },
     async mounted(){
         const data = await this.get_profile(this.userId);
         this.currentUser = data.data
+        this.currentEmail = data.data.email
         await this.getUserTypes()
     },
     computed: {
@@ -121,8 +123,12 @@ export default {
             return this.$route.params.id
         },
         allUserTypes(){
+            
             return this.userTypes
         },
+        rules () {
+            return this.currentEmail === this.currentUser.email ? 'required|email':'required|email|unique'
+        }
         // invalidNameFeedback(){
         //     if(this.currentUser.name.length > 2){
         //         return ''
@@ -159,7 +165,7 @@ export default {
         }),
         async saveProfile() {
             await this.$validator.validateAll().then((result) => {
-                    if (result && this.currentUser.userType !== null) {
+                    if (result && (result || this.currentUser.userType !== null)) {
                         this.editProfile({
                             _id: this.userId,
                             name: this.currentUser.name,
