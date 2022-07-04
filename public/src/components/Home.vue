@@ -83,7 +83,7 @@ import axios from 'axios'
         filterBooks(category) {
             const filtered = []
             for (let i = 0; i < this.books.length; i++){
-                if (this.books[i].categories[0].title === category) {
+                if (this.books[i] || this.books[i].categories[0].title === category) {
                     console.log('true')
                     filtered.push(this.books[i])
                 }
