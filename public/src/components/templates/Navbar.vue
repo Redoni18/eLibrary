@@ -53,69 +53,73 @@
     </mdb-navbar>
 
     <!-- Sidebar -->
-    <div class="sidebar-fixed position-fixed">
+    <div class="sidebar-fixed position-fixed scrollable">
       <a class="logo-wrapper"
         ><img alt="" class="img-fluid"
       /></a>
       <mdb-list-group class="list-group-flush">
         <router-link :to="{path: '/'}" @click.native="activeItem = 1">
           <mdb-list-group-item
+          id="sidebar-item"
           :class="activeItem === 1 && 'active'"
             :action="true"
             ><mdb-icon
               icon="book"
               class="mr-3"
-            />Home</mdb-list-group-item
+            /><p>Home</p></mdb-list-group-item
           >
         </router-link>
         <mdb-list-group-item
-          v-if="user.authenticated"
-          @click.native="activeItem = 2; showDropdown = !showDropdown;"
+            id="sidebar-item"
+            v-if="user.authenticated"
+            @click.native="activeItem = 2; showDropdown = !showDropdown;"
             :action="true"
             :class="activeItem === 2 && 'active'"
-            class="d-flex"
             >
-            <b-avatar variant="primary" v-if="user.authenticated" :text="user.data.name.slice(0, 2)" size="2rem"></b-avatar>
-            Profile
+            <mdb-icon icon="user" class="mr-3" />
+            <p class="ml-2">Profile</p>
           </mdb-list-group-item>
-          <router-link v-if="user.authenticated" :to="{name: 'userprofile', params: {id: user.data.id}}">
-            <mdb-list-group-item
-              v-if="showDropdown"
-              :action="true"
-              class="sidebar-submenu"
-              ><mdb-icon icon="user" class="mr-3" />Profile</mdb-list-group-item
-            >
-          </router-link>
-          <router-link v-if="user.authenticated" to="#" @click.native="out">
-            <mdb-list-group-item
-              v-if="showDropdown"
-              :action="true"
-              class="sidebar-submenu"
-              ><mdb-icon icon="sign-out-alt" class="mr-3" />Sign Out</mdb-list-group-item
-            >
-          </router-link>
+          <div v-if="showDropdown" class="sidebar-submenu">
+            <router-link v-if="user.authenticated" :to="{name: 'userprofile', params: {id: user.data.id}}">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="user" class="mr-3" /><p>Profile</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated" to="#" @click.native="out">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="sign-out-alt" class="mr-3" /><p>Sign Out</p></mdb-list-group-item
+                >
+            </router-link>
+          </div>
         <router-link to="/tables" @click.native="activeItem = 3">
           <mdb-list-group-item
+          id="sidebar-item"
             :action="true"
             :class="activeItem === 3 && 'active'"
-            ><mdb-icon icon="table" class="mr-3" />Tables</mdb-list-group-item
+            ><mdb-icon icon="table" class="mr-3" /><p>Tables</p></mdb-list-group-item
           >
         </router-link>
         <router-link to="/maps" @click="activeItem = 4">
           <mdb-list-group-item
+            id="sidebar-item"
             :action="true"
             :class="activeItem === 4 && 'active'"
-            ><mdb-icon icon="map" class="mr-3" />Maps</mdb-list-group-item
+            ><mdb-icon icon="map" class="mr-3" /><p>Maps</p></mdb-list-group-item
           >
         </router-link>
         <router-link to="/404" @click.native="activeItem = 5">
           <mdb-list-group-item
+            id="sidebar-item"
             :action="true"
             :class="activeItem === 5 && 'active'"
             ><mdb-icon
               icon="exclamation"
               class="mr-3"
-            />404</mdb-list-group-item
+            /><p>404</p></mdb-list-group-item
           >
         </router-link>
       </mdb-list-group>
@@ -206,6 +210,12 @@ export default {
           return this.activeItem
         }
     },
+    // watch: {
+    //     activeItem() {
+    //         console.log(this.activeItem)
+    //         this.setNavbarColor()
+    //     }
+    // },
     mounted() {
       this.setNavbarColor()
     },
@@ -246,12 +256,13 @@ export default {
 </style>
 
 <style scoped>
+
 main {
-  background-color: #ededee;
+    background-color: #ededee;
 }
 
 .flexible-content {
-  transition: padding-left 0.3s;
+    transition: padding-left 0.3s;
   padding-left: 270px;
 }
 
@@ -260,8 +271,32 @@ main {
   padding-left: 270px;
 }
 
+.scrollable{
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #a5a5a5;
+  border-radius: 5px; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #0d6efd;
+}
+
 .sidebar-fixed {
-  left: 0;
+    left: 0;
   top: 0;
   height: 100vh;
   width: 270px;
@@ -278,7 +313,7 @@ main {
 }
 
 .sidebar-fixed .list-group-item {
-  display: block !important;
+    display: block !important;
   transition: background-color 0.3s;
 }
 
@@ -289,23 +324,38 @@ main {
 
 @media (max-width: 1199.98px) {
   .sidebar-fixed {
-    display: none;
+    width: 100px;
+    overflow-x: hidden;
   }
+
+  #sidebar-item, p{
+    display: none !important;
+  }
+  
   .flexible-content {
-    padding-left: 0;
+    padding-left: 100px;
+    margin: auto;
   }
   .flexible-navbar {
-    padding-left: 10px;
+    padding-left: 100px;
   }
-}
-
-.sidebar-menu{
-  display: flex;
-  justify-content: space-between;
 }
 
 .sidebar-submenu{
+transition: 1s;
   margin: 0 10%;
   width: 90%;
+  background: #0d6efd;
+}
+
+#sidebar-item{
+    display: flex !important;
+    align-items: center !important;
+}
+
+#sidebar-item, p{
+    justify-content: flex-start !important;
+    text-align: center !important;  
+    margin: 0;
 }
 </style>
