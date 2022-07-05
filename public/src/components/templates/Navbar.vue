@@ -1,57 +1,9 @@
 <template>
   
 <div class="flexible-content">
-    <!--Navbar-->
-    <mdb-navbar class="flexible-navbar white" light position="top" scrolling>
-      <mdb-navbar-brand href="https://mdbootstrap.com/docs/vue/" target="_blank"
-        >MDB</mdb-navbar-brand
-      >
-      <mdb-navbar-toggler>
-        <mdb-navbar-nav left>
-          <mdb-nav-item to="/" waves-fixed active class="active"
-            >Home</mdb-nav-item
-          >
-          <mdb-nav-item
-            href="https://mdbootstrap.com/docs/vue/getting-started/quick-start/"
-            waves-fixed
-            >About MDB</mdb-nav-item
-          >
-          <mdb-nav-item
-            href="https://mdbootstrap.com/docs/vue/getting-started/download/"
-            waves-fixed
-            >Free download</mdb-nav-item
-          >
-          <mdb-nav-item
-            href="https://mdbootstrap.com/education/bootstrap/"
-            waves-fixed
-            >Free tutorials</mdb-nav-item
-          >
-        </mdb-navbar-nav>
-        <mdb-navbar-nav right>
-          <mdb-nav-item href="#!" waves-fixed
-            ><mdb-icon fab class="text-black" icon="facebook-square"
-          /></mdb-nav-item>
-          <mdb-nav-item href="#!" waves-fixed
-            ><mdb-icon fab icon="twitter"
-          /></mdb-nav-item>
-          <mdb-nav-item
-            href="https://github.com/mdbootstrap/bootstrap-material-design"
-            waves-fixed
-            class="border border-light rounded mr-1"
-            target="_blank"
-            ><mdb-icon fab icon="github" class="mr-2" />MDB GitHub
-          </mdb-nav-item>
-          <mdb-nav-item
-            href="https://mdbootstrap.com/products/vue-ui-kit/"
-            waves-fixed
-            class="border border-light rounded"
-            target="_blank"
-            ><mdb-icon icon="gem" far class="mr-2" />Go Pro
-          </mdb-nav-item>
-        </mdb-navbar-nav>
-      </mdb-navbar-toggler>
-    </mdb-navbar>
-
+    <div class="p-5">
+        <router-view></router-view>
+      </div>
     <!-- Sidebar -->
     <div class="sidebar-fixed position-fixed scrollable">
       <router-link class="logo-wrapper" to="/#"
@@ -195,26 +147,31 @@
     </div>
     <!-- /Sidebar  -->
     <main>
-      <div class="mt-5 p-5">
-        <router-view></router-view>
-      </div>
       <ftr color="primary-color-dark" class="text-center font-small darken-2">
         <div class="pt-4">
+        <router-link v-if="!user.authenticated" to="/signup">
           <mdb-btn
             outline="white"
             tag="a"
-            href="https://mdbootstrap.com/docs/vue/getting-started/download/"
             target="_blank"
             >Sign Up <mdb-icon icon="user-plus" class="ml-2"
           /></mdb-btn>
+        </router-link>
+        <router-link v-if="!user.authenticated" to="/signin">
           <mdb-btn
             outline="white"
             tag="a"
-            href="https://mdbootstrap.com/education/bootstrap/"
+
             target="_blank"
             >Sign In<mdb-icon icon="sign-in-alt" class="ml-2"
           /></mdb-btn>
-        </div>
+        </router-link>
+          <div v-else class="footer-logo-wrapper">
+            <router-link to="/#"
+                ><img alt="" class="img-fluid sidebar-logo" src="../../assets/logo.png"
+            /></router-link>
+          </div>
+            </div>
         <hr class="my4" />
         <div class="pb-4">
           <a href="#"><mdb-icon fab icon="facebook-square" class="mr-3"/></a>
@@ -334,6 +291,7 @@ main {
 .flexible-content {
     transition: padding-left 0.3s;
   padding-left: 270px;
+  background: #e9e9e9;
 }
 
 .flexible-navbar {
@@ -428,5 +386,22 @@ transition: 1s;
     width: 100%;
     margin: 0;
     padding: 0;
+}
+
+.footer-logo-wrapper{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    max-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-logo-wrapper img{
+    width: 300px;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
 }
 </style>
