@@ -1,6 +1,74 @@
 <template>
-  
-<div class="flexible-content">
+<div>
+  <div v-if="!user.authenticated || !user.data.isAdmin">
+    <mdb-navbar v-if="user.authenticated" color="unique-color-dark" dark>
+    <mdb-navbar-brand>
+        <router-link to="/#">
+            <img src="../../assets/logo2.png" width="100" alt="">
+        </router-link>
+    </mdb-navbar-brand>
+    <mdb-navbar-toggler>
+      <mdb-navbar-nav>
+        <router-link to="/#">
+            <mdb-nav-item href="#">Books</mdb-nav-item>
+        </router-link>
+        <router-link :to="({path: '/contact-us'})">
+            <mdb-nav-item href="#">Contact Us</mdb-nav-item>
+        </router-link>
+        <mdb-nav-item href="#">Pricing</mdb-nav-item>
+      </mdb-navbar-nav>
+      <mdb-navbar-nav right>
+        <mdb-dropdown end tag="li" class="nav-item">
+            <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
+                <b-avatar variant="primary" v-if="user.authenticated" :text="user.data.name.slice(0, 2)" size="2rem"></b-avatar>
+            </mdb-dropdown-toggle>
+            <mdb-dropdown-menu>
+                <mdb-dropdown-item :to="{name: 'userprofile', params: {id: user.data.id}}">My Profile</mdb-dropdown-item>
+                <mdb-dropdown-item @click.native="out">Sign Out</mdb-dropdown-item>
+            </mdb-dropdown-menu>
+        </mdb-dropdown>
+      </mdb-navbar-nav>
+      <!-- <form>
+        <mdb-input type="text" class="text-white" placeholder="Search" aria-label="Search" label navInput waves
+          waves-fixed />
+      </form> -->
+    </mdb-navbar-toggler>
+  </mdb-navbar>
+
+
+  <mdb-navbar v-else color="unique-color-dark mb-0" dark>
+    <mdb-navbar-brand>
+        <router-link to="/#">
+            <img src="../../assets/logo2.png" width="100" alt="">
+        </router-link>
+    </mdb-navbar-brand>
+    <mdb-navbar-toggler>
+      <mdb-navbar-nav>
+        <router-link to="/#">
+            <mdb-nav-item href="#">Home</mdb-nav-item>
+        </router-link>
+      </mdb-navbar-nav>
+      <mdb-navbar-nav right>
+        <router-link to="/signin">
+            <mdb-nav-item>Sign In</mdb-nav-item>
+        </router-link>
+        <router-link to="/signup">
+            <mdb-nav-item>Sign Up</mdb-nav-item>
+        </router-link>
+      </mdb-navbar-nav>
+      <!-- <form>
+        <mdb-input type="text" class="text-white" placeholder="Search" aria-label="Search" label navInput waves
+          waves-fixed />
+      </form> -->
+    </mdb-navbar-toggler>
+  </mdb-navbar>
+    <div class="p-5">
+        <router-view></router-view>
+      </div>
+
+      <!-- Navbar -->
+  </div>
+<div class="flexible-content" v-else>
     <div class="p-5">
         <router-view></router-view>
       </div>
@@ -191,6 +259,7 @@
       </ftr>
     </main>
   </div>
+</div>
 </template>
 
 <script>
@@ -205,7 +274,12 @@ import {
   mdbListGroup,
   mdbListGroupItem,
   mdbFooter,
-  waves
+  waves,
+  mdbDropdown,
+  mdbDropdownMenu,
+  mdbDropdownToggle,
+  mdbDropdownItem,
+  mdbInput
 } from "mdbvue";
 import { mapActions, mapGetters } from 'vuex'
 export default {
@@ -220,7 +294,12 @@ export default {
     mdbListGroup,
     mdbListGroupItem,
     mdbIcon,
-    ftr: mdbFooter
+    ftr: mdbFooter,
+    mdbDropdown,
+    mdbDropdownMenu,
+    mdbDropdownToggle,
+    mdbDropdownItem,
+    mdbInput
   },
   data() {
     return {
