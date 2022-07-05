@@ -30,6 +30,10 @@ import Category from '@/components/categories/Category.vue'
 import Memberships from '@/components/memberships/Memberships.vue'
 import AddMembership from '@/components/memberships/AddMembership.vue'
 import EditMembership from '@/components/memberships/EditMembership.vue'
+import FacultiesListing from '@/components/faculties/Listing.vue'
+import InsertFaculty from '@/components/faculties/CreateFaculty.vue'
+import EditFaculty from '@/components/faculties/EditFaculty.vue'
+
 
 Vue.use(Router);
 
@@ -272,9 +276,31 @@ const router = new Router({
                     beforeEnter.authenticate(to,from,next)
             }
         },
+        {
+            path: '/faculties',
+            name: 'Faculties',
+            component: FacultiesListing,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/insertFaculty',
+            name: 'InsertFaculty',
+            component: InsertFaculty,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/faculties/editFaculty/:id',
+            name: 'EditFaculty',
+            component: EditFaculty,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
     ]
 })
-
-
 
 export default router
