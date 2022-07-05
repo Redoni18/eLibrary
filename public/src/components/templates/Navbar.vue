@@ -76,7 +76,7 @@
     <div class="sidebar-fixed position-fixed scrollable">
         <div class="logo-wrapper">
             <router-link to="/#"
-                ><img alt="" class="img-fluid sidebar-logo" src="../../assets/logo.png"
+                ><img alt="" class="img-fluid sidebar-logo" src="../../assets/logo2.png"
             /></router-link>
         </div>
       <mdb-list-group class="list-group-flush">
@@ -238,7 +238,7 @@
         </router-link>
           <div v-else class="footer-logo-wrapper">
             <router-link to="/#"
-                ><img alt="" class="img-fluid sidebar-logo" src="../../assets/logo.png"
+                ><img alt="" class="img-fluid sidebar-logo" src="../../assets/logo2.png"
             /></router-link>
           </div>
             </div>
@@ -472,8 +472,8 @@ transition: 1s;
 .logo-wrapper{
    width: 100%;
     padding: 0;
-    margin: 0;
-    max-height: 150px;
+    margin: 20px 0;
+    max-height: 200px;
     display: flex;
     justify-content: center;
     align-items: center; 

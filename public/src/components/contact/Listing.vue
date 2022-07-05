@@ -16,23 +16,16 @@
         >
           <template v-slot:table-row="props">
             <span v-if="props.column.field === 'actions'">
-                <div class="more-options">
-                <b-dropdown id="dropdown-right" right text="Right align" variant="link" toggle-class="text-decoration-none text-secondary" no-caret class="m-2">
-                <template #button-content>
-                    <b-icon icon="three-dots"></b-icon>
-                </template>
-                <b-dropdown-item
-                @click="removeMessage(props.row._id)"
-                >
-                <span
-                    class="d-flex align-items-center"
-                >
-                    <b-icon icon="trash"></b-icon>
-                    <p class="p-0 m-0 ml-3">Delete</p>
-                </span>
-                </b-dropdown-item>
-            </b-dropdown>
-                </div>
+                <mdb-dropdown end tag="li" class="nav-item">
+                    <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
+                        <template #button-content>
+                            <mdb-icon icon="ellipsis-h" class="mr-3" />
+                        </template>
+                    </mdb-dropdown-toggle>
+                    <mdb-dropdown-menu>
+                        <mdb-dropdown-item @click.native="removeMessage(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                    </mdb-dropdown-menu>
+                </mdb-dropdown>
             </span>
         </template>  
     </vue-good-table>
@@ -41,9 +34,17 @@
 
 <script>
 import axios from 'axios'
+import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
 import {mapActions} from 'vuex'
 export default {
     name: "MessagesList",
+    components: {
+        mdbDropdown,
+      mdbDropdownItem,
+      mdbDropdownMenu,
+      mdbDropdownToggle,
+      mdbIcon
+    },
     data(){
         return {
             messages: [],
