@@ -31,7 +31,8 @@ const reviewsController = require('../controllers/reviewsController');
 const userTypeController = require('../controllers/userTypeController');
 const locationController = require('../controllers/locationController')
 const categoriesController = require('../controllers/categoriesController');
-const membershipController = require('../controllers/membershipController')
+const membershipController = require('../controllers/membershipController');
+const staffController = require('../controllers/staffController');
 
 /**
  * Routes
@@ -90,5 +91,11 @@ router.post('/api/addMembership', membershipController.post_membership);
 router.put('/api/editMembership/:id', membershipController.edit_membership);
 router.delete('/api/deleteMembership/:id', membershipController.delete_membership);
 router.get('/api/membership/:id', membershipController.get_membership);
+
+router.get('/api/staff', staffController.get_staffs);
+router.post('/api/createStaff', staffController.post_staff);
+router.get('/api/staff/:id', staffController.get_staff);
+router.put('/api/editStaff/:id', staffController.edit_staff);
+router.delete('/api/staff/delete/:id', staffController.delete_staff);
 
 module.exports = router;

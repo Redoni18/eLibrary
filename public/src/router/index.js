@@ -30,6 +30,10 @@ import Category from '@/components/categories/Category.vue'
 import Memberships from '@/components/memberships/Memberships.vue'
 import AddMembership from '@/components/memberships/AddMembership.vue'
 import EditMembership from '@/components/memberships/EditMembership.vue'
+import CreateStaff from '@/components/staff/CreateStaff'
+import StaffListing from '@/components/staff/Listing'
+import EditStaff from '@/components/staff/EditStaff'
+
 
 Vue.use(Router);
 
@@ -270,6 +274,30 @@ const router = new Router({
             component: EditMembership ,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/staff',
+            name: 'StaffListing',
+            component: StaffListing,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/insertStaff',
+            name: 'InsertStaff',
+            component: CreateStaff,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/staff/editStaff/:id',
+            name: 'EditStaff',
+            component: EditStaff,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
             }
         },
     ]
