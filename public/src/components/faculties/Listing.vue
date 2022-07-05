@@ -14,7 +14,7 @@
     </div>
     <vue-good-table
         :columns="columns"
-        :rows="Faculties"
+        :rows="allFaculties"
         :search-options="{
             enabled: true
         }"
@@ -65,8 +65,8 @@ export default {
         };
     },
     computed: {
-         allFaculties() {
-            return this.Faculty
+        allFaculties() {
+            return this.faculties
         }
     },
 
@@ -86,7 +86,7 @@ export default {
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
                     const response = await axios.get("http://localhost:8000/api/faculties")
-                    this.Faculty = response.data  
+                    this.faculties = response.data  
                 }
             });
         },
