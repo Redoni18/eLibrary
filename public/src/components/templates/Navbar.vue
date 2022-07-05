@@ -6,9 +6,11 @@
       </div>
     <!-- Sidebar -->
     <div class="sidebar-fixed position-fixed scrollable">
-      <router-link class="logo-wrapper" to="/#"
-        ><img alt="" class="img-fluid sidebar-logo" src="../../assets/logo.png"
-      /></router-link>
+        <div class="logo-wrapper">
+            <router-link to="/#"
+                ><img alt="" class="img-fluid sidebar-logo" src="../../assets/logo.png"
+            /></router-link>
+        </div>
       <mdb-list-group class="list-group-flush">
         <router-link :to="{path: '/'}" @click.native="activeItem = 1">
           <mdb-list-group-item
@@ -46,32 +48,6 @@
             /><p>Sign Up</p></mdb-list-group-item
           >
         </router-link>
-        <mdb-list-group-item
-            id="sidebar-item"
-            v-if="user.authenticated"
-            @click.native="activeItem = 2; showProfileDropdown = !showProfileDropdown;"
-            :action="true"
-            :class="activeItem === 2 && 'active'"
-            >
-            <mdb-icon icon="user" class="mr-3" />
-            <p class="ml-2">Profile</p>
-          </mdb-list-group-item>
-          <div v-if="showProfileDropdown" class="sidebar-submenu">
-            <router-link v-if="user.authenticated" :to="{name: 'userprofile', params: {id: user.data.id}}">
-                <mdb-list-group-item
-                id="sidebar-item"
-                :action="true"
-                ><mdb-icon icon="user" class="mr-3" /><p>Profile</p></mdb-list-group-item
-                >
-            </router-link>
-            <router-link v-if="user.authenticated" to="#" @click.native="out">
-                <mdb-list-group-item
-                id="sidebar-item"
-                :action="true"
-                ><mdb-icon icon="sign-out-alt" class="mr-3" /><p>Sign Out</p></mdb-list-group-item
-                >
-            </router-link>
-          </div>
         <mdb-list-group-item
             id="sidebar-item"
             :action="true"
@@ -143,6 +119,32 @@
                 ><mdb-icon icon="envelope" class="mr-3" /><p>Messages</p>
             </mdb-list-group-item>
         </router-link>
+        <mdb-list-group-item
+            id="sidebar-item"
+            v-if="user.authenticated"
+            @click.native="activeItem = 2; showProfileDropdown = !showProfileDropdown;"
+            :action="true"
+            :class="activeItem === 2 && 'active'"
+            >
+            <mdb-icon icon="user" class="mr-3" />
+            <p class="ml-2">Profile</p>
+          </mdb-list-group-item>
+          <div v-if="showProfileDropdown" class="sidebar-submenu">
+            <router-link v-if="user.authenticated" :to="{name: 'userprofile', params: {id: user.data.id}}">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="user" class="mr-3" /><p>Profile</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated" to="#" @click.native="out">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="sign-out-alt" class="mr-3" /><p>Sign Out</p></mdb-list-group-item
+                >
+            </router-link>
+          </div>
       </mdb-list-group>
     </div>
     <!-- /Sidebar  -->
@@ -386,6 +388,23 @@ transition: 1s;
     width: 100%;
     margin: 0;
     padding: 0;
+}
+
+.logo-wrapper{
+   width: 100%;
+    padding: 0;
+    margin: 0;
+    max-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.logo-wrapper img{
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
 }
 
 .footer-logo-wrapper{
