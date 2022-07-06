@@ -37,7 +37,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="email" name="email" placeholder="Insert new user type"
                                                    v-model="staffEmail"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|min:2|max:30'"
                                                    :class="{'email': true, 'is-invalid': errors.has('email') }"/>
                                             <small v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</small>
                                         </div>

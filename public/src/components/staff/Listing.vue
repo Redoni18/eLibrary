@@ -1,12 +1,6 @@
 <template>
 <div>
-    <div class="form-group row" v-if="toggleButtons">
-    <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-9">
-        <router-link :to="{name: 'EditStaff', params: {id: rowId}}"> <button type="submit" class="btn btn-primary">Edit Staff</button></router-link>
-    <button type="submit" class="btn btn-danger" @click="removeStaff(rowId)">Delete Staff</button>
-
-    </div>
-  </div>
+  
 
     <div class="mb-3">
         <router-link type="submit" class="btn btn-primary" :to="{path: 'insertStaff'}">Insert new staff</router-link>
@@ -27,6 +21,37 @@
         }"
         @on-row-click="onRowClick"
         >
+        <template v-if="user.data.isAdmin" v-slot:table-row="props">
+      <span v-if="props.column.field === 'actions'">
+        <div class="more-options">
+          <b-dropdown id="dropdown-right" right text="Right align" variant="link" toggle-class="text-decoration-none text-secondary" no-caret class="m-2">
+        <template #button-content>
+            <b-icon icon="three-dots"></b-icon>
+          </template>
+        <b-dropdown-item
+          @click="removeStaff(props.row._id)"
+        >
+         <span
+            class="d-flex align-items-center"
+          >
+            <b-icon icon="trash"></b-icon>
+            <p class="p-0 m-0 ml-3">Delete</p>
+          </span>
+        </b-dropdown-item>
+        <b-dropdown-item
+            :to="{name: 'EditStaff', params: {id: props.row._id}}"
+        >
+            <span
+              class="d-flex align-items-center"
+            >
+              <b-icon icon="pen"></b-icon>
+              <p class="p-0 m-0 ml-3">Edit</p>
+            </span>
+          </b-dropdown-item>
+      </b-dropdown>
+        </div>
+      </span>
+  </template>
             
     </vue-good-table>
 </div>
