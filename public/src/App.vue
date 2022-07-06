@@ -1,12 +1,15 @@
 <template>
     <div id="app">
         <navbar></navbar>
+        <!-- <FooterComponent  v-if="user.authenticated && user.data.isAdmin"></FooterComponent> -->
     </div>
 </template>
 
 <script>
     import axios from 'axios'
     import navbar from '@/components/templates/Navbar'
+    //import FooterComponent from '@/components/templates/Footer'
+    import { mapGetters } from 'vuex'
 
     // Add a request interceptor
     axios.interceptors.request.use(function (config) {
@@ -30,7 +33,13 @@ export default {
     name: 'App',
 
     components: {
-        navbar
+        navbar,
+        //FooterComponent
+    },
+    computed: {
+        ...mapGetters({
+            user: 'getUser'
+        }),
     }
 }
 </script>

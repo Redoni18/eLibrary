@@ -67,6 +67,7 @@
     <div class="p-5">
         <router-view></router-view>
       </div>
+      <FooterComponent></FooterComponent>
   </div>
     <!-- /Random user navbar -->
 
@@ -203,49 +204,8 @@
       </mdb-list-group>
     </div>
     <!-- /Sidebar  -->
-    <main>
-      <ftr color="primary-color-dark" class="text-center font-small darken-2">
-        <div class="pt-4">
-        <router-link v-if="!user.authenticated" to="/signup">
-          <mdb-btn
-            outline="white"
-            tag="a"
-            target="_blank"
-            >Sign Up <mdb-icon icon="user-plus" class="ml-2"
-          /></mdb-btn>
-        </router-link>
-        <router-link v-if="!user.authenticated" to="/signin">
-          <mdb-btn
-            outline="white"
-            tag="a"
-
-            target="_blank"
-            >Sign In<mdb-icon icon="sign-in-alt" class="ml-2"
-          /></mdb-btn>
-        </router-link>
-          <div v-else class="footer-logo-wrapper">
-            <router-link to="/#"
-                ><img alt="" class="img-fluid sidebar-logo" src="../../assets/logo2.png"
-            /></router-link>
-          </div>
-            </div>
-        <hr class="my4" />
-        <div class="pb-4">
-          <a href="#"><mdb-icon fab icon="facebook-square" class="mr-3"/></a>
-          <a href="#"><mdb-icon fab icon="twitter" class="mr-3"/></a>
-          <a href="#"><mdb-icon fab icon="youtube" class="mr-3"/></a>
-          <a href="#"><mdb-icon fab icon="google-plus" class="mr-3"/></a>
-          <a href="#"><mdb-icon fab icon="dribbble" class="mr-3"/></a>
-          <a href="#"><mdb-icon fab icon="pinterest" class="mr-3"/></a>
-          <a href="#"><mdb-icon fab icon="github" class="mr-3"/></a>
-          <a href="#"><mdb-icon fab icon="codepen" class="mr-3"/></a>
-        </div>
-        <p class="footer-copyright mb-0 py-3 text-center">
-          &copy; {{ new Date().getFullYear() }} Copyright: LabCourse Group
-        </p>
-      </ftr>
-    </main>
-  </div>
+    <FooterComponent></FooterComponent>
+</div>
 </div>
 <!-- /Admin Sidebar and footer -->
 </template>
@@ -269,6 +229,8 @@ import {
   mdbDropdownItem,
   mdbInput
 } from "mdbvue";
+    import FooterComponent from '@/components/templates/Footer'
+
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: "AdminTemplate",
@@ -287,7 +249,8 @@ export default {
     mdbDropdownMenu,
     mdbDropdownToggle,
     mdbDropdownItem,
-    mdbInput
+    mdbInput,
+    FooterComponent
   },
   data() {
     return {
@@ -376,7 +339,6 @@ export default {
 </style>
 
 <style scoped>
-
 main {
     background-color: #ededee;
 }
@@ -385,6 +347,7 @@ main {
     transition: padding-left 0.3s;
   padding-left: 270px;
   background: #e9e9e9;
+  height: 100%;
 }
 
 .flexible-navbar {
