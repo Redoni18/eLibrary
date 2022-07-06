@@ -2,7 +2,6 @@
     <div class="signup_container">
 
         <div class="row">
-
             <div class="col-md-8 offset-2">
                 <div class="card">
                     <div class="card-header">
@@ -20,7 +19,46 @@
                                 <form method="post" @submit.prevent="addLocation">
 
                                     <div class="form-group row">
+                                        <label for="country" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Country: </label>
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            <v-select v-model="selectedCountry" :options="allCountries" label="name">
+                                                <template #search="{attributes, events}">
+                                                    <input
+                                                    id="country" 
+                                                    name="country"
+                                                    :required="!selectedCountry"
+                                                    :placeholder="!selectedCountry ? 'Select a country...' : ''"
+                                                    class="vs__search"
+                                                    :class="{'country': true, 'is-invalid': errors.has('country') }"
+                                                    v-bind="attributes"
+                                                    v-on="events"
+                                                    />
+                                                </template>
+                                            </v-select>
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group row">
+                                        <label for="city" class="col-sm-3 col-md-3 col-lg-3 col-form-label">City: </label>
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            <v-select v-model="selectedCity" :options="allCities" label="name">
+                                                <template #search="{attributes, events}">
+                                                    <input
+                                                    id="city" 
+                                                    name="city"
+                                                    :required="!selectedCity"
+                                                    :placeholder="!selectedCity ? 'Select a city...' : ''"
+                                                    class="vs__search"
+                                                    :class="{'city': true, 'is-invalid': errors.has('city') }"
+                                                    v-bind="attributes"
+                                                    v-on="events"
+                                                    />
+                                                </template>
+                                            </v-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
                                         <label for="address" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Address: </label>
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="address" name="address" placeholder="Add new address"
@@ -60,26 +98,82 @@
 
 
 <script>
+    var headers = new Headers();
+    headers.append("X-CSCAPI-KEY", "YTlpenh2WjY0RU5QVFFRSURzdnI2QUtYd2I4ZjhMRVE2alc0UjFRQQ==");
+
+    var requestOptions = {
+    method: 'GET',
+    headers: headers,
+    redirect: 'follow'
+    };
     import axios from 'axios'
     export default {
         name: 'AddLocation',
 
         data() {
             return {
+                cities: [],
+                selectedCity: '',
+                name: '',
+                countries: [],
+                selectedCountry: '',
                 locationAddress: '',
                 locationPhoneNumber: '',
+                city: '',
+                iso: ''
             }
         },
+        mounted() {
+            this.getCountries()
+        },
+        computed: {
+            allCountries() {
+                return this.countries;
+            },
+            allCities(){
+                return this.cities
+            },
+        },
+        watch : {
+               selectedCountry:function() {
+                  this.getCities()
+               }
+            },
         methods: {
+            async getCountries(){
+                const response = await axios.get('http://localhost:8000/api/countries')
+                console.log(response)               
+                this.countries = response.data
+                console.log(this.countries)
+                // for(let i = 0;i<response.data.length;i++){
+                //     this.countries.push(
+                //         {name: response.data[i].name, iso: response.data[i].isoCountryCode}
+                //     )
+                // }
+            },
+            async getCities(){
+                console.log(this.selectedCountry.isoCountryCode)
+                const response = await fetch(`https://api.countrystatecity.in/v1/countries/${this.selectedCountry.isoCountryCode}/cities`,requestOptions)
+                const allCities = await response.json()
+                this.cities = allCities
+                console.log("qytetet",this.cities)
+                // for(let i = 0;i<allCities.length;i++){
+                //     this.cities.push(allCities[i].name)
+                // }
+                
+                console.log(allCities)
+            },
             async addLocation() {
                 this.$validator.validateAll().then( async (result) => {
                     if (result) {
-                        await axios.post("http://localhost:8000/api/addLocation", {address: this.locationAddress, phoneNumber: this.locationPhoneNumber})
+                        await axios.post("http://localhost:8000/api/addLocation", {city:this.selectedCity.name, address: this.locationAddress, phoneNumber: this.locationPhoneNumber})
+                        this.selectedCity = null
                         this.locationAddress = null
                         this.locationPhoneNumber = null
-                        this.$router.push({path:"/locations"})
+                        this.$router.push({path:"/locations/listing"})
                         return true;
                     }
+
                 });
             }, 
         },

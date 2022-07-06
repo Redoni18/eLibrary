@@ -32,7 +32,11 @@ const userTypeController = require('../controllers/userTypeController');
 const locationController = require('../controllers/locationController')
 const categoriesController = require('../controllers/categoriesController');
 const membershipController = require('../controllers/membershipController');
+
+const countryController = require('../controllers/countryController')
+
 const requestsController = require('../controllers/requestsController');
+
 
 /**
  * Routes
@@ -92,8 +96,10 @@ router.put('/api/editMembership/:id', membershipController.edit_membership);
 router.delete('/api/deleteMembership/:id', membershipController.delete_membership);
 router.get('/api/membership/:id', membershipController.get_membership);
 
-
-/* REQUEST CONTROLLER */
+router.get('/api/countries', countryController.get_countries);
+router.post('/api/addCountry', countryController.post_country);
+router.delete('/api/deleteCountry/:id', countryController.delete_country);
+router.get('/api/country/:id', countryController.get_country);
 
 router.post('/api/request/add', requestsController.add_request);
 router.get('/api/requests/:id', requestsController.get_request);
