@@ -1,5 +1,7 @@
 <template>
 <div>
+
+    <!-- Random user navbar -->
   <div v-if="!user.authenticated || !user.data.isAdmin">
     <mdb-navbar v-if="user.authenticated" color="unique-color-dark" dark>
     <mdb-navbar-brand>
@@ -65,9 +67,12 @@
     <div class="p-5">
         <router-view></router-view>
       </div>
-
-      <!-- Navbar -->
   </div>
+    <!-- /Random user navbar -->
+
+
+
+<!-- Admin Sidebar and footer -->
 <div class="flexible-content" v-else>
     <div class="p-5">
         <router-view></router-view>
@@ -100,7 +105,7 @@
             ><mdb-icon icon="book" class="mr-3" /><p>Books</p>
         </mdb-list-group-item>
         <div v-if="showBooksDropdown" class="sidebar-submenu">
-            <router-link v-if="user.authenticated" :to="{path: '/books/listing'}">
+            <router-link v-if="user.authenticated" :to="{path: '/booksList/listing'}">
                 <mdb-list-group-item
                 id="sidebar-item"
                 :action="true"
@@ -242,6 +247,7 @@
     </main>
   </div>
 </div>
+<!-- /Admin Sidebar and footer -->
 </template>
 
 <script>
@@ -329,6 +335,30 @@ export default {
               break
             case ('userProfile'): 
               this.activeItem = 2
+              break
+            case ('messages'): 
+              this.activeItem = 5
+              break
+            case ('categories'): 
+              this.activeItem = 4
+              break
+            case ('userTypes'): 
+              this.activeItem = 4
+              break
+            case ('locations'): 
+              this.activeItem = 4
+              break
+            case ('memberships'): 
+              this.activeItem = 4
+              break
+            case ('countries'): 
+              this.activeItem = 4
+              break
+            case ('booksList'): 
+              this.activeItem = 3
+              break
+            case ('books'): 
+              this.activeItem = 3
               break
           }
         }

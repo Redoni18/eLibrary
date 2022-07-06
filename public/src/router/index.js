@@ -80,7 +80,7 @@ const router = new Router({
             }
         },
         {
-            path: '/books/listing',
+            path: '/booksList/listing',
             name: 'booksList',
             component: BooksListing,
             beforeEnter: (to, from, next) => {
