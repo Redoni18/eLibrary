@@ -91,31 +91,6 @@
             /><p>Home</p></mdb-list-group-item
           >
         </router-link>
-        <router-link :to="{path: '/signin'}" @click.native="activeItem = 2">
-          <mdb-list-group-item
-          v-if="!user.authenticated"
-          id="sidebar-item"
-          :class="activeItem === 2 && 'active'"
-            :action="true"
-            ><mdb-icon
-              icon="sign-in-alt"
-              class="mr-3"
-            /><p>Sign In</p></mdb-list-group-item
-          >
-        </router-link>
-
-        <router-link :to="{path: '/signup'}" @click.native="activeItem = 3">
-          <mdb-list-group-item
-          v-if="!user.authenticated"
-          id="sidebar-item"
-          :class="activeItem === 3 && 'active'"
-            :action="true"
-            ><mdb-icon
-              icon="user-plus"
-              class="mr-3"
-            /><p>Sign Up</p></mdb-list-group-item
-          >
-        </router-link>
         <mdb-list-group-item
             id="sidebar-item"
             :action="true"
@@ -175,6 +150,13 @@
                 id="sidebar-item"
                 :action="true"
                 ><mdb-icon icon="user-plus" class="mr-3" /><p>Memberships</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/countries/listing'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="globe" class="mr-3" /><p>Countries</p></mdb-list-group-item
                 >
             </router-link>
           </div>
