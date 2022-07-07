@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <navbar></navbar>
-        <FooterComponent  v-if="user.authenticated && user.data.isAdmin"></FooterComponent>
+        <FooterComponent  v-if="!user.authenticated || !user.data.isAdmin"></FooterComponent>
     </div>
 </template>
 

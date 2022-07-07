@@ -104,14 +104,6 @@ export default {
 </script>
 
 <style scoped>
-.footer-component{
-    margin-left: 270px;
-    
-}
-
-.footer-component, .main-footer{
-    margin-top: 0;
-}
 
 @media (max-width: 1199.98px) {
     .footer-component{

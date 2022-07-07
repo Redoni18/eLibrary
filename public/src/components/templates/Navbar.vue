@@ -346,7 +346,7 @@ main {
     transition: padding-left 0.3s;
   padding-left: 270px;
   background: #e9e9e9;
-  min-height: 73.5vh;
+  min-height: 100vh;
 }
 
 .flexible-navbar {
