@@ -1,14 +1,14 @@
 <template>
     <div id="app">
         <navbar></navbar>
-        <!-- <FooterComponent  v-if="user.authenticated && user.data.isAdmin"></FooterComponent> -->
+        <FooterComponent  v-if="user.authenticated && user.data.isAdmin"></FooterComponent>
     </div>
 </template>
 
 <script>
     import axios from 'axios'
     import navbar from '@/components/templates/Navbar'
-    //import FooterComponent from '@/components/templates/Footer'
+    import FooterComponent from '@/components/templates/Footer'
     import { mapGetters } from 'vuex'
 
     // Add a request interceptor
@@ -34,7 +34,7 @@ export default {
 
     components: {
         navbar,
-        //FooterComponent
+        FooterComponent
     },
     computed: {
         ...mapGetters({
@@ -45,12 +45,21 @@ export default {
 </script>
 
 <style>
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        color: #2c3e50;
-    }
+
+html,body {height:100%}
+
+
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
     
 </style>

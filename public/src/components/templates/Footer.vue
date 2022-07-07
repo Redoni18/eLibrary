@@ -94,17 +94,17 @@ export default {
     mounted(){
         this.removeClassFromFooter()
     },
-    // methods: {
-    //     removeClassFromFooter(){
-    //         var element = document.getElementById("myFtr");
-    //         element.classList.remove("mt-4");
-    //     }
-    // }
+    methods: {
+        removeClassFromFooter(){
+            var element = document.getElementById("myFtr");
+            element.classList.remove("mt-4");
+        }
+    }
 }
 </script>
 
 <style scoped>
-/* .footer-component{
+.footer-component{
     margin-left: 270px;
     
 }
@@ -117,7 +117,7 @@ export default {
     .footer-component{
         margin-left: 100px;
     }
-} */
+}
 
 .footer-logo-wrapper{
     width: 100%;

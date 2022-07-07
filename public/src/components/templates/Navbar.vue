@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="body-container">
 
     <!-- Random user navbar -->
   <div v-if="!user.authenticated || !user.data.isAdmin">
@@ -64,10 +64,9 @@
       </form> -->
     </mdb-navbar-toggler>
   </mdb-navbar>
-    <div class="p-5">
+    <div class="p-5 content-container">
         <router-view></router-view>
       </div>
-      <FooterComponent></FooterComponent>
   </div>
     <!-- /Random user navbar -->
 
@@ -75,7 +74,7 @@
 
 <!-- Admin Sidebar and footer -->
 <div class="flexible-content" v-else>
-    <div class="p-5">
+    <div class="p-5 content-container">
         <router-view></router-view>
       </div>
     <!-- Sidebar -->
@@ -204,7 +203,7 @@
       </mdb-list-group>
     </div>
     <!-- /Sidebar  -->
-    <FooterComponent></FooterComponent>
+    <!-- <FooterComponent></FooterComponent> -->
 </div>
 </div>
 <!-- /Admin Sidebar and footer -->
@@ -229,7 +228,7 @@ import {
   mdbDropdownItem,
   mdbInput
 } from "mdbvue";
-    import FooterComponent from '@/components/templates/Footer'
+    //import FooterComponent from '@/components/templates/Footer'
 
 import { mapActions, mapGetters } from 'vuex'
 export default {
@@ -250,7 +249,7 @@ export default {
     mdbDropdownToggle,
     mdbDropdownItem,
     mdbInput,
-    FooterComponent
+    //FooterComponent
   },
   data() {
     return {
@@ -347,7 +346,7 @@ main {
     transition: padding-left 0.3s;
   padding-left: 270px;
   background: #e9e9e9;
-  height: 100%;
+  min-height: 73.5vh;
 }
 
 .flexible-navbar {
@@ -477,4 +476,9 @@ transition: 1s;
     justify-content: center;
     margin: auto;
 }
+
+.content-container{
+    height: 100%;
+}
+
 </style>
