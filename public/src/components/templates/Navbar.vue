@@ -1,8 +1,7 @@
 <template>
 <div class="body-container">
-
     <!-- Random user navbar -->
-  <div v-if="!user.authenticated || !user.data.isAdmin">
+  <div v-if="!user.authenticated || !user.data.isAdmin || switchView">
     <mdb-navbar v-if="user.authenticated" color="unique-color-dark" dark>
     <mdb-navbar-brand>
         <router-link to="/#">
@@ -26,6 +25,7 @@
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
                 <mdb-dropdown-item :to="{name: 'userprofile', params: {id: user.data.id}}">My Profile</mdb-dropdown-item>
+                <mdb-dropdown-item v-if="user.data.isAdmin" @click="switchViews">Admin Dashboard</mdb-dropdown-item>
                 <mdb-dropdown-item @click.native="out">Sign Out</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
@@ -192,6 +192,12 @@
                 ><mdb-icon icon="user" class="mr-3" /><p>Profile</p></mdb-list-group-item
                 >
             </router-link>
+            <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                @click.native="switchViews"
+                ><mdb-icon icon="retweet" class="mr-3" /><p>Go to website</p></mdb-list-group-item
+                >
             <router-link v-if="user.authenticated" to="#" @click.native="out">
                 <mdb-list-group-item
                 id="sidebar-item"
@@ -257,6 +263,7 @@ export default {
       showProfileDropdown: false,
       showBooksDropdown: false,
       showSettingsDropdown: false,
+      switchToWebsite: JSON.parse(window.localStorage.getItem('switchToWebsite')),
     };
   },
   mixins: [waves],
@@ -266,6 +273,9 @@ export default {
         }),
         activeLink() {
           return this.activeItem
+        },
+        switchView() {
+            return this.switchToWebsite
         }
     },
     // watch: {
@@ -274,6 +284,7 @@ export default {
     //         this.setNavbarColor()
     //     }
     // },
+
     mounted() {
       this.setNavbarColor()
     },
@@ -283,10 +294,24 @@ export default {
             signOut: 'signOut'
         }),
         out() {
+            localStorage.setItem('switchToWebsite', JSON.stringify(false))
+            this.switchToWebsite = JSON.parse(localStorage.getItem('switchToWebsite'))
             this.signOut();
             this.$nextTick(function () {
                 window.location.replace('#/signin');
             })
+        },
+        switchViews(){
+            if(!this.switchView){
+                localStorage.setItem('switchToWebsite', JSON.stringify(true))
+                this.switchToWebsite = JSON.parse(localStorage.getItem('switchToWebsite'))
+                this.$router.push({path: '/'})
+            }else{
+                localStorage.setItem('switchToWebsite', JSON.stringify(false))
+                this.switchToWebsite = JSON.parse(localStorage.getItem('switchToWebsite'))
+                this.$router.push({path: '/'})
+            }
+
         },
         setNavbarColor(){
           let linkItems = window.location.href.split('/')

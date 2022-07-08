@@ -40,6 +40,7 @@ export default {
         ...mapGetters({
             user: 'getUser'
         }),
+
     }
 }
 </script>
