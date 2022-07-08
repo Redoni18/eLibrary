@@ -25,10 +25,40 @@
             perPageDropdown: [5, 7, 10],
             dropdownAllowAll: false,
         }"
-        @on-row-click="onRowClick"
+         >
+    <template v-if="user.data.isAdmin" v-slot:table-row="props">
+      <span v-if="props.column.field === 'actions'">
+        <div class="more-options">
+          <b-dropdown id="dropdown-right" right text="Right align" variant="link" toggle-class="text-decoration-none text-secondary" no-caret class="m-2">
+        <template #button-content>
+            <b-icon icon="three-dots"></b-icon>
+          </template>
+        <b-dropdown-item
+          @click="removeFaculty(props.row._id)"
         >
+         <span
+            class="d-flex align-items-center"
+          >
+            <b-icon icon="trash"></b-icon>
+            <p class="p-0 m-0 ml-3">Delete</p>
+          </span>
+        </b-dropdown-item>
+        <b-dropdown-item
+            :to="{name: 'EditFaculty', params: {id: props.row._id}}"
+        >
+            <span
+              class="d-flex align-items-center"
+            >
+              <b-icon icon="pen"></b-icon>
+              <p class="p-0 m-0 ml-3">Edit</p>
+            </span>
+          </b-dropdown-item>
+      </b-dropdown>
+        </div>
+      </span>
+  </template>
+</vue-good-table>
             
-    </vue-good-table>
 </div>
     
 </template>

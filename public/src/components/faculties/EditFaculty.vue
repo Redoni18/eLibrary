@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="offset-5">
-                                Create new Faculty
+                                Edit Faculty
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="drejtimi" name="drejtimi" 
                                                    v-model="drejtimi"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|min:2|max:50'"
                                                    :class="{'drejtimi': true, 'is-invalid': errors.has('drejtimi') }"/>
                                             <small v-show="errors.has('drejtimi')" class="help is-danger">{{ errors.first('drejtimi') }}</small>
                                         </div>
@@ -62,12 +62,12 @@
 <script>
     import axios from 'axios'
     export default {
-        name: 'EditFaculty',
+        name: 'editFaculty',
 
         data() {
             return {
-                name: '',
-                drejtim: '',
+                emri: '',
+                drejtimi: '',
             }
         },
         computed: {
@@ -81,15 +81,15 @@
         methods: {
             async fetchFaculty(){
                 const response = await axios.get(`http://localhost:8000/api/faculty/${this.facultyId}`)
-                this.name = response.data.emri,
-                this.drejtim = response.data.drejtimi
+                this.emri = response.data.emri,
+                this.drejtimi = response.data.drejtimi
             },
-            async editFaculty() {
+            async EditFaculty() {
                 this.$validator.validateAll().then( async (result) => {
                     if (result) {
-                        await axios.put(`http://localhost:8000/api/editFaculty/${this.facultyId}`, {_id: this.facultyId, name: this.emri, drejtim: this.drejtimi})
-                        this.name = null,
-                        this.drejtim = null
+                        await axios.put(`http://localhost:8000/api/editFaculty/${this.facultyId}`, {_id: this.facultyId, emri: this.emri, drejtimi: this.drejtimi})
+                        this.emri = null,
+                        this.drejtimi = null
                         this.$router.push({path:"/faculties"})
                         return true;
                     }
