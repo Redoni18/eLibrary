@@ -15,6 +15,7 @@
     "bootstrap-css-only": "^4.4.1",
     "bootstrap-vue": "^2.22.0",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "joi": "^17.6.0",
     "mdb-ui-kit": "^4.2.0",
     "mdb-vue-ui-kit": "^1.14.0",
     "mdbootstrap": "^4.20.0",

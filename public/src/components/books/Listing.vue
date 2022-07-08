@@ -23,7 +23,7 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item @click.native="removeMessage(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                <mdb-dropdown-item @click.native="removeBook(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{name: 'editBook', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
