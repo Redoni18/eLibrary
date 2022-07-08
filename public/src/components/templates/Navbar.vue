@@ -35,6 +35,7 @@
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/locations'})">Locations</router-link>
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/memberships'})">Memberships</router-link>
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: './faculties'})">Faculties</router-link>
+              
             </div>
           </li>
           <li class="nav-item active" v-if="user.authenticated">

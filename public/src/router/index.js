@@ -33,9 +33,7 @@ import EditMembership from '@/components/memberships/EditMembership.vue'
 import FacultiesListing from '@/components/faculties/Listing.vue'
 import InsertFaculty from '@/components/faculties/CreateFaculty.vue'
 import EditFaculty from '@/components/faculties/EditFaculty.vue'
-import BlogpostsListing from '@/components/blogposts/Listing.vue'
-import InsertBlogpost from '@/components/blogposts/CreateBlogpost.vue'
-import EditBlogpost from '@/components/blogposts/EditBlogpost.vue'
+
 
 
 Vue.use(Router);
@@ -303,30 +301,6 @@ const router = new Router({
                     beforeEnter.authenticate(to,from,next)
             }
         },
-        /*{
-            path: '/blogposts',
-            name: 'Blogposts',
-            component: BlogpostsListing,
-            beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
-            }
-        },
-        {
-            path: '/insertBlogpost',
-            name: 'InsertBlogpost',
-            component: InsertBlogpost,
-            beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
-            }
-        },
-        {
-            path: '/blogposts/editBlogpost/:id',
-            name: 'EditBlogpost',
-            component: EditBlogpost,
-            beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
-            }
-        },*/
     ]
 })
 
