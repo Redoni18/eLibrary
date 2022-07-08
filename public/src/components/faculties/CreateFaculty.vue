@@ -23,7 +23,7 @@
 
                                         <label for="emri" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Emri: </label>
                                         <div class="col-sm-9 col-md-9 col-lg-9">
-                                            <input type="text" class="form-control form-control-sm" id="emri" name="emri" placeholder="Insert Emri.."
+                                            <input type="text" class="form-control form-control-sm" id="emri" name="emri" placeholder="Insert Emri"
                                                    v-model="emri"
                                                    v-validate="'required|min:2|max:50'"
                                                    :class="{'emri': true, 'is-invalid': errors.has('emri') }"/>
@@ -35,7 +35,7 @@
 
                                         <label for="drejtimi" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Drejtimi: </label>
                                         <div class="col-sm-9 col-md-9 col-lg-9">
-                                            <input type="text" class="form-control form-control-sm" id="drejtimi" name="drejtimi" placeholder="Insert Drejtimi.."
+                                            <input type="text" class="form-control form-control-sm" id="drejtimi" name="drejtimi" placeholder="Insert Drejtimi"
                                                    v-model="drejtimi"
                                                    v-validate="'required|min:2|max:50'"
                                                    :class="{'drejtimi': true, 'is-invalid': errors.has('drejtimi') }"/>

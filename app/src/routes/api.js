@@ -33,7 +33,7 @@ const locationController = require('../controllers/locationController')
 const categoriesController = require('../controllers/categoriesController');
 const membershipController = require('../controllers/membershipController')
 const facultyController = require('../controllers/facultyController')
-//const blogpostController = require('../controllers/blogpostController')
+
 
 /**
  * Routes
@@ -99,10 +99,5 @@ router.put('/api/editFaculty/:id', facultyController.edit_faculty);
 router.delete('/api/deleteFaculty/:id', facultyController.delete_faculty);
 router.get('/api/faculty/:id', facultyController.get_faculty);
 
-/*router.get('/api/blogposts', blogpostController.get_blogposts);
-router.post('/api/createBlogpost', blogpostController.post_blogpost);
-router.put('/api/editBlogpost/:id', blogpostController.edit_blogpost);
-router.delete('/api/deleteBlogpost/:id', blogpostController.delete_blogpost);
-router.get('/api/blogpost/:id', blogpostController.get_blogpost); */
 
 module.exports = router;
