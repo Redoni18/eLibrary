@@ -19,7 +19,6 @@
             perPageDropdown: [5, 7, 10],
             dropdownAllowAll: false,
         }"
-        @on-row-click="onRowClick"
         >
         <template v-if="user.data.isAdmin" v-slot:table-row="props">
       <span v-if="props.column.field === 'actions'">
@@ -105,13 +104,6 @@ export default {
     },
 
     methods: {
-        onRowClick(params){
-            if(this.user.data.isAdmin){
-                this.toggleButtons = !this.toggleButtons
-                this.rowId = params.row._id
-            }
-            return
-        },
         async fetchStaff(){
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
@@ -133,4 +125,14 @@ export default {
 
 <style scoped>
 
+.more-options{
+  transition: 0.3s;
+}
+
+.more-options:hover{
+  border-radius: 5px;
+  background: rgb(230, 230, 230);
+  color:rgb(0, 0, 0);
+  transition: 0.3s;
+}
 </style>

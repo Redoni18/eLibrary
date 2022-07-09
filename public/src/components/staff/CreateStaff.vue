@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="offset-5">
-                                Create new Staff
+                                Insert Staff
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                                     
                                     <div class="form-group row">
                                         <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-3">
-                                            <button type="submit" class="btn btn-primary">Create</button>
+                                            <button type="submit" class="btn btn-primary">Insert</button>
                                         </div>
                                     </div>
                                 </form>
