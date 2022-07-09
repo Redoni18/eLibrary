@@ -1,12 +1,5 @@
 <template>
 <div>
-    <div class="form-group row" v-if="toggleButtons">
-    <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-9">
-        <router-link :to="{name: 'EditFaculty', params: {id: rowId}}"> <button type="submit" class="btn btn-primary">Edit Faculty</button></router-link>
-    <button type="submit" class="btn btn-danger" @click="removeFaculty(rowId)">Delete Faculty</button>
-
-    </div>
-  </div>
 
     <div class="mb-3">
         <router-link type="submit" class="btn btn-primary" :to="{path: '/insertFaculty'}">Insert new Faculty</router-link>
@@ -105,13 +98,6 @@ export default {
     },
 
     methods: {
-        onRowClick(params){
-            if(this.user.data.isAdmin){
-                this.toggleButtons = !this.toggleButtons
-                this.rowId = params.row._id
-            }
-            return
-        },
         async fetchFaculties(){
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
@@ -132,5 +118,16 @@ export default {
 </script>
 
 <style scoped>
+
+.more-options{
+  transition: 0.3s;
+}
+
+.more-options:hover{
+  border-radius: 5px;
+  background: rgb(230, 230, 230);
+  color:rgb(0, 0, 0);
+  transition: 0.3s;
+}
 
 </style>
