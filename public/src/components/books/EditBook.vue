@@ -49,7 +49,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <textarea type="text" class="form-control form-control-sm" id="description" name="description" placeholder="Enter book description"
                                                    v-model="selectedBook.description"
-                                                   v-validate="'required|min:2|max:500'"
+                                                   v-validate="'required|min:2|max:1000'"
                                                    :class="{'description': true, 'is-invalid': errors.has('description') }"></textarea>
                                             <small v-show="errors.has('description')" class="help is-danger">{{ errors.first('description') }}</small>
                                         </div>
@@ -83,7 +83,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <textarea type="text" class="form-control form-control-sm" id="imageUrl" name="imageUrl" placeholder="Or provide an image url"
                                                    v-model="selectedBook.imageUrl"
-                                                   v-validate="'required|min:2|max:150'"
+                                                   v-validate="'required|min:2'"
                                                    :class="{'imageUrl': true, 'is-invalid': errors.has('imageUrl') }"></textarea>
                                             <small v-show="errors.has('imageUrl')" class="help is-danger">{{ errors.first('imageUrl') }}</small>
                                         </div>
