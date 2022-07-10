@@ -105,11 +105,6 @@ export default {
 
 <style scoped>
 
-@media (max-width: 1199.98px) {
-    .footer-component{
-        margin-left: 100px;
-    }
-}
 
 .footer-logo-wrapper{
     width: 100%;
