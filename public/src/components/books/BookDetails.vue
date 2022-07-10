@@ -18,7 +18,7 @@
                 </div>
                 <div class="book-metadata">
                     <p>Year published: {{selectedBook.year}}</p>
-                    <p>ISBN: {{selectedBook.isbn}}</p>
+                    <p>ISBN: {{hyphenatedISBN}}</p>
                 </div>
             </div>
             <hr>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+const ISBN = require('isbn3')
 import axios from 'axios'
 import { mapActions, mapGetters  } from 'vuex'
 export default {
@@ -53,13 +54,15 @@ export default {
     data() {
         return {
             selectedBook: {},
-            reviews: {}
+            reviews: {},
+            hyphenatedISBN: null
         }
     },
 
     async mounted(){
         const response = await this.getBook(this.bookId)
         this.selectedBook = response.data
+        this.hyphenatedISBN = ISBN.hyphenate(this.selectedBook.isbn)
         let reviews = await axios.get(`http://localhost:8000/api/reviews/${response.data._id}/`).then(response => { this.reviews = response.data})
     },
     computed: {
