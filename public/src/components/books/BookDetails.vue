@@ -17,7 +17,7 @@
                     <img :src="selectedBook.imageUrl" class="book-cover">
                 </div>
                 <div class="book-metadata">
-                    <p>Year published: {{selectedBook.year}}</p>
+                    <p>Published: {{selectedBook.year}}</p>
                     <p>ISBN: {{hyphenatedISBN ? hyphenatedISBN : selectedBook.isbn}}</p>
                 </div>
             </div>

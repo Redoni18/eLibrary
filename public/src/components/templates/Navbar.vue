@@ -298,6 +298,7 @@ export default {
             this.$nextTick(function () {
                 window.location.replace('#/signin');
             })
+            this.activeItem = 1
             localStorage.setItem('switchToWebsite', JSON.stringify(false))
             this.switchToWebsite = JSON.parse(localStorage.getItem('switchToWebsite'))
         },
@@ -306,10 +307,12 @@ export default {
                 localStorage.setItem('switchToWebsite', JSON.stringify(true))
                 this.switchToWebsite = JSON.parse(localStorage.getItem('switchToWebsite'))
                 this.$router.push({path: '/'})
+                this.activeItem = 1
             }else{
                 localStorage.setItem('switchToWebsite', JSON.stringify(false))
                 this.switchToWebsite = JSON.parse(localStorage.getItem('switchToWebsite'))
                 this.$router.push({path: '/'})
+                this.activeItem = 1
             }
 
         },

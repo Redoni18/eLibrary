@@ -110,8 +110,8 @@
                                                     <input
                                                     id="categories" 
                                                     name="categories"
-                                                    :required="!selectedBook.categories.length"
-                                                    :placeholder="!selectedBook.categories.length ? 'Select a category...' : ''"
+                                                    :required="!selectedBook.categories"
+                                                    :placeholder="!selectedBook.categories ? 'Select a category...' : ''"
                                                     class="vs__search"
                                                     :class="{'categories': true, 'is-invalid': errors.has('categories') }"
                                                     v-bind="attributes"
