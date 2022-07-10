@@ -30,19 +30,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="book-details__right-column">
-                <div class="right-column__reviews-container">
-                    <b-card title="Reviews" :sub-title="`${selectedBook.title} Reviews`">
-                            <div v-for="(review,index) in reviews" :key="index">
-                                <b-card class="mt-3" v-if="index < 3" :title="review.book" :sub-title="`Reviewed by: ${review.username}`">
-                                    <p>{{review.review}}</p>
-                                </b-card>
-                            </div>
-                        <router-link :to="`/reviews/${selectedBook._id}/${selectedBook.title}/${selectedBook.author}`" class="card-link">Check out Reviews</router-link>
-                        <router-link :to="`/review/add/${selectedBook._id}/${selectedBook.title}/${selectedBook.author}`"><b-badge pill variant="primary">Add a review</b-badge></router-link>
-                    </b-card>
-                </div>
-            </div> -->
     </div>
 
     <div class="book-details_reviews mt-5">
@@ -247,13 +234,6 @@ export default {
     word-break: break-word;
 }
 
-/* .review-body{
-    width: 100%;    
-    display: flex;
-    max-height: 100px;
-    border-bottom: 1px solid black;
-    margin-bottom: 10px;
-} */
 
 .user-avatar{
     height: 100%;
