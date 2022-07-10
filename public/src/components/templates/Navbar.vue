@@ -22,6 +22,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <router-link class="dropdown-item" :to="({path: '/books/listing'})">Listing</router-link>
+                <router-link class="dropdown-item" :to="({path: '/request'})">Request</router-link>
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/books/create'})">Insert Book</router-link>
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/books/upcomings'})">Upcoming Books</router-link>
             </div>

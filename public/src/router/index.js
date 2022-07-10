@@ -34,7 +34,7 @@ import Request from '@/components/requests/Request'
 import AddCountry from '@/components/countries/AddCountry.vue'
 import CountriesListing from '@/components/countries/Listing'
 import Upcomings from '@/components/books/Upcoming'
-
+import RequestPage from '@/components/requests/RequestPage'
 Vue.use(Router);
 
 
@@ -305,6 +305,14 @@ const router = new Router({
             path: '/requests',
             name: 'Request',
             component: Request,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/request',
+            name: 'RequestPage',
+            component: RequestPage,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }
