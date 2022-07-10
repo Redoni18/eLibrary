@@ -7,9 +7,9 @@ exports.validate = (method) => {
   switch (method) {
     case 'post_book': {
      return [ 
-            body('title').exists().isLength({ min: 2, max: 30 }),
-            body('author').exists().isLength({min: 2, max: 20}),
-            body('description').exists().isLength({min: 2, max: 150}),
+            body('title').exists().isLength({ min: 2, max: 100 }),
+            body('author').exists().isLength({min: 2, max: 100}),
+            body('description').exists().isLength({min: 2, max: 500}),
             body('year').exists().isInt(),
             body('image').optional(),
             body('imageUrl').exists().isURL(),

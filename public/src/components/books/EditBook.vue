@@ -25,7 +25,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="Enter book title"
                                                    v-model="selectedBook.title"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|min:2|max:100'"
                                                    :class="{'title': true, 'is-invalid': errors.has('title') }">
                                             <small v-show="errors.has('title')" class="help is-danger">{{ errors.first('title') }}</small>
                                         </div>
@@ -37,7 +37,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="author" name="author" placeholder="Enter book author"
                                                    v-model="selectedBook.author"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|min:2|max:100'"
                                                    :class="{'author': true, 'is-invalid': errors.has('author') }">
                                             <small v-show="errors.has('author')" class="help is-danger">{{ errors.first('author') }}</small>
                                         </div>
@@ -49,7 +49,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <textarea type="text" class="form-control form-control-sm" id="description" name="description" placeholder="Enter book description"
                                                    v-model="selectedBook.description"
-                                                   v-validate="'required|min:2|max:150'"
+                                                   v-validate="'required|min:2|max:500'"
                                                    :class="{'description': true, 'is-invalid': errors.has('description') }"></textarea>
                                             <small v-show="errors.has('description')" class="help is-danger">{{ errors.first('description') }}</small>
                                         </div>
