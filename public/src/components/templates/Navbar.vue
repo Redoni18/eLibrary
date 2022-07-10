@@ -23,6 +23,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <router-link class="dropdown-item" :to="({path: '/books/listing'})">Listing</router-link>
               <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/books/create'})">Insert Book</router-link>
+              <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/books/upcomings'})">Upcoming Books</router-link>
             </div>
            </li>
           <li class="nav-item dropdown" v-if="user.authenticated && user.data.isAdmin">
@@ -35,6 +36,7 @@
                 <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/countries/listing'})">Countries</router-link>
                 <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/locations/listing'})">Locations</router-link>
                 <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/memberships'})">Memberships</router-link>
+                <router-link class="dropdown-item" v-if="user.data.isAdmin" :to="({path: '/requests'})">Requests</router-link>
             </div>
           </li>
           <li class="nav-item active" v-if="user.authenticated">

@@ -30,9 +30,10 @@ import Category from '@/components/categories/Category.vue'
 import Memberships from '@/components/memberships/Memberships.vue'
 import AddMembership from '@/components/memberships/AddMembership.vue'
 import EditMembership from '@/components/memberships/EditMembership.vue'
-
+import Request from '@/components/requests/Request'
 import AddCountry from '@/components/countries/AddCountry.vue'
 import CountriesListing from '@/components/countries/Listing'
+import Upcomings from '@/components/books/Upcoming'
 
 Vue.use(Router);
 
@@ -91,9 +92,10 @@ const router = new Router({
             }
         },
         {
-            path: '/books/create',
+            path: '/books/create/:title?/:author?/:date?',
             name: 'createBooks',
             component: InsertBook,
+            props: true,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
@@ -112,6 +114,14 @@ const router = new Router({
             component: BookDetails,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/books/upcomings',
+            name: 'Upcomings',
+            component: Upcomings,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
             }
         },
         {
@@ -291,6 +301,14 @@ const router = new Router({
                     beforeEnter.authenticate(to,from,next)
             }
         },
+        {
+            path: '/requests',
+            name: 'Request',
+            component: Request,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        }
     ]
 })
 
