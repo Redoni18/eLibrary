@@ -30,6 +30,7 @@
             </b-form-group>
 
             <b-form-group
+                v-if="!user.data.isAdmin"
                 label="User Type: "
                 label-for="userType"
                 label-cols-sm="2"

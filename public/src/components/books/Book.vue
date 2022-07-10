@@ -1,6 +1,6 @@
 <template>
 
-    <div class="book-card" @click="sendEvent">
+    <div class="book-card" @click="sendEvent" @mouseover="changeDefOver" @mouseleave="hover = true">
       <b-card
         :title="title"
         :img-src="imageUrl"
@@ -26,10 +26,21 @@
         name: 'Book',
 
         props: ['title', 'description', 'author', 'year', 'imageUrl'],
+        data(){
+          return {
+            hover: true
+          }
+        },
 
         methods: {
           sendEvent(){
             this.$emit('changePage')
+          },
+          changeDefOver(){
+            if(this.hover){
+              this.$emit('getDataOnHover')
+            }
+            this.hover = false;
           }
         }
     }

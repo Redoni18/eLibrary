@@ -23,7 +23,7 @@
             </b-form-group>
 
             <b-form-group
-                v-if="selectedUser.userType"
+                v-if="selectedUser.userType && !user.data.isAdmin"
                 label="User Type: "
                 label-for="userType"
                 label-cols-sm="2"

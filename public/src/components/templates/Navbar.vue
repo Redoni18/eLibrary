@@ -294,12 +294,12 @@ export default {
             signOut: 'signOut'
         }),
         out() {
-            localStorage.setItem('switchToWebsite', JSON.stringify(false))
-            this.switchToWebsite = JSON.parse(localStorage.getItem('switchToWebsite'))
             this.signOut();
             this.$nextTick(function () {
                 window.location.replace('#/signin');
             })
+            localStorage.setItem('switchToWebsite', JSON.stringify(false))
+            this.switchToWebsite = JSON.parse(localStorage.getItem('switchToWebsite'))
         },
         switchViews(){
             if(!this.switchView){
