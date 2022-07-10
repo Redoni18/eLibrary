@@ -22,7 +22,7 @@
                     <p>ISBN: {{hyphenatedISBN ? hyphenatedISBN : selectedBook.isbn}}</p>
                 </div>
             </div>
-            <hr>
+            <hr class="card-seperator">
             <div class="book-categories">
                 <h3 class="ml-2">Categories: </h3>
                 <b-badge v-for="category in selectedBook.categories" pill :key="category.id" variant="primary" class="ml-2">{{category.title}}</b-badge>
@@ -106,7 +106,7 @@ export default {
 
 .book-title{
     width: calc(100% - 40px);
-    word-break: break-all;
+    word-break: break-word;
     color: #2d96e0;
     font-weight: 800;
 }
@@ -177,23 +177,25 @@ export default {
         justify-content: space-around;
     }
 
-    .content-seperator{
+    .card-seperator{
         display: none;
     }
 
     .quick-info__row{
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
-        width: fit-content;
+        width: 100%;
+        justify-content: flex-start;
     }
 
     .book-metadata{
         margin-left: 20px;
+        width: 100%;
     }
 
     .book-categories{
         margin-right: auto;
+
     }
 }
 
