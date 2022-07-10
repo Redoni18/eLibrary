@@ -56,22 +56,18 @@ export default {
           {
             label: 'Title',
             field: 'title',
-            tooltip: 'Click on a specific row that you want to edit or delete!',
           },
           {
             label: 'Author',
             field: 'author',
-            tooltip: 'Click on a specific row that you want to edit or delete!',
           },
           {
             label: 'Description',
             field: 'description',
-            tooltip: 'Click on a specific row that you want to edit or delete!',
           },
           {
             label: 'Year',
             field: 'year',
-            tooltip: 'Click on a specific row that you want to edit or delete!',
           },
           {
             label: '',

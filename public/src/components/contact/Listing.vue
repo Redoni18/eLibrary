@@ -52,18 +52,15 @@ export default {
                 {
                     label: 'Sender',
                     field: 'senderName',
-                    tooltip: 'Click on a specific row that you want to edit or delete!',
                     width: '200px',
                 },
                 {
                     label: 'Message',
                     field: 'messageBody',
-                    tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
                     label: 'Date Sent',
                     field: 'date',
-                    tooltip: 'Click on a specific row that you want to edit or delete!',
                     width: '100px',
                 },
                 {
