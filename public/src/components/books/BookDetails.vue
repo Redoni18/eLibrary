@@ -37,7 +37,7 @@
             <h2 class="reviews-text">Reviews:</h2>
             <div class="more-actions">
                 <router-link :to="`/reviews/${selectedBook._id}/${selectedBook.title}/${selectedBook.author}`" class="card-link">
-                    <b-button size="sm" variant="primary">Reviews</b-button>
+                    <b-button size="sm" variant="primary">Read All</b-button>
                 </router-link>
 
                 <router-link :to="`/review/add/${selectedBook._id}/${selectedBook.title}/${selectedBook.author}`">
