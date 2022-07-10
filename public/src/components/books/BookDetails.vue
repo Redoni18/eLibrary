@@ -18,7 +18,7 @@
                 </div>
                 <div class="book-metadata">
                     <p>Year published: {{selectedBook.year}}</p>
-                    <p>ISBN: {{hyphenatedISBN}}</p>
+                    <p>ISBN: {{hyphenatedISBN ? hyphenatedISBN : selectedBook.isbn}}</p>
                 </div>
             </div>
             <hr>
