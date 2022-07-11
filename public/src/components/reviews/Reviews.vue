@@ -1,8 +1,8 @@
 <template>
     <b-card :title="$route.params.book" :sub-title="$route.params.author">
-                <b-card  v-for="(review,index) in reviews" :key="index+review" :title="`Reviewed by: ${review.username}`">
+                <b-card  v-for="(review,index) in reviews" :key="index+review" :title="`Reviewed by: ${review.username.name}`">
                                 <p v-if="!edited">{{review.review}}</p>
-                                <b-container v-if="review.username == user.data.name">
+                                <b-container v-if="review.username.id == user.data.id || user.data.isAdmin">
                                         <router-link :to="`/review/${$route.params.book}/${$route.params.id}/${review._id}`">Details</router-link>    
                                 </b-container>
                  </b-card>

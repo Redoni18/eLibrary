@@ -48,10 +48,24 @@ export default{
             }
         },
         async submit(){
-            const review = {bookId:this.$route.params.id,book: this.$route.params.book, author: this.$route.params.author, review: this.review, username: this.user.data.name}
+            const review = {bookId:this.$route.params.id,book: this.$route.params.book, author: this.$route.params.author, review: this.review, username: this.user.data}
              await axios.post(`http://localhost:8000/api/addReview/`, review).then((response) => {
 
                 this.$router.push(`/book/${this.$route.params.id}`)
+                this.$toast.success("Review posted successfully", {
+                    position: "top-right",
+                    timeout: 5000,
+                    closeOnClick: true,
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    draggablePercent: 0.6,
+                    showCloseButtonOnHover: false,
+                    hideProgressBar: true,
+                    closeButton: "button",
+                    icon: true,
+                    rtl: false
+                });
             })
         }
     },

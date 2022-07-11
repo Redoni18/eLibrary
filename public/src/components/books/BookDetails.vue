@@ -49,13 +49,13 @@
         <div v-for="(review,index) in reviews" :key="index">
             <div v-if="index < 3" class="single-review">
                 <div class="review-body">
-                    <b-avatar class="user-avatar" variant="primary" v-if="user.authenticated" :text="review.username.slice(0, 2)" size="2rem"></b-avatar>
+                    <b-avatar class="user-avatar" variant="primary" v-if="user.authenticated" :text="review.username.name.slice(0, 2)" size="2rem"></b-avatar>
                     <div class="review-content">
-                        <small>{{review.username}}</small>
+                        <small>{{review.username.name}}</small>
                         <p class="review-paragraph">{{review.review}}</p>
                     </div>
                 </div>
-                <div class="more-actions__button">
+                <div v-if="review.username.id == user.data.id || user.data.isAdmin" class="more-actions__button">
                     <mdb-dropdown end tag="li" class="nav-item">
                         <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
                             <template #button-content>
@@ -103,7 +103,8 @@ export default {
         this.selectedBook = response.data
         this.hyphenatedISBN = ISBN.hyphenate(this.selectedBook.isbn)
         await this.fetchReviews(response.data._id)
-        await axios.get(`http://localhost:8000/api/reviews/${response.data._id}/`).then(response => { this.reviews = response.data})
+        const data = await axios.get(`http://localhost:8000/api/reviews/${response.data._id}/`)
+        this.response = data.data
     },
     computed: {
         bookId() {
@@ -123,6 +124,20 @@ export default {
         async deleteReview(reviewId){
             await axios.delete(`http://localhost:8000/api/review/delete/${reviewId}`)
             await this.fetchReviews(this.bookId)
+            this.$toast.success("Review deleted successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
         },
 
         async fetchReviews(book){
@@ -252,7 +267,8 @@ export default {
 
 .review-paragraph{
     font-weight: normal;
-    width: 95%;
+    width: 100%;
+    padding-right: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

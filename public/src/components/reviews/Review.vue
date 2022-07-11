@@ -1,22 +1,22 @@
 <template>
 <b-card :title="`Review by: ${review.book}`">
-                                <p v-if="!edited">{{review.review}}</p>
-                                <b-form-textarea
-                                    v-if="edited"
-                                    id="textarea"
-                                    v-model="editedReview"
-                                    :state="editedReview.length > 10"
-                                    placeholder="Edit you're review.."
-                                    rows="2"
-                                    max-rows="6"/>
-                                <b-container v-if="review.username == user.data.name">
-                                      <b-button variant="dark" v-if="edited" @click="reverse()">Cancel</b-button>
-                                      <b-button variant="danger" v-if="!edited" @click="deleteApi(review)">Delete</b-button>
-                                    <b-button variant="info" v-if="!edited" @click="reverse()">Edit</b-button>
-                                    <b-button variant="success" v-if="edited && editedReview.length > 10" @click="callApi(review)">Save</b-button>
-                                     <b-button v-if="!edited" variant="dark" @click="generateBookRoute(review)">Back to Book</b-button>
-                                </b-container>
-    </b-card>
+    <p v-if="!edited">{{review.review}}</p>
+    <b-form-textarea
+        v-if="edited"
+        id="textarea"
+        v-model="editedReview"
+        :state="editedReview.length > 10"
+        placeholder="Edit you're review.."
+        rows="2"
+        max-rows="6"/>
+    <b-container v-if="review.username.id == user.data.id || user.data.isAdmin">
+            <b-button variant="dark" v-if="edited" @click="reverse()">Cancel</b-button>
+            <b-button variant="danger" v-if="!edited" @click="deleteApi(review)">Delete</b-button>
+        <b-button variant="info" v-if="!edited" @click="reverse()">Edit</b-button>
+        <b-button variant="success" v-if="edited && editedReview.length > 10" @click="callApi(review)">Save</b-button>
+            <b-button v-if="!edited" variant="dark" @click="generateBookRoute(review)">Back to Book</b-button>
+    </b-container>
+</b-card>
 </template>
 
 <script>
@@ -46,12 +46,41 @@ export default {
             this.edited = false
             this.editedReview = ''
             this.$router.push(`/book/${this.$route.params.bookId}`)
+
+            this.$toast.success("Review updated successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
         },
        async deleteApi(review){
              let aw = await axios.delete(`http://localhost:8000/api/review/delete/${review._id}`)
             this.edited = false
             this.editedReview = ''
             this.$router.push(`/book/${this.$route.params.bookId}`)
+            this.$toast.success("Review deleted successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
             
         },
         generateBookRoute(review){
