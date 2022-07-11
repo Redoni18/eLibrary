@@ -1,5 +1,38 @@
 const Book = require('../models/Book');
 var ObjectID = require('mongoose').Types.ObjectId
+const { body, validationResult } = require('express-validator/check')
+
+//validation method
+exports.validate = (method) => {
+  switch (method) {
+    case 'post_book': {
+     return [ 
+            body('title').exists().isLength({ min: 2, max: 100 }),
+            body('author').exists().isLength({min: 2, max: 100}),
+            body('description').exists().isLength({min: 2, max: 1000}),
+            body('year').exists().isInt(),
+            body('image').optional(),
+            body('imageUrl').exists().isURL(),
+            body('isbn').exists().isInt().isLength({ min: 13, max: 13 }),
+            body('categories').exists()
+       ]   
+    }
+    case 'edit_book': {
+        return [ 
+               body('title').exists().isLength({ min: 2, max: 100 }),
+               body('author').exists().isLength({min: 2, max: 100}),
+               body('description').exists().isLength({min: 2, max: 1000}),
+               body('year').exists().isInt(),
+               body('image').optional(),
+               body('imageUrl').exists().isURL(),
+               body('isbn').exists().isInt().isLength({ min: 13, max: 13 }),
+               body('categories').exists()
+          ]   
+       }
+  }
+}
+
+
 
 exports.get_books = function (req, res) {
     Book.find((err, docs) => {
@@ -14,6 +47,7 @@ exports.get_books = function (req, res) {
 exports.post_book = function (req, res) {
 
     console.log(req.body)
+    const errors = validationResult(req)
 
     let newBook = new Book({
         title: req.body.title,
@@ -26,7 +60,9 @@ exports.post_book = function (req, res) {
         categories: req.body.categories
     });
 
-    newBook.save();
+    if(errors.isEmpty()){
+        newBook.save();
+    }
 
 
     res.json({
@@ -44,9 +80,17 @@ exports.post_book = function (req, res) {
 }
 
 exports.edit_book = function (req, res) {
+
+    const errors = validationResult(req)
+
     if(!ObjectID.isValid(req.body._id)){
         return res.status(400).send(`No record with given id:   ${req.body._id}`)
     }
+
+    if(!errors.isEmpty()){
+        return res.status(500).send(`Invalid Data`)
+    }
+
 
     let updatedBook = {
         title: req.body.title,

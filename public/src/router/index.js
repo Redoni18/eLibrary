@@ -33,8 +33,11 @@ import EditMembership from '@/components/memberships/EditMembership.vue'
 import FacultiesListing from '@/components/faculties/Listing.vue'
 import InsertFaculty from '@/components/faculties/CreateFaculty.vue'
 import EditFaculty from '@/components/faculties/EditFaculty.vue'
-
-
+import Request from '@/components/requests/Request'
+import AddCountry from '@/components/countries/AddCountry.vue'
+import CountriesListing from '@/components/countries/Listing'
+import Upcomings from '@/components/books/Upcoming'
+import RequestPage from '@/components/requests/RequestPage'
 
 Vue.use(Router);
 
@@ -85,7 +88,7 @@ const router = new Router({
             }
         },
         {
-            path: '/books/listing',
+            path: '/booksList/listing',
             name: 'booksList',
             component: BooksListing,
             beforeEnter: (to, from, next) => {
@@ -93,9 +96,10 @@ const router = new Router({
             }
         },
         {
-            path: '/books/create',
+            path: '/books/create/:title?/:author?/:date?',
             name: 'createBooks',
             component: InsertBook,
+            props: true,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
@@ -114,6 +118,14 @@ const router = new Router({
             component: BookDetails,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/books/upcomings',
+            name: 'Upcomings',
+            component: Upcomings,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
             }
         },
         {
@@ -200,7 +212,7 @@ const router = new Router({
             }
         },
         {
-            path: '/locations',
+            path: '/locations/listing',
             name: 'Locations',
             component: LocationsListing,
             beforeEnter: (to, from, next) => {
@@ -208,7 +220,7 @@ const router = new Router({
             }
         },
         {
-            path: '/addLocation',
+            path: '/locations/addLocation',
             name: 'AddLocation',
             component: AddLocation,
             beforeEnter: (to, from, next) => {
@@ -217,7 +229,7 @@ const router = new Router({
         },
         {
             path: '/locations/editLocation/:id',
-            name: 'EditLocation',
+            name: 'editLocation',
             component: EditLocation ,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
@@ -278,6 +290,7 @@ const router = new Router({
             }
         },
         {
+
             path: '/faculties',
             name: 'Faculties',
             component: FacultiesListing,
@@ -294,6 +307,23 @@ const router = new Router({
             }
         },
         {
+            path: '/countries/addCountry',
+            name: 'AddCountry',
+            component: AddCountry,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/countries/listing',
+            name: 'Countries',
+            component: CountriesListing,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+
             path: '/faculties/editFaculty/:id',
             name: 'EditFaculty',
             component: EditFaculty,
@@ -301,6 +331,23 @@ const router = new Router({
                     beforeEnter.authenticate(to,from,next)
             }
         },
+        {
+            path: '/requests',
+            name: 'Request',
+            component: Request,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/request',
+            name: 'RequestPage',
+            component: RequestPage,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        }
+
     ]
 })
 

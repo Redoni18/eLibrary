@@ -33,6 +33,9 @@ const locationController = require('../controllers/locationController')
 const categoriesController = require('../controllers/categoriesController');
 const membershipController = require('../controllers/membershipController')
 const facultyController = require('../controllers/facultyController')
+const countryController = require('../controllers/countryController')
+const requestsController = require('../controllers/requestsController');
+const upcomingController = require('../controllers/upcomingController');
 
 
 /**
@@ -46,8 +49,8 @@ router.get('/api/user/auth', auth.verify, authController.get_auth);
 
 router.get('/api/books', bookController.get_books);
 router.get('/api/books/:id', bookController.get_book);
-router.post('/api/createBooks', uploadFile.single('bookImage'), bookController.post_book);
-router.put('/api/editBook/:id', bookController.edit_book);
+router.post('/api/createBooks', bookController.validate('post_book'), uploadFile.single('bookImage'), bookController.post_book);
+router.put('/api/editBook/:id', bookController.validate('edit_book'), bookController.edit_book);
 router.delete('/api/books/delete/:id', bookController.delete_book);
 
 
@@ -93,11 +96,29 @@ router.put('/api/editMembership/:id', membershipController.edit_membership);
 router.delete('/api/deleteMembership/:id', membershipController.delete_membership);
 router.get('/api/membership/:id', membershipController.get_membership);
 
+
 router.get('/api/faculties', facultyController.get_faculties);
 router.post('/api/createFaculty', facultyController.post_faculty);
 router.put('/api/editFaculty/:id', facultyController.edit_faculty);
 router.delete('/api/deleteFaculty/:id', facultyController.delete_faculty);
 router.get('/api/faculty/:id', facultyController.get_faculty);
 
+
+router.get('/api/countries', countryController.get_countries);
+router.post('/api/addCountry', countryController.post_country);
+router.delete('/api/deleteCountry/:id', countryController.delete_country);
+router.get('/api/country/:id', countryController.get_country);
+
+router.post('/api/request/add', requestsController.add_request);
+router.get('/api/requests/:id', requestsController.get_request);
+router.get('/api/requests', requestsController.get_requests);
+router.delete('/api/requests/delete/:id', requestsController.delete_request);
+router.put('/api/requests/edit', requestsController.edit_request);
+
+router.post('/api/upcoming/add', upcomingController.add_upcoming);
+router.get('/api/get/upcoming/:id', upcomingController.get_upcoming);
+router.get('/api/upcomings', upcomingController.get_upcomings);
+router.delete('/api/upcoming/delete/:id', upcomingController.delete_upcoming);
+router.put('/api/upcoming/edit', upcomingController.edit_upcoming);
 
 module.exports = router;

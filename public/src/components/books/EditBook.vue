@@ -25,7 +25,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="Enter book title"
                                                    v-model="selectedBook.title"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|min:2|max:100'"
                                                    :class="{'title': true, 'is-invalid': errors.has('title') }">
                                             <small v-show="errors.has('title')" class="help is-danger">{{ errors.first('title') }}</small>
                                         </div>
@@ -37,7 +37,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="author" name="author" placeholder="Enter book author"
                                                    v-model="selectedBook.author"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|min:2|max:100'"
                                                    :class="{'author': true, 'is-invalid': errors.has('author') }">
                                             <small v-show="errors.has('author')" class="help is-danger">{{ errors.first('author') }}</small>
                                         </div>
@@ -49,7 +49,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <textarea type="text" class="form-control form-control-sm" id="description" name="description" placeholder="Enter book description"
                                                    v-model="selectedBook.description"
-                                                   v-validate="'required|min:2|max:150'"
+                                                   v-validate="'required|min:2|max:1000'"
                                                    :class="{'description': true, 'is-invalid': errors.has('description') }"></textarea>
                                             <small v-show="errors.has('description')" class="help is-danger">{{ errors.first('description') }}</small>
                                         </div>
@@ -83,7 +83,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <textarea type="text" class="form-control form-control-sm" id="imageUrl" name="imageUrl" placeholder="Or provide an image url"
                                                    v-model="selectedBook.imageUrl"
-                                                   v-validate="'required|min:2|max:150'"
+                                                   v-validate="'required|min:2'"
                                                    :class="{'imageUrl': true, 'is-invalid': errors.has('imageUrl') }"></textarea>
                                             <small v-show="errors.has('imageUrl')" class="help is-danger">{{ errors.first('imageUrl') }}</small>
                                         </div>
@@ -110,8 +110,8 @@
                                                     <input
                                                     id="categories" 
                                                     name="categories"
-                                                    :required="!selectedBook.categories.length"
-                                                    :placeholder="!selectedBook.categories.length ? 'Select a category...' : ''"
+                                                    :required="!selectedBook.categories"
+                                                    :placeholder="!selectedBook.categories ? 'Select a category...' : ''"
                                                     class="vs__search"
                                                     :class="{'categories': true, 'is-invalid': errors.has('categories') }"
                                                     v-bind="attributes"

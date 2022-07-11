@@ -14,6 +14,7 @@ exports.get_locations = function (req,res) {
 exports.post_location = function (req,res) {
 
     let newLocation = new Location({
+        city: req.body.city,
         address: req.body.address,
         phoneNumber: req.body.phoneNumber
     });
@@ -22,6 +23,7 @@ exports.post_location = function (req,res) {
 
     res.json({
         data: {
+            city: newLocation.city,
             address: newLocation.address,
             phoneNumber: newLocation.phoneNumber
         }
@@ -34,6 +36,7 @@ exports.edit_location = function (req,res) {
     }
 
     let updatedLocation = {
+        city: req.body.city,
         address: req.body.address,
         phoneNumber: req.body.phoneNumber
     }

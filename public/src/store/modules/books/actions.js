@@ -25,7 +25,7 @@ export const updateBook = ({ commit }, data ) => {
     return axios.put('http://localhost:8000/api/editBook/:id', data).then((response) => {
         commit('storeBook', response.data)
 
-        window.location.replace('#/books/listing');
+        window.location.replace('#/booksList/listing');
     })
 }
 
