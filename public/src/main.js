@@ -10,6 +10,9 @@ import 'vue-select/dist/vue-select.css';
 import { unique } from './validation/unique'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import 'bootstrap-css-only/css/bootstrap.min.css'
+import 'mdbvue/lib/css/mdb.min.css'
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'

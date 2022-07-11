@@ -2,7 +2,7 @@
 <b-card>
     <div class="review-add__container">
         <div class="review-add__info">
-            <h1><b-badge variant="light">{{$route.params.book}} by {{$route.params.author}}</b-badge></h1>
+            <h1 class="review-info__header">{{$route.params.book}} by {{$route.params.author}}</h1>
                 <p>Reviewed by: <b-badge variant="dark">{{user.data.name}}</b-badge></p>
         </div>
         <div class="review-add__textarea">
@@ -81,5 +81,17 @@ export default{
     margin-top: 20px;
     justify-content: flex-end;
     width: 100%;
+}
+
+.review-info__header{
+    font-weight: normal;
+    font-size: 2rem;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    word-break: break-word;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
 }
 </style>

@@ -50,8 +50,8 @@ router.get('/api/user/auth', auth.verify, authController.get_auth);
 
 router.get('/api/books', bookController.get_books);
 router.get('/api/books/:id', bookController.get_book);
-router.post('/api/createBooks', uploadFile.single('bookImage'), bookController.post_book);
-router.put('/api/editBook/:id', bookController.edit_book);
+router.post('/api/createBooks', bookController.validate('post_book'), uploadFile.single('bookImage'), bookController.post_book);
+router.put('/api/editBook/:id', bookController.validate('edit_book'), bookController.edit_book);
 router.delete('/api/books/delete/:id', bookController.delete_book);
 
 

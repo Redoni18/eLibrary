@@ -1,5 +1,5 @@
 <template>
-    <div class="signup_container">
+    <div class="signup_container mt-0">
 
         <div class="row">
 

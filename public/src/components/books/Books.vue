@@ -3,7 +3,7 @@
         <h2 class="title">{{pageTitle}}</h2>
         <div class="row">
                 
-                <book @changePage="changePage(book._id)" v-for="book in books" :key="book._id" :title="book.title" :description="book.description" :author="book.author" :year="book.year" :imageUrl="book.imageUrl">
+                <book class="single-book" @changePage="changePage(book._id)" v-for="book in books" :key="book._id" @getDataOnHover="changeDefOver(book._id)" :title="book.title" :description="book.description" :author="book.author" :year="book.year" :imageUrl="book.imageUrl">
 
                 </book>
         </div>
@@ -21,19 +21,31 @@
 
         components: { book },
         props: ['pageTitle'],
+        data(){
+            return {
+                selectedBook: {}
+            }
+        },
 
         methods: {
             ...mapActions({
-                getBooks: 'getBooks'
+                getBooks: 'getBooks',
+                getBook: 'getBook'
             }),
             changePage(id){
                 this.$router.push({name: 'bookDetails', params: {id: id}})
+            },
+            async changeDefOver(book) {
+                const response = await this.getBook(book)
+                this.selectedBook = response.data
+                console.log(this.selectedBook)
             }
         },
 
         mounted() {
             this.getBooks();
         },
+
 
         computed: {
             ...mapGetters({
@@ -52,7 +64,8 @@
     }
 
     .row{
-        margin: auto;
+        display: flex;
+        justify-content: center;
     }
 
     
