@@ -10,9 +10,15 @@
     </mdb-navbar-brand>
     <mdb-navbar-toggler>
       <mdb-navbar-nav>
-        <router-link to="/#">
-            <mdb-nav-item href="#">Books</mdb-nav-item>
-        </router-link>
+            <mdb-dropdown start tag="li" class="nav-item">
+            <mdb-dropdown-toggle tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
+                Books
+            </mdb-dropdown-toggle>
+            <mdb-dropdown-menu>
+                <mdb-dropdown-item :to="{path: '/'}">Books</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{path: '/booksList/listing'}">Listing</mdb-dropdown-item>
+            </mdb-dropdown-menu>
+        </mdb-dropdown>
         <router-link :to="({path: '/contact-us'})">
             <mdb-nav-item href="#">Contact Us</mdb-nav-item>
         </router-link>

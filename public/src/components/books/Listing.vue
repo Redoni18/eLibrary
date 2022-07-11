@@ -13,6 +13,7 @@
         perPageDropdown: [5, 7, 10],
         dropdownAllowAll: false,
     }"
+    @on-row-click="getBook"
     >
     <template v-if="user.data.isAdmin" v-slot:table-row="props">
       <span v-if="props.column.field === 'actions'">
@@ -89,6 +90,10 @@ export default {
         await axios.delete(`http://localhost:8000/api/books/delete/${id}`)
       }
       await this.getBooks()
+    },
+    
+    getBook(params){
+      this.$router.push({name: 'bookDetails', params: {id: params.row._id}})
     }
   },
 
