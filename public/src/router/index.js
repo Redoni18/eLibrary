@@ -30,11 +30,15 @@ import Category from '@/components/categories/Category.vue'
 import Memberships from '@/components/memberships/Memberships.vue'
 import AddMembership from '@/components/memberships/AddMembership.vue'
 import EditMembership from '@/components/memberships/EditMembership.vue'
+import FacultiesListing from '@/components/faculties/Listing.vue'
+import InsertFaculty from '@/components/faculties/CreateFaculty.vue'
+import EditFaculty from '@/components/faculties/EditFaculty.vue'
 import Request from '@/components/requests/Request'
 import AddCountry from '@/components/countries/AddCountry.vue'
 import CountriesListing from '@/components/countries/Listing'
 import Upcomings from '@/components/books/Upcoming'
 import RequestPage from '@/components/requests/RequestPage'
+
 Vue.use(Router);
 
 
@@ -286,6 +290,23 @@ const router = new Router({
             }
         },
         {
+
+            path: '/faculties',
+            name: 'Faculties',
+            component: FacultiesListing,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/insertFaculty',
+            name: 'InsertFaculty',
+            component: InsertFaculty,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
             path: '/countries/addCountry',
             name: 'AddCountry',
             component: AddCountry,
@@ -297,6 +318,15 @@ const router = new Router({
             path: '/countries/listing',
             name: 'Countries',
             component: CountriesListing,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+
+            path: '/faculties/editFaculty/:id',
+            name: 'EditFaculty',
+            component: EditFaculty,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }
@@ -317,9 +347,8 @@ const router = new Router({
                     beforeEnter.authenticate(to,from,next)
             }
         }
+
     ]
 })
-
-
 
 export default router

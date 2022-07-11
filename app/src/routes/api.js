@@ -31,11 +31,10 @@ const reviewsController = require('../controllers/reviewsController');
 const userTypeController = require('../controllers/userTypeController');
 const locationController = require('../controllers/locationController')
 const categoriesController = require('../controllers/categoriesController');
-const membershipController = require('../controllers/membershipController');
+const membershipController = require('../controllers/membershipController')
+const facultyController = require('../controllers/facultyController')
 const countryController = require('../controllers/countryController')
-
 const requestsController = require('../controllers/requestsController');
-
 const upcomingController = require('../controllers/upcomingController');
 
 
@@ -96,6 +95,14 @@ router.post('/api/addMembership', membershipController.post_membership);
 router.put('/api/editMembership/:id', membershipController.edit_membership);
 router.delete('/api/deleteMembership/:id', membershipController.delete_membership);
 router.get('/api/membership/:id', membershipController.get_membership);
+
+
+router.get('/api/faculties', facultyController.get_faculties);
+router.post('/api/createFaculty', facultyController.post_faculty);
+router.put('/api/editFaculty/:id', facultyController.edit_faculty);
+router.delete('/api/deleteFaculty/:id', facultyController.delete_faculty);
+router.get('/api/faculty/:id', facultyController.get_faculty);
+
 
 router.get('/api/countries', countryController.get_countries);
 router.post('/api/addCountry', countryController.post_country);

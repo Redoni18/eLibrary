@@ -1,20 +1,13 @@
 <template>
 <div>
-    <div class="form-group row" v-if="toggleButtons">
-    <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-9">
-        <router-link :to="{name: 'EditUserType', params: {id: rowId}}"> <button type="submit" class="btn btn-primary">Edit User Type</button></router-link>
-    <button type="submit" class="btn btn-danger" @click="removeUserType(rowId)">Delete User Type</button>
-
-    </div>
-  </div>
 
     <div class="mb-3">
-        <router-link type="submit" class="btn btn-primary" :to="{path: 'insertUserType'}">Insert new user type</router-link>
+        <router-link type="submit" class="btn btn-primary" :to="{path: '/insertFaculty'}">Insert new Faculty</router-link>
 
     </div>
     <vue-good-table
         :columns="columns"
-        :rows="typesOfUser"
+        :rows="allFaculties"
         :search-options="{
             enabled: true
         }"
@@ -25,8 +18,7 @@
             perPageDropdown: [5, 7, 10],
             dropdownAllowAll: false,
         }"
-      
-       >
+         >
     <template v-if="user.data.isAdmin" v-slot:table-row="props">
       <span v-if="props.column.field === 'actions'">
         <div class="more-options">
@@ -35,7 +27,7 @@
             <b-icon icon="three-dots"></b-icon>
           </template>
         <b-dropdown-item
-          @click="removeUserType(props.row._id)"
+          @click="removeFaculty(props.row._id)"
         >
          <span
             class="d-flex align-items-center"
@@ -45,7 +37,7 @@
           </span>
         </b-dropdown-item>
         <b-dropdown-item
-            :to="{name: 'EditUserType', params: {id: props.row._id}}"
+            :to="{name: 'EditFaculty', params: {id: props.row._id}}"
         >
             <span
               class="d-flex align-items-center"
@@ -60,7 +52,6 @@
   </template>
 </vue-good-table>
             
-    
 </div>
     
 </template>
@@ -68,18 +59,23 @@
 <script>
 import axios from 'axios'
 export default {
-    name: "UserTypesListing",
+    name: "FacultiesListing",
     data() {
         return {
             user: JSON.parse(window.localStorage.getItem('user')),
             toggleButtons: false,
             rowId: null,
-            userTypes: null,
+            faculties: null,
             columns: [
                 {
-                    label: 'Type of user',
-                    field: 'userType',
-                    tooltip: 'Click on a specific row that you want to edit or delete!',
+                    label: 'Emri',
+                    field: 'emri',
+                    //tooltip: 'Click on a specific row that you want to edit or delete!',
+                },
+                {
+                    label: 'Drejtimi',
+                    field: 'drejtimi',
+                    //tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
                     label: '',
@@ -92,42 +88,46 @@ export default {
         };
     },
     computed: {
-        typesOfUser() {
-            return this.userTypes
+        allFaculties() {
+            return this.faculties
         }
     },
 
     async mounted(){
-        await this.fetchUserTypes()
+        await this.fetchFaculties()
     },
 
     methods: {
-        onRowClick(params){
-            if(this.user.data.isAdmin){
-                this.toggleButtons = !this.toggleButtons
-                this.rowId = params.row._id
-            }
-            return
-        },
-        async fetchUserTypes(){
+        async fetchFaculties(){
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
-                    const response = await axios.get("http://localhost:8000/api/userTypes")
-                    this.userTypes = response.data
+                    const response = await axios.get("http://localhost:8000/api/faculties")
+                    this.faculties = response.data  
                 }
             });
         },
-        async removeUserType(id) {
-            if(window.confirm("Are you sure you want to delete this book?")){
-                await axios.delete(`http://localhost:8000/api/deleteUserType/${id}`)
+        async removeFaculty(id) {
+            if(window.confirm("Are you sure you want to delete this Faculty?")){
+                await axios.delete(`http://localhost:8000/api/deleteFaculty/${id}`)
                 this.toggleButtons = false
             }
-            await this.fetchUserTypes()
+            await this.fetchFaculties()
         }
     }
 }
 </script>
 
 <style scoped>
+
+.more-options{
+  transition: 0.3s;
+}
+
+.more-options:hover{
+  border-radius: 5px;
+  background: rgb(230, 230, 230);
+  color:rgb(0, 0, 0);
+  transition: 0.3s;
+}
 
 </style>
