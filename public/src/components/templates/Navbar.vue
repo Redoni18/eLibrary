@@ -16,7 +16,10 @@
         <router-link :to="({path: '/contact-us'})">
             <mdb-nav-item href="#">Contact Us</mdb-nav-item>
         </router-link>
-        <mdb-nav-item href="#">Pricing</mdb-nav-item>
+
+        <router-link :to="({path: '/request'})">
+            <mdb-nav-item>Request</mdb-nav-item>
+        </router-link>
       </mdb-navbar-nav>
       <mdb-navbar-nav right>
         <mdb-dropdown end tag="li" class="nav-item">
@@ -119,6 +122,13 @@
                 ><mdb-icon icon="plus" class="mr-3" /><p>Insert Book</p></mdb-list-group-item
                 >
             </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/books/upcomings'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="clock" class="mr-3" /><p>Upcoming Books</p></mdb-list-group-item
+                >
+            </router-link>
           </div>
         <mdb-list-group-item
             id="sidebar-item"
@@ -162,6 +172,13 @@
                 id="sidebar-item"
                 :action="true"
                 ><mdb-icon icon="globe" class="mr-3" /><p>Countries</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/requests'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="concierge-bell" class="mr-3" /><p>Requests</p></mdb-list-group-item
                 >
             </router-link>
           </div>
