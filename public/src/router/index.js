@@ -27,7 +27,7 @@ import EditLocation from '@/components/locations/EditLocation'
 import Categories from '@/components/categories/Categories.vue'
 import AddCategories from '@/components/categories/AddCategories.vue'
 import Category from '@/components/categories/Category.vue'
-import Memberships from '@/components/memberships/Memberships.vue'
+import MembershipsListing from '@/components/memberships/Listing.vue'
 import AddMembership from '@/components/memberships/AddMembership.vue'
 import EditMembership from '@/components/memberships/EditMembership.vue'
 import FacultiesListing from '@/components/faculties/Listing.vue'
@@ -268,7 +268,7 @@ const router = new Router({
         {
             path: '/memberships',
             name: 'Memberships',
-            component: Memberships,
+            component: MembershipsListing,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }
