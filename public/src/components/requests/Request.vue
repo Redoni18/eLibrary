@@ -79,6 +79,20 @@ export default {
              const deny = await axios.delete(`http://localhost:8000/api/requests/delete/${id}`).then(
                  response => { 
                     this.toggleButtons = false
+                    this.$toast.info("Request moved", {
+                        position: "top-right",
+                        timeout: 5000,
+                        closeOnClick: true,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: false,
+                        hideProgressBar: true,
+                        closeButton: "button",
+                        icon: true,
+                        rtl: false
+                    });
                     this.refresh()
                 }
             )

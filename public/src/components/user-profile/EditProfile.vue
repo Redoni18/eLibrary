@@ -180,7 +180,37 @@ export default {
                             social3: this.currentUser.social3
                         });
 
+                        this.$toast.success("Profile updated successfully", {
+                            position: "top-right",
+                            timeout: 5000,
+                            closeOnClick: true,
+                            pauseOnFocusLoss: true,
+                            pauseOnHover: true,
+                            draggable: true,    
+                            draggablePercent: 0.6,
+                            showCloseButtonOnHover: false,
+                            hideProgressBar: true,
+                            closeButton: "button",
+                            icon: true,
+                            rtl: false
+                        });
+
                         this.getProfile()
+                    } else {
+                        this.$toast.error("Problem while editing profile", {
+                            position: "top-right",
+                            timeout: 5000,
+                            closeOnClick: true,
+                            pauseOnFocusLoss: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            draggablePercent: 0.6,
+                            showCloseButtonOnHover: false,
+                            hideProgressBar: true,
+                            closeButton: "button",
+                            icon: true,
+                            rtl: false
+                        });
                     }
                 });
 

@@ -107,10 +107,22 @@ export default {
         },
         async removeMembership(id) {
             console.log('id', id)
-            if(window.confirm("Are you sure you want to remove this membership?")){
-                await axios.delete(`http://localhost:8000/api/deleteMembership/${id}`)
-                this.toggleButtons = false
-            }
+            await axios.delete(`http://localhost:8000/api/deleteMembership/${id}`)
+            this.toggleButtons = false
+             this.$toast.success("Memebership deleted successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
             await this.fetchMemberships()
         }
     }

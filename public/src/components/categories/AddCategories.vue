@@ -40,6 +40,20 @@ export default {
             const category = { title: this.title, description: this.description}
              await axios.post('http://localhost:8000/api/category/add', category).then(response => {
                 this.$router.push('/categories')
+                this.$toast.success("Category added successfully", {
+                    position: "top-right",
+                    timeout: 5000,
+                    closeOnClick: true,
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    draggablePercent: 0.6,
+                    showCloseButtonOnHover: false,
+                    hideProgressBar: true,
+                    closeButton: "button",
+                    icon: true,
+                    rtl: false
+                });
             })
         }
     }

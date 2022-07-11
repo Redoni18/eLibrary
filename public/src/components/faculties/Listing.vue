@@ -107,10 +107,23 @@ export default {
             });
         },
         async removeFaculty(id) {
-            if(window.confirm("Are you sure you want to delete this Faculty?")){
-                await axios.delete(`http://localhost:8000/api/deleteFaculty/${id}`)
-                this.toggleButtons = false
-            }
+          await axios.delete(`http://localhost:8000/api/deleteFaculty/${id}`)
+          this.toggleButtons = false
+
+            this.$toast.success("Faculty deleted successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
             await this.fetchFaculties()
         }
     }

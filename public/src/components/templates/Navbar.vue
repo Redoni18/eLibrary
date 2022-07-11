@@ -159,7 +159,7 @@
                 ><mdb-icon icon="user-cog" class="mr-3" /><p>User Types</p></mdb-list-group-item
                 >
             </router-link>
-            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/locations'})">
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/locations/listing'})">
                 <mdb-list-group-item
                 id="sidebar-item"
                 :action="true"
@@ -187,7 +187,7 @@
                 ><mdb-icon icon="concierge-bell" class="mr-3" /><p>Requests</p></mdb-list-group-item
                 >
             </router-link>
-            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: './faculties'})">
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/faculties'})">
                 <mdb-list-group-item
                 id="sidebar-item"
                 :action="true"

@@ -86,9 +86,22 @@ export default {
         }),
         
         async removeMessage(id) {
-            if(window.confirm("Are you sure you want to delete this book?")){
-                await axios.delete(`http://localhost:8000/api/messages/delete/${id}`)
-            }
+            await axios.delete(`http://localhost:8000/api/messages/delete/${id}`)
+            this.$toast.success("Message deleted successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
+
             await this.getMessages()
         },
         async getMessages() {

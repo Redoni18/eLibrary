@@ -100,13 +100,6 @@ export default {
     },
 
     methods: {
-        onRowClick(params){
-            if(this.user.data.isAdmin){
-                this.toggleButtons = !this.toggleButtons
-                this.rowId = params.row._id
-            }
-            return
-        },
         async fetchLocations(){
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
@@ -116,11 +109,23 @@ export default {
             });
         },
         async removeLocation(id) {
-            console.log('id', id)
-            if(window.confirm("Are you sure you want to remove this location?")){
-                await axios.delete(`http://localhost:8000/api/deleteLocation/${id}`)
-                this.toggleButtons = false
-            }
+            await axios.delete(`http://localhost:8000/api/deleteLocation/${id}`)
+            this.toggleButtons = false
+
+            this.$toast.success("Location deleted successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
             await this.fetchLocations()
         }
     }

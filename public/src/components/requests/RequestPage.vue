@@ -1,6 +1,6 @@
 <template>
 <div class="request-page__container">
-    <b-card v-if="!requested" title="Make a Request" :sub-title="user.data.name" style="display: flex; flex-direction: column; align-items: center;text-align: center;"">
+    <b-card v-if="!requested" title="Make a Request" :sub-title="user.data.name" style="display: flex; flex-direction: column; align-items: center;text-align: center;">
         <b-form-input v-model="title" :state="!title || title.length > 5"   type="text" size="sm" style="margin: 15px" placeholder="Title of the Book..." />
         <b-form-input  v-model="author" :state="!author ||author.length > 5"  type="text" size="sm" style="margin: 15px"  placeholder="Name of the author..."/>
         <b-form-input   v-model="date" :state="year <= dateNow " type="date" size="sm" style="margin: 15px" placeholder="Date of Publish..." />

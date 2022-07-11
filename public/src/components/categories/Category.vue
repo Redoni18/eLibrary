@@ -71,6 +71,20 @@ export default {
                      await axios.put(`http://localhost:8000/api/category/edit/${this.category._id}`, { id: this.category._id, title: this.title, description: this.description }).then(
                         response => {
                             this.$router.push('/categories')
+                            this.$toast.success("Category updated successfully", {
+                                position: "top-right",
+                                timeout: 5000,
+                                closeOnClick: true,
+                                pauseOnFocusLoss: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                draggablePercent: 0.6,
+                                showCloseButtonOnHover: false,
+                                hideProgressBar: true,
+                                closeButton: "button",
+                                icon: true,
+                                rtl: false
+                            });
                         }
                     )
                 }
@@ -80,6 +94,21 @@ export default {
              await axios.delete(`http://localhost:8000/api/category/delete/${this.category._id}`)
                  .then(response => {
                 this.$router.push('/categories')
+
+                this.$toast.success("Category deleted successfully", {
+                    position: "top-right",
+                    timeout: 5000,
+                    closeOnClick: true,
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    draggablePercent: 0.6,
+                    showCloseButtonOnHover: false,
+                    hideProgressBar: true,
+                    closeButton: "button",
+                    icon: true,
+                    rtl: false
+                });
             })
         }
     },

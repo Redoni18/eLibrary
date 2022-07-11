@@ -13,7 +13,6 @@
         perPageDropdown: [5, 7, 10],
         dropdownAllowAll: false,
     }"
-    @on-row-click="getBook"
     >
     <template v-if="user.data.isAdmin" v-slot:table-row="props">
       <span v-if="props.column.field === 'actions'">
@@ -86,15 +85,29 @@ export default {
     }),
     
     async removeBook(id) {
-      if(window.confirm("Are you sure you want to delete this book?")){
-        await axios.delete(`http://localhost:8000/api/books/delete/${id}`)
-      }
+      await axios.delete(`http://localhost:8000/api/books/delete/${id}`)
+
+      this.$toast.success("Book deleted successfully", {
+          position: "top-right",
+          timeout: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false
+      });
+
       await this.getBooks()
     },
     
-    getBook(params){
-      this.$router.push({name: 'bookDetails', params: {id: params.row._id}})
-    }
+    // getBook(params){
+    //   this.$router.push({name: 'bookDetails', params: {id: params.row._id}})
+    // }
   },
 
     mounted() {

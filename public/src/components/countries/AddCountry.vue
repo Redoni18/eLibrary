@@ -91,7 +91,7 @@
                 for(let i = 0;i<allCountries.length;i++){
                     this.countries.push(
                         {name: allCountries[i].name, isoCode: allCountries[i].iso2}
-                        )
+                    )
                 }
             },
             async addCountry() {
@@ -100,6 +100,22 @@
                         await axios.post("http://localhost:8000/api/addCountry", {name: this.selectedCountry.name, isoCountryCode: this.selectedCountry.isoCode })
                         console.log(this.selectedCountry.name)
                         this.$router.push({path:"/countries/listing"})
+
+                        this.$toast.success("Countrie added successfully", {
+                            position: "top-right",
+                            timeout: 5000,
+                            closeOnClick: true,
+                            pauseOnFocusLoss: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            draggablePercent: 0.6,
+                            showCloseButtonOnHover: false,
+                            hideProgressBar: true,
+                            closeButton: "button",
+                            icon: true,
+                            rtl: false
+                        });
+
                         return true;
                     }
                 
