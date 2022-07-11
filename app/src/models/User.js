@@ -24,6 +24,10 @@ const schema = new Schema({
         type: Boolean,
         default: false
     },
+    isMember: {
+        type: Boolean,
+        default:false
+    },
     bio:{
         type: String,
         required: false,

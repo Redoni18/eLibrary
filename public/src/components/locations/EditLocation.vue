@@ -91,11 +91,13 @@
                 this.city = response.data.city
                 this.locationAddress = response.data.address
                 this.locationPhoneNumber = response.data.phoneNumber
+                this.latitude = response.data.latitude
+                this.longitude = response.data.longitude
             },
             async editLocation() {
                 this.$validator.validateAll().then( async (result) => {
                     if (result) {
-                        await axios.put(`http://localhost:8000/api/editLocation/${this.locationId}`, {_id: this.locationId,city:this.city, address: this.locationAddress, phoneNumber: this.locationPhoneNumber})
+                        await axios.put(`http://localhost:8000/api/editLocation/${this.locationId}`, {_id: this.locationId,city:this.city, address: this.locationAddress, phoneNumber: this.locationPhoneNumber,latitude: this.latitude, longitude:this.longitude})
                         this.locationAddress = null
                         this.locationPhoneNumber = null
                         this.$router.push({path:"/locations/listing"})

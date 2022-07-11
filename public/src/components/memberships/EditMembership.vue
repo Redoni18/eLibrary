@@ -106,7 +106,7 @@
 <script>
     import axios from 'axios'
     export default {
-        name: 'InsertMembership',
+        name: 'EditMembership',
 
         data() {
             return {

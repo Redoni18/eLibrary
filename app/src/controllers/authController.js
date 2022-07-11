@@ -52,7 +52,7 @@ exports.edit_profile = function (req, res) {
         if(!err){
             res.send(doc)
         }else{
-            console.log('Error while updating book')
+            console.log('Error while updating user profile')
         }
     })
 };
@@ -116,4 +116,20 @@ exports.post_signin = function (req, res) {
 
 exports.get_auth = function (req, res, next) {
     res.sendStatus(200);
+};
+
+exports.update_membership = function (req, res) {
+
+    let updatedInfo = {
+        isMember: req.body.isMember,
+    }
+
+
+    User.findByIdAndUpdate(req.body._id, {$set: updatedInfo}, {new: true}, (err, doc) => {
+        if(!err){
+            res.send(doc)
+        }else{
+            console.log('Error while updating user profile')
+        }
+    })
 };

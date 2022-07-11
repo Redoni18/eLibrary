@@ -1,11 +1,11 @@
 <template>
 <div>
 <div class="mb-3">
-        <router-link type="submit" class="btn btn-primary" :to="{path: 'addLocation'}">Add location</router-link>
+        <router-link type="submit" class="btn btn-primary" :to="{path: 'addMembership'}">Add membership</router-link>
 </div>
 <vue-good-table
     :columns="columns"
-    :rows="locations"
+    :rows="memberships"
     :search-options="{
         enabled: true
     }"
@@ -26,8 +26,8 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item @click.native="removeLocation(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
-                <mdb-dropdown-item :to="{name: 'editLocation', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
+                <mdb-dropdown-item @click.native="removeMembership(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{name: 'EditMembership', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
       </span>
@@ -41,7 +41,7 @@
 import axios from 'axios'
 import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
 export default {
-    name: "LocationsListing",
+    name: "MembershipListing",
     components: {
       mdbDropdown,
       mdbDropdownItem,
@@ -54,31 +54,31 @@ export default {
             user: JSON.parse(window.localStorage.getItem('user')),
             toggleButtons: false,
             rowId: null,
-            locations: null,
+            memberships: null,
             columns: [
                 {
-                    label: 'City',
-                    field: 'city',
+                    label: 'User Type',
+                    field: 'userType.userType',
                     tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
-                    label: 'Address',
-                    field: 'address',
+                    label: 'Duration',
+                    field: 'duration',
                     tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
-                    label: 'Phone number',
-                    field: 'phoneNumber',
+                    label: 'Price',
+                    field: 'price',
                     tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
-                    label: 'Latitude',
-                    field: 'latitude',
+                    label: 'Description',
+                    field: 'description',
                     tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
-                    label: 'Longitude',
-                    field: 'longitude',
+                    label: 'Premium',
+                    field: 'isPremium' ,
                     tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
@@ -92,13 +92,13 @@ export default {
         };
     },
     computed: {
-        allLocations() {
-            return this.locations
+        allMemberships() {
+            return this.memberships
         }
     },
 
     async mounted(){
-        await this.fetchLocations()
+        await this.fetchMemberships()
     },
 
     methods: {
@@ -109,21 +109,21 @@ export default {
             }
             return
         },
-        async fetchLocations(){
+        async fetchMemberships(){
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
-                    const response = await axios.get("http://localhost:8000/api/locations")
-                    this.locations = response.data
+                    const response = await axios.get("http://localhost:8000/api/memberships")
+                    this.memberships = response.data
                 }
             });
         },
-        async removeLocation(id) {
+        async removeMembership(id) {
             console.log('id', id)
-            if(window.confirm("Are you sure you want to remove this location?")){
-                await axios.delete(`http://localhost:8000/api/deleteLocation/${id}`)
+            if(window.confirm("Are you sure you want to remove this membership?")){
+                await axios.delete(`http://localhost:8000/api/deleteMembership/${id}`)
                 this.toggleButtons = false
             }
-            await this.fetchLocations()
+            await this.fetchMemberships()
         }
     }
 }

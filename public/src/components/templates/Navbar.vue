@@ -16,7 +16,9 @@
         <router-link :to="({path: '/contact-us'})">
             <mdb-nav-item href="#">Contact Us</mdb-nav-item>
         </router-link>
-
+        <router-link :to="({path: '/allMemberships'})">
+            <mdb-nav-item href="#">Membership</mdb-nav-item>
+        </router-link>
         <router-link :to="({path: '/request'})">
             <mdb-nav-item>Request</mdb-nav-item>
         </router-link>
@@ -153,7 +155,7 @@
                 ><mdb-icon icon="user-cog" class="mr-3" /><p>User Types</p></mdb-list-group-item
                 >
             </router-link>
-            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/locations'})">
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/locations/listing'})">
                 <mdb-list-group-item
                 id="sidebar-item"
                 :action="true"
