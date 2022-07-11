@@ -1,20 +1,20 @@
 const mongoose = require('../database/db');
 const Schema = mongoose.Schema;
 
-const locationSchema = new Schema({
-    city: {
+const upcoming = new Schema({
+    title: {
         type: String,
         required: true
     },
-    address: {
+    author: {
         type: String,
         required: true
     },
-    phoneNumber: {
-        type : String,
-        required : true
+    date: {
+        type: Date,
+        required: true
     }
 });
 
 
-module.exports = mongoose.model('location', locationSchema);
+module.exports = mongoose.model('upcoming', upcoming);

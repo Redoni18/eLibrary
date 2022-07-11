@@ -31,7 +31,13 @@ const reviewsController = require('../controllers/reviewsController');
 const userTypeController = require('../controllers/userTypeController');
 const locationController = require('../controllers/locationController')
 const categoriesController = require('../controllers/categoriesController');
-const membershipController = require('../controllers/membershipController')
+const membershipController = require('../controllers/membershipController');
+const countryController = require('../controllers/countryController')
+
+const requestsController = require('../controllers/requestsController');
+
+const upcomingController = require('../controllers/upcomingController');
+
 
 /**
  * Routes
@@ -90,5 +96,22 @@ router.post('/api/addMembership', membershipController.post_membership);
 router.put('/api/editMembership/:id', membershipController.edit_membership);
 router.delete('/api/deleteMembership/:id', membershipController.delete_membership);
 router.get('/api/membership/:id', membershipController.get_membership);
+
+router.get('/api/countries', countryController.get_countries);
+router.post('/api/addCountry', countryController.post_country);
+router.delete('/api/deleteCountry/:id', countryController.delete_country);
+router.get('/api/country/:id', countryController.get_country);
+
+router.post('/api/request/add', requestsController.add_request);
+router.get('/api/requests/:id', requestsController.get_request);
+router.get('/api/requests', requestsController.get_requests);
+router.delete('/api/requests/delete/:id', requestsController.delete_request);
+router.put('/api/requests/edit', requestsController.edit_request);
+
+router.post('/api/upcoming/add', upcomingController.add_upcoming);
+router.get('/api/get/upcoming/:id', upcomingController.get_upcoming);
+router.get('/api/upcomings', upcomingController.get_upcomings);
+router.delete('/api/upcoming/delete/:id', upcomingController.delete_upcoming);
+router.put('/api/upcoming/edit', upcomingController.edit_upcoming);
 
 module.exports = router;

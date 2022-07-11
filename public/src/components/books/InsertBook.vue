@@ -158,6 +158,11 @@
         },
         mounted() {
             this.getCategories()
+            if (this.$route.params.title && this.$route.params.author && this.$route.params.date) {
+                this.bookTitle = this.$route.params.title
+                this.bookAuthor = this.$route.params.author
+                this.bookYear = this.$route.params.date
+            }
         },
         computed: {
             allCategories() {
