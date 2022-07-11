@@ -14,8 +14,20 @@
         dropdownAllowAll: false,
     }"
     >
-    <template v-if="user.data.isAdmin" v-slot:table-row="props">
-      <span v-if="props.column.field === 'actions'">
+    <template v-slot:table-row="props">
+      <span v-if="props.column.field === 'title'" class="title-cell">
+        <span @click="getBook(props)">{{props.row.title}}</span>
+      </span>
+      <span v-if="props.column.field === 'author'">
+        <span>{{props.row.author}}</span>
+      </span>
+      <span v-if="props.column.field === 'description'">
+        <span>{{props.row.description}}</span>
+      </span>
+      <span v-if="props.column.field === 'year'">
+        <span>{{props.row.year}}</span>
+      </span>
+      <span v-if="user.data.isAdmin && props.column.field === 'actions'">
         <mdb-dropdown end tag="li" class="nav-item">
             <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
                 <template #button-content>
@@ -105,9 +117,9 @@ export default {
       await this.getBooks()
     },
     
-    // getBook(params){
-    //   this.$router.push({name: 'bookDetails', params: {id: params.row._id}})
-    // }
+    getBook(params){
+      this.$router.push({name: 'bookDetails', params: {id: params.row._id}})
+    }
   },
 
     mounted() {
@@ -132,5 +144,14 @@ export default {
   background: rgb(230, 230, 230);
   color:rgb(0, 0, 0);
   transition: 0.3s;
+}
+
+.title-cell{
+  font-weight: 600;
+}
+
+.title-cell:hover{
+  cursor: pointer;
+  color: #2d96e0;
 }
 </style>
