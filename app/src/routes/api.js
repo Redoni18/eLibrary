@@ -58,7 +58,7 @@ router.delete('/api/books/delete/:id', bookController.delete_book);
 
 
 router.get('/api/messages', messageController.get_messages)
-router.post('/api/postMessage', messageController.post_messages)
+router.post('/api/postMessage', bookController.validate('post_messages'),messageController.post_messages)
 router.get('/api/messages/:id', messageController.get_message)
 router.delete('/api/messages/delete/:id', messageController.delete_message);
 

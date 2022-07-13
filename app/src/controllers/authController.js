@@ -39,10 +39,6 @@ exports.post_signup = function (req, res) {
 
     const errors = validationResult(req)
 
-    if(errors.isEmpty()){
-        newBook.save();
-    }
-
     let user = new User({
         name: req.body.name,
         email: req.body.email,
@@ -52,8 +48,10 @@ exports.post_signup = function (req, res) {
         isMember: req.body.isMember
     });
 
-    user.save();
-
+    if(errors.isEmpty()){
+        user.save();
+    }
+    
     let payload = { id: user.id };
     let token = auth.encode(payload);
 
