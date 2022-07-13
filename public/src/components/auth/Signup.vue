@@ -25,7 +25,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter name"
                                                    v-model="name"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|min:2|max:50'"
                                                    :class="{'name': true, 'is-invalid': errors.has('name') }">
                                             <small v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</small>
                                         </div>
