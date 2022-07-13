@@ -136,3 +136,22 @@ exports.update_membership = function (req, res) {
         }
     })
 };
+
+exports.get_membership = function (req, res) {
+    let id = req.params.id;
+
+    try {
+        User.findById({ _id: id }).exec(function (err, user) {
+            if (user) {
+                res.send(user);
+            } 
+        });
+      } catch (error) {
+        if ([400, 403, 404].includes(error.code)) {
+          return res.status(error.code).send(error.message);
+        }
+    
+        console.error(error);
+        return res.status(500).send(error.message);
+      }
+};
