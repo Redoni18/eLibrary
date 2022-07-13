@@ -13,7 +13,8 @@ exports.post_signup = function (req, res) {
         email: req.body.email,
         userType: req.body.userType,
         password: hash_password,
-        isAdmin: req.body.email.includes('@eLibrary') ? true : false
+        isAdmin: req.body.email.includes('@eLibrary') ? true : false,
+        isMember: req.body.isMember
     });
 
     user.save();
@@ -27,7 +28,8 @@ exports.post_signup = function (req, res) {
             name: user.name,
             email: user.email,
             userType: user.userType,
-            isAdmin: user.isAdmin
+            isAdmin: user.isAdmin,
+            isMember: user.isMember
         },
         token: token
     });
@@ -102,7 +104,8 @@ exports.post_signin = function (req, res) {
                     social1: user.social1,
                     social2: user.social2,
                     social3: user.social3,
-                    isAdmin: user.isAdmin
+                    isAdmin: user.isAdmin,
+                    isMember: user.isMember
                 },
                 token: token
             });

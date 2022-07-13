@@ -72,16 +72,6 @@ export default {
                     tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
-                    label: 'Latitude',
-                    field: 'latitude',
-                    tooltip: 'Click on a specific row that you want to edit or delete!',
-                },
-                {
-                    label: 'Longitude',
-                    field: 'longitude',
-                    tooltip: 'Click on a specific row that you want to edit or delete!',
-                },
-                {
                     label: '',
                     field: 'actions',
                     sortable: false,

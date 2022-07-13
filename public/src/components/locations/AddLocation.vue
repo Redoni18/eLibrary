@@ -95,7 +95,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="phoneNumber" name="phoneNumber" placeholder="Insert phone number"
                                                    v-model="locationPhoneNumber"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|numeric|max:20'"
                                                    :class="{'phoneNumber': true, 'is-invalid': errors.has('phoneNumber') }"/>
                                             <small v-show="errors.has('phoneNumber')" class="help is-danger">{{ errors.first('phoneNumber') }}</small>
                                         </div>
