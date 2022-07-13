@@ -26,20 +26,39 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item @click.native="removeMembership(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                <mdb-dropdown-item @click.native="showModal = true;selectedMembership=props.row;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{name: 'EditMembership', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
       </span>
     </template>
 </vue-good-table>
+
+<div>
+    <mdb-modal centered v-if="showModal" @close="showModal = false">
+      <mdb-modal-header>
+        <mdb-modal-title>Warning</mdb-modal-title>
+      </mdb-modal-header>
+      <mdb-modal-body>Are you sure you want to delete selected membership?</mdb-modal-body>
+      <mdb-modal-footer>
+        <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
+        <mdb-btn color="danger" @click.native="removeMembership(selectedMembership)">Delete</mdb-btn>
+      </mdb-modal-footer>
+    </mdb-modal>
+  </div>
 </div>
     
 </template>
 
 <script>
 import axios from 'axios'
-import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
+import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn } from 'mdbvue';
+
 export default {
     name: "MembershipListing",
     components: {
@@ -47,13 +66,21 @@ export default {
       mdbDropdownItem,
       mdbDropdownMenu,
       mdbDropdownToggle,
-      mdbIcon
+      mdbIcon,
+       mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn
     },
     data() {
         return {
             user: JSON.parse(window.localStorage.getItem('user')),
             rowId: null,
             memberships: null,
+            showModal: false,
+            selectedMembership: {},
             columns: [
                 {
                     label: 'User Type',
@@ -105,8 +132,25 @@ export default {
                 }
             });
         },
-        async removeMembership(id) {
-            await axios.delete(`http://localhost:8000/api/deleteMembership/${id}`)
+        async removeMembership(membership) {
+            await axios.delete(`http://localhost:8000/api/deleteMembership/${membership._id}`)
+            await this.fetchMemberships()
+
+            this.$toast.success("Membership deleted successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
+            this.showModal = false
             await this.fetchMemberships()
         }
     }
