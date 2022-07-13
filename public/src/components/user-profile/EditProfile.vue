@@ -159,14 +159,9 @@ export default {
                     this.userTypes.push(response.data[i])
                 }
             },
-        ...mapActions({
-            editProfile: 'editProfile',
-            signOut: 'signOut',
-            get_profile: "get_profile"
-        }),
         async saveProfile() {
             await this.$validator.validateAll().then((result) => {
-                    if (result && this.currentUser.userType !== null) {
+                    if (result && this.currentUser.userType !== null && !this.currentUser.email.includes('eLibrary')) {
                         this.editProfile({
                             _id: this.userId,
                             name: this.currentUser.name,

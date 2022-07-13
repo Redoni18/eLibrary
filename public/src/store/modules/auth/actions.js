@@ -11,10 +11,15 @@ export const signUp = ({ commit }, data ) => {
 }
 
 export const editProfile = ({ commit }, data ) => {
-    return axios.post('http://localhost:8000/api/editProfile/:id', data).then((response) => {
+    return axios.put('http://localhost:8000/api/editProfile/:id', data).then((response) => {
         commit('storeUser', response.data)
     })
 }
+
+export const editUser = ({ commit }, data ) => {
+    return axios.put('http://localhost:8000/api/editUser/:id', data)
+}
+
 
 export const get_profile = ({ commit }, id ) => {
     return axios.get(`http://localhost:8000/api/userProfile/${id}`)

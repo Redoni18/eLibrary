@@ -3,7 +3,7 @@
 
         <div class="media">
             <div class="media-left">
-                <img src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-squares-01/3/30-512.png" class="media-object" style="width:45px">
+                <b-avatar variant="primary" v-if="user.authenticated" :text="name.slice(0, 2)" size="2rem"></b-avatar>
             </div>
             <div class="media-body">
                 <h6 class="media-heading">{{ name }}</h6>
@@ -18,10 +18,16 @@
 
 
 <script>
+import { mapGetters } from 'vuex'
     export default {
         name: 'User',
 
-        props: ['name', 'email']
+        props: ['name', 'email'],
+        computed: {
+            ...mapGetters({
+                user: 'getUser'
+            }),
+        }
     }
 </script>
 

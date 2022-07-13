@@ -23,18 +23,36 @@
                         </template>
                     </mdb-dropdown-toggle>
                     <mdb-dropdown-menu>
-                        <mdb-dropdown-item @click.native="removeMessage(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                        <mdb-dropdown-item @click.native="showModal = true;selectedMessage = props.row"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
                     </mdb-dropdown-menu>
                 </mdb-dropdown>
             </span>
         </template>  
     </vue-good-table>
+
+        <div>
+        <mdb-modal v-if="showModal" @close="showModal = false">
+        <mdb-modal-header>
+            <mdb-modal-title>Warning</mdb-modal-title>
+        </mdb-modal-header>
+        <mdb-modal-body>Are you sure you want to delete selected message?</mdb-modal-body>
+        <mdb-modal-footer>
+            <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
+            <mdb-btn color="danger" @click.native="removeMessage(selectedMessage._id)">Delete</mdb-btn>
+        </mdb-modal-footer>
+        </mdb-modal>
+    </div>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
+import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn } from 'mdbvue';
 import {mapActions} from 'vuex'
 export default {
     name: "MessagesList",
@@ -43,11 +61,19 @@ export default {
       mdbDropdownItem,
       mdbDropdownMenu,
       mdbDropdownToggle,
-      mdbIcon
+      mdbIcon,
+        mdbModal,
+        mdbModalHeader,
+        mdbModalTitle,
+        mdbModalBody,
+        mdbModalFooter,
+        mdbBtn
     },
     data(){
         return {
             messages: [],
+            showModal: false,
+            selectedMessage: {},
             columns: [
                 {
                     label: 'Sender',
@@ -101,6 +127,8 @@ export default {
                 icon: true,
                 rtl: false
             });
+
+            this.showModal = false
 
             await this.getMessages()
         },

@@ -75,7 +75,7 @@
   </mdb-navbar>
     <div class="p-5 content-container">
         <router-view></router-view>
-      </div>
+    </div>
   </div>
     <!-- /Random user navbar -->
 
@@ -192,6 +192,13 @@
                 id="sidebar-item"
                 :action="true"
                 ><mdb-icon icon="school" class="mr-3" /><p>Faculties</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/users'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="users" class="mr-3" /><p>Users</p></mdb-list-group-item
                 >
             </router-link>
           </div>

@@ -43,7 +43,9 @@ const upcomingController = require('../controllers/upcomingController');
  */
 router.post('/api/signup', authController.post_signup);
 router.post('/api/signin', authController.post_signin);
-router.post('/api/editProfile/:id', authController.edit_profile);
+router.put('/api/editProfile/:id', authController.edit_profile);
+router.put('/api/editUser/:id', authController.edit_user);
+router.delete('/api/users/deleteUser/:id', authController.delete_user);
 router.get('/api/userProfile/:id', authController.get_profile);
 router.get('/api/user/auth', auth.verify, authController.get_auth);
 
