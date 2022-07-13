@@ -44,7 +44,7 @@
   </template>
 </vue-good-table>
     <div>
-    <mdb-modal v-if="showModal" @close="showModal = false">
+    <mdb-modal centered v-if="showModal" @close="showModal = false">
       <mdb-modal-header>
         <mdb-modal-title>Warning</mdb-modal-title>
       </mdb-modal-header>

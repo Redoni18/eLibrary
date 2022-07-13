@@ -381,6 +381,15 @@ export default {
             case ('countries'): 
               this.activeItem = 4
               break
+            case ('requests'): 
+              this.activeItem = 4
+              break
+            case ('faculties'): 
+              this.activeItem = 4
+              break
+            case ('users'): 
+              this.activeItem = 4
+              break
             case ('booksList'): 
               this.activeItem = 3
               break
