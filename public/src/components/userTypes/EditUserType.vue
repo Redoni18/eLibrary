@@ -76,6 +76,22 @@
                         await axios.put(`http://localhost:8000/api/editUserType/${this.userTypeId}`, {_id: this.userTypeId, userType: this.typeUser})
                         this.typeUser = null
                         this.$router.push({path:"/userTypes"})
+
+                        this.$toast.success("User type edited successfully", {
+                            position: "top-right",
+                            timeout: 5000,
+                            closeOnClick: true,
+                            pauseOnFocusLoss: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            draggablePercent: 0.6,
+                            showCloseButtonOnHover: false,
+                            hideProgressBar: true,
+                            closeButton: "button",
+                            icon: true,
+                            rtl: false
+                        });
+
                         return true;
                     }
                 });

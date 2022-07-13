@@ -87,13 +87,6 @@ export default {
     },
 
     methods: {
-        onRowClick(params){
-            if(this.user.data.isAdmin){
-                this.toggleButtons = !this.toggleButtons
-                this.rowId = params.row._id
-            }
-            return
-        },
         async fetchCountries(){
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
@@ -104,11 +97,24 @@ export default {
             });
         },
         async removeCountry(id) {
-            console.log('id', id)
-            if(window.confirm("Are you sure you want to remove this country?")){
-                await axios.delete(`http://localhost:8000/api/deleteCountry/${id}`)
-                this.toggleButtons = false
-            }
+            await axios.delete(`http://localhost:8000/api/deleteCountry/${id}`)
+            this.toggleButtons = false
+
+
+            this.$toast.success("Country deleted successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
             await this.fetchCountries()
         },
         

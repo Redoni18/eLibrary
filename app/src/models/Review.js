@@ -22,8 +22,8 @@ const reviewSchema = new Schema({
         required: true
     },
     username: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.Mixed, 
+        ref: 'schema' 
     }
 })
 

@@ -52,7 +52,6 @@ export default {
     data() {
         return {
             user: JSON.parse(window.localStorage.getItem('user')),
-            toggleButtons: false,
             rowId: null,
             memberships: null,
             columns: [
@@ -97,13 +96,7 @@ export default {
     },
 
     methods: {
-        onRowClick(params){
-            if(this.user.data.isAdmin){
-                this.toggleButtons = !this.toggleButtons
-                this.rowId = params.row._id
-            }
-            return
-        },
+
         async fetchMemberships(){
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
@@ -113,11 +106,7 @@ export default {
             });
         },
         async removeMembership(id) {
-            console.log('id', id)
-            if(window.confirm("Are you sure you want to remove this membership?")){
-                await axios.delete(`http://localhost:8000/api/deleteMembership/${id}`)
-                this.toggleButtons = false
-            }
+            await axios.delete(`http://localhost:8000/api/deleteMembership/${id}`)
             await this.fetchMemberships()
         }
     }

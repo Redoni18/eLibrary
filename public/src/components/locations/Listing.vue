@@ -33,21 +33,44 @@
       </span>
     </template>
 </vue-good-table>
+<div>
+    <mdb-modal centered v-if="showModal" @close="showModal = false">
+    <mdb-modal-header>
+        <mdb-modal-title>Warning</mdb-modal-title>
+    </mdb-modal-header>
+    <mdb-modal-body>Are you sure you want to delete selected location?</mdb-modal-body>
+    <mdb-modal-footer>
+        <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
+        <mdb-btn color="danger" @click.native="removeLocation(selectedLocation)">Delete</mdb-btn>
+    </mdb-modal-footer>
+    </mdb-modal>
+</div>
 </div>
     
 </template>
 
 <script>
 import axios from 'axios'
-import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
+import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn} from 'mdbvue';
 export default {
     name: "LocationsListing",
     components: {
-      mdbDropdown,
-      mdbDropdownItem,
-      mdbDropdownMenu,
-      mdbDropdownToggle,
-      mdbIcon
+        mdbDropdown,
+        mdbDropdownItem,
+        mdbDropdownMenu,
+        mdbDropdownToggle,
+        mdbIcon,
+        mdbModal,
+        mdbModalHeader,
+        mdbModalTitle,
+        mdbModalBody,
+        mdbModalFooter,
+        mdbBtn
     },
     data() {
         return {
@@ -55,6 +78,8 @@ export default {
             toggleButtons: false,
             rowId: null,
             locations: null,
+            showModal: false,
+            selectedLocation: {},
             columns: [
                 {
                     label: 'City',
@@ -92,13 +117,6 @@ export default {
     },
 
     methods: {
-        onRowClick(params){
-            if(this.user.data.isAdmin){
-                this.toggleButtons = !this.toggleButtons
-                this.rowId = params.row._id
-            }
-            return
-        },
         async fetchLocations(){
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
@@ -107,12 +125,25 @@ export default {
                 }
             });
         },
-        async removeLocation(id) {
-            console.log('id', id)
-            if(window.confirm("Are you sure you want to remove this location?")){
-                await axios.delete(`http://localhost:8000/api/deleteLocation/${id}`)
-                this.toggleButtons = false
-            }
+        async removeLocation(location) {
+            await axios.delete(`http://localhost:8000/api/deleteLocation/${location._id}`)
+            this.toggleButtons = false
+
+            this.$toast.success("Location deleted successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
+            this.showModal = false
             await this.fetchLocations()
         }
     }

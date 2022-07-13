@@ -10,9 +10,15 @@
     </mdb-navbar-brand>
     <mdb-navbar-toggler>
       <mdb-navbar-nav>
-        <router-link to="/#">
-            <mdb-nav-item href="#">Books</mdb-nav-item>
-        </router-link>
+            <mdb-dropdown start tag="li" class="nav-item">
+            <mdb-dropdown-toggle tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
+                Books
+            </mdb-dropdown-toggle>
+            <mdb-dropdown-menu>
+                <mdb-dropdown-item :to="{path: '/'}">Books</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{path: '/booksList/listing'}">Listing</mdb-dropdown-item>
+            </mdb-dropdown-menu>
+        </mdb-dropdown>
         <router-link :to="({path: '/contact-us'})">
             <mdb-nav-item href="#">Contact Us</mdb-nav-item>
         </router-link>
@@ -71,7 +77,7 @@
   </mdb-navbar>
     <div class="p-5 content-container">
         <router-view></router-view>
-      </div>
+    </div>
   </div>
     <!-- /Random user navbar -->
 
@@ -183,11 +189,18 @@
                 ><mdb-icon icon="concierge-bell" class="mr-3" /><p>Requests</p></mdb-list-group-item
                 >
             </router-link>
-            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: './faculties'})">
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/faculties'})">
                 <mdb-list-group-item
                 id="sidebar-item"
                 :action="true"
                 ><mdb-icon icon="school" class="mr-3" /><p>Faculties</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/users'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="users" class="mr-3" /><p>Users</p></mdb-list-group-item
                 >
             </router-link>
           </div>
@@ -368,6 +381,15 @@ export default {
               this.activeItem = 4
               break
             case ('countries'): 
+              this.activeItem = 4
+              break
+            case ('requests'): 
+              this.activeItem = 4
+              break
+            case ('faculties'): 
+              this.activeItem = 4
+              break
+            case ('users'): 
               this.activeItem = 4
               break
             case ('booksList'): 

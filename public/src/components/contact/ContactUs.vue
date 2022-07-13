@@ -76,9 +76,24 @@
                 this.$validator.validateAll().then( async (result) => {
                     if (result) {
                         await axios.post("http://localhost:8000/api/postMessage", {messageBody: this.messageBody, user: this.user.data, senderName: this.user.data})
-                        this.messageBody = null
-                        return true;
                     }
+                });
+                this.$router.push('/contact-us')
+                this.messageBody = ''
+
+                this.$toast.success("Message sent successfully", {
+                    position: "top-right",
+                    timeout: 5000,
+                    closeOnClick: true,
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    draggablePercent: 0.6,
+                    showCloseButtonOnHover: false,
+                    hideProgressBar: true,
+                    closeButton: "button",
+                    icon: true,
+                    rtl: false
                 });
             },
         },

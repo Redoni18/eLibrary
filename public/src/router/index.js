@@ -14,6 +14,7 @@ import ContactUs from '@/components/contact/ContactUs'
 import MessagesListing from '@/components/contact/Listing'
 import UserProfile from '@/components/user-profile/UserProfile'
 import EditProfile from '@/components/user-profile/EditProfile'
+import EditUser from '@/components/users/EditUser'
 import NotFound from '@/components/NotFound'
 import AddReview from '@/components/reviews/AddReview.vue'
 import Reviews from '@/components/reviews/Reviews.vue'
@@ -154,6 +155,14 @@ const router = new Router({
             }
         },
         {
+            path: '/editUser/:id',
+            name: 'editUser',
+            component: EditUser,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
             path: '/userProfile/:id',
             name: 'userprofile',
             component: UserProfile,
@@ -276,7 +285,7 @@ const router = new Router({
         },{
             path: '/allMemberships',
             name: 'Memberships',
-            component: Memberships,
+            component: MembershipsListing,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }
