@@ -3,12 +3,45 @@ const auth = require("../helper/auth");
 const bcrypt = require('../helper/bcrypt.js');
 var ObjectID = require('mongoose').Types.ObjectId
 
+const { body, validationResult } = require('express-validator/check')
+
+//validation method
+exports.validate = (method) => {
+  switch (method) {
+    case 'post_signup': {
+     return [ 
+            body('name').exists().isLength({ min: 2, max: 50 }),
+            body('email').isEmail(),
+            body('userType').exists()
+       ]   
+    }
+    case 'edit_profile': {
+        return [ 
+            body('name').exists().isLength({ min: 2, max: 50 }),
+            body('email').isEmail(),
+        ]   
+    }
+    case 'edit_user': {
+        return [ 
+            body('email').isEmail()
+        ]   
+    }
+       
+  }
+}
+
 
 
 
 exports.post_signup = function (req, res) {
 
     let hash_password = bcrypt.hash(req.body.password);
+
+    const errors = validationResult(req)
+
+    if(errors.isEmpty()){
+        newBook.save();
+    }
 
     let user = new User({
         name: req.body.name,
@@ -39,6 +72,12 @@ exports.post_signup = function (req, res) {
 
 exports.edit_profile = function (req, res) {
 
+    const errors = validationResult(req)
+
+    if(!errors.isEmpty()){
+        return res.status(500).send(`Invalid Data`)
+    }
+
     let updatedInfo = {
         name: req.body.name,
         email: req.body.email,
@@ -63,6 +102,12 @@ exports.edit_profile = function (req, res) {
 };
 
 exports.edit_user = function (req, res) {
+
+    const errors = validationResult(req)
+
+    if(!errors.isEmpty()){
+        return res.status(500).send(`Invalid Data`)
+    }
 
     let updatedInfo = {
         email: req.body.email,

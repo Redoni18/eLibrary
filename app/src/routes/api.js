@@ -41,10 +41,10 @@ const upcomingController = require('../controllers/upcomingController');
 /**
  * Routes
  */
-router.post('/api/signup', authController.post_signup);
+router.post('/api/signup', authController.validate('post_signup'),authController.post_signup);
 router.post('/api/signin', authController.post_signin);
-router.put('/api/editProfile/:id', authController.edit_profile);
-router.put('/api/editUser/:id', authController.edit_user);
+router.put('/api/editProfile/:id', authController.validate('edit_profile'),authController.edit_profile);
+router.put('/api/editUser/:id', authController.validate('edit_user'),authController.edit_user);
 router.delete('/api/users/deleteUser/:id', authController.delete_user);
 router.get('/api/userProfile/:id', authController.get_profile);
 router.get('/api/userMembership/:id', authController.get_membership);

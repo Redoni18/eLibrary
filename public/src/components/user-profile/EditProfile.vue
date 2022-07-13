@@ -10,7 +10,7 @@
                 label-cols-sm="2"
                 label-align-sm="left"                
             >
-                <b-form-input v-validate="'required|min:2|max:20'" v-model="currentUser.name" id="name" name="name" 
+                <b-form-input v-validate="'required|min:2|max:50'" v-model="currentUser.name" id="name" name="name" 
                     :class="{'name': true, 'is-invalid': errors.has('name') }">
                 </b-form-input>
                     <small v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</small>
@@ -161,7 +161,7 @@ export default {
             },
         async saveProfile() {
             await this.$validator.validateAll().then((result) => {
-                    if (result && this.currentUser.userType !== null && !this.currentUser.email.includes('eLibrary')) {
+                    if (result && this.currentUser.userType !== null && (this.user.data.isAdmin || !this.currentUser.email.includes('eLibrary'))) {
                         this.editProfile({
                             _id: this.userId,
                             name: this.currentUser.name,
@@ -200,8 +200,6 @@ export default {
                             pauseOnHover: true,
                             draggable: true,
                             draggablePercent: 0.6,
-                            showCloseButtonOnHover: false,
-                            hideProgressBar: true,
                             closeButton: "button",
                             icon: true,
                             rtl: false
