@@ -77,11 +77,6 @@ export default {
                     tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
-                    label: 'Premium',
-                    field: 'isPremium' ,
-                    tooltip: 'Click on a specific row that you want to edit or delete!',
-                },
-                {
                     label: '',
                     field: 'actions',
                     sortable: false,
