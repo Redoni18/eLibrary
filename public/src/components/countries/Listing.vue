@@ -100,7 +100,7 @@ export default {
             this.toggleButtons = false
 
 
-            this.$toast.success("Countrie deleted successfully", {
+            this.$toast.success("Country deleted successfully", {
                 position: "top-right",
                 timeout: 5000,
                 closeOnClick: true,

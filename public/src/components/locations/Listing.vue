@@ -25,7 +25,7 @@
             <b-icon icon="three-dots"></b-icon>
           </template>
         <b-dropdown-item
-          @click="removeLocation(props.row._id)"
+          @click="showModal = true;selectedLocation = props.row"
         >
          <span
             class="d-flex align-items-center"
@@ -49,20 +49,53 @@
       </span>
   </template>
 </vue-good-table>
+<div>
+    <mdb-modal v-if="showModal" @close="showModal = false">
+    <mdb-modal-header>
+        <mdb-modal-title>Warning</mdb-modal-title>
+    </mdb-modal-header>
+    <mdb-modal-body>Are you sure you want to delete selected location?</mdb-modal-body>
+    <mdb-modal-footer>
+        <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
+        <mdb-btn color="danger" @click.native="removeLocation(selectedLocation)">Delete</mdb-btn>
+    </mdb-modal-footer>
+    </mdb-modal>
+</div>
 </div>
     
 </template>
 
 <script>
 import axios from 'axios'
+import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn} from 'mdbvue';
 export default {
     name: "LocationsListing",
+    components: {
+        mdbDropdown,
+        mdbDropdownItem,
+        mdbDropdownMenu,
+        mdbDropdownToggle,
+        mdbIcon,
+        mdbModal,
+        mdbModalHeader,
+        mdbModalTitle,
+        mdbModalBody,
+        mdbModalFooter,
+        mdbBtn
+    },
     data() {
         return {
             user: JSON.parse(window.localStorage.getItem('user')),
             toggleButtons: false,
             rowId: null,
             locations: null,
+            showModal: false,
+            selectedLocation: {},
             columns: [
                 {
                     label: 'City',
@@ -108,8 +141,8 @@ export default {
                 }
             });
         },
-        async removeLocation(id) {
-            await axios.delete(`http://localhost:8000/api/deleteLocation/${id}`)
+        async removeLocation(location) {
+            await axios.delete(`http://localhost:8000/api/deleteLocation/${location._id}`)
             this.toggleButtons = false
 
             this.$toast.success("Location deleted successfully", {
@@ -126,6 +159,7 @@ export default {
                 icon: true,
                 rtl: false
             });
+            this.showModal = false
             await this.fetchLocations()
         }
     }

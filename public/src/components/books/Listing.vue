@@ -35,13 +35,26 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item @click.native="removeBook(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                <mdb-dropdown-item @click.native="showModal=true;selectedBook=props.row;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{name: 'editBook', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
+
       </span>
   </template>
 </vue-good-table>
+    <div>
+    <mdb-modal v-if="showModal" @close="showModal = false">
+      <mdb-modal-header>
+        <mdb-modal-title>Warning</mdb-modal-title>
+      </mdb-modal-header>
+      <mdb-modal-body>Are you sure you want to delete selected book?</mdb-modal-body>
+      <mdb-modal-footer>
+        <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
+        <mdb-btn color="danger" @click.native="removeBook(selectedBook)">Delete</mdb-btn>
+      </mdb-modal-footer>
+    </mdb-modal>
+  </div>
 
 </div>
      
@@ -49,7 +62,12 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
+import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn} from 'mdbvue';
 
 import axios from 'axios'
 export default {
@@ -59,10 +77,18 @@ export default {
       mdbDropdownItem,
       mdbDropdownMenu,
       mdbDropdownToggle,
-      mdbIcon
+      mdbIcon,
+      mdbModal,
+      mdbModalHeader,
+      mdbModalTitle,
+      mdbModalBody,
+      mdbModalFooter,
+      mdbBtn
     },
     data(){
       return {
+        showModal: false,
+        selectedBook: {},
         user: JSON.parse(window.localStorage.getItem('user')),
         columns: [
           {
@@ -96,8 +122,8 @@ export default {
         getBooks: 'getBooks',
     }),
     
-    async removeBook(id) {
-      await axios.delete(`http://localhost:8000/api/books/delete/${id}`)
+    async removeBook(book) {
+      await axios.delete(`http://localhost:8000/api/books/delete/${book._id}`)
 
       this.$toast.success("Book deleted successfully", {
           position: "top-right",
@@ -113,7 +139,7 @@ export default {
           icon: true,
           rtl: false
       });
-
+      this.showModal = false
       await this.getBooks()
     },
     
