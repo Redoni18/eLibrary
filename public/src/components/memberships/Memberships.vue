@@ -130,3 +130,10 @@ export default {
         }    
     }
 </script>
+
+<style scoped>
+li{
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+</style>

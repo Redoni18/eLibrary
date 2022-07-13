@@ -285,7 +285,7 @@ const router = new Router({
         },{
             path: '/allMemberships',
             name: 'Memberships',
-            component: MembershipsListing,
+            component: Memberships,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }
