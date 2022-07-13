@@ -17,10 +17,6 @@ const membershipSchema = new Schema({
     description: {
         type: String,
         required: true
-    },
-    isPremium: {
-        type: Boolean,
-        required:true
     }
 });
 

@@ -22,7 +22,9 @@
         <router-link :to="({path: '/contact-us'})">
             <mdb-nav-item href="#">Contact Us</mdb-nav-item>
         </router-link>
-
+        <router-link :to="({path: '/allMemberships'})">
+            <mdb-nav-item href="#">Membership</mdb-nav-item>
+        </router-link>
         <router-link :to="({path: '/request'})">
             <mdb-nav-item>Request</mdb-nav-item>
         </router-link>

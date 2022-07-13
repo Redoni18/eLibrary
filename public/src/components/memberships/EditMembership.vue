@@ -77,17 +77,6 @@
                                     </div>
 
                                     <div class="form-group row">
-
-                                        <label for="isPremium" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Premium: </label>
-                                        <div class="col-sm-9 col-md-9 col-lg-9">
-                                            <input type="checkbox" class="form-control form-control-sm" id="isPremium" name="isPremium" placeholder="Premium"
-                                                   v-model="membershipIsPremium" 
-                                                   :class="{'isPremium': true, 'is-invalid': errors.has('isPremium') }"/>
-                                            <small v-show="errors.has('isPremium')" class="help is-danger">{{ errors.first('isPremium') }}</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
                                         <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-3">
                                             <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
@@ -106,7 +95,7 @@
 <script>
     import axios from 'axios'
     export default {
-        name: 'InsertMembership',
+        name: 'EditMembership',
 
         data() {
             return {
@@ -114,8 +103,7 @@
                 selectedUserType: '',
                 membershipDuration: '',
                 membershipPrice: '',
-                membershipDescription: '',
-                membershipIsPremium: false,
+                membershipDescription: ''
             }
         },
         computed: {
@@ -144,17 +132,15 @@
                 this.membershipDuration = response.data.duration
                 this.membershipPrice = response.data.price
                 this.membershipDescription = response.data.description
-                this.membershipIsPremium = response.data.isPremium
             },
             async editMembership() {
                 this.$validator.validateAll().then( async (result) => {
                     if (result) {
-                        await axios.put(`http://localhost:8000/api/editMembership/${this.membershipId}`, {_id: this.membershipId, userType: this.selectedUserType, duration: this.membershipDuration, price: this.membershipPrice, description: this.membershipDescription, isPremium: this.membershipIsPremium})
+                        await axios.put(`http://localhost:8000/api/editMembership/${this.membershipId}`, {_id: this.membershipId, userType: this.selectedUserType, duration: this.membershipDuration, price: this.membershipPrice, description: this.membershipDescription})
                         this.selectedUserType = null
                         this.membershipDuration = null
                         this.membershipPrice = null
                         this.membershipDescription = null
-                        this.membershipIsPremium === false
                         this.$router.push({path:"/memberships"})
 
                         this.$toast.success("Memebership updated successfully", {

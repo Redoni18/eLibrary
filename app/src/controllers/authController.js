@@ -15,7 +15,8 @@ exports.post_signup = function (req, res) {
         email: req.body.email,
         userType: req.body.userType,
         password: hash_password,
-        isAdmin: req.body.email.includes('@eLibrary') ? true : false
+        isAdmin: req.body.email.includes('@eLibrary') ? true : false,
+        isMember: req.body.isMember
     });
 
     user.save();
@@ -29,7 +30,8 @@ exports.post_signup = function (req, res) {
             name: user.name,
             email: user.email,
             userType: user.userType,
-            isAdmin: user.isAdmin
+            isAdmin: user.isAdmin,
+            isMember: user.isMember
         },
         token: token
     });
@@ -55,7 +57,7 @@ exports.edit_profile = function (req, res) {
         if(!err){
             res.send(doc)
         }else{
-            console.log('Error while updating profile')
+            console.log('Error while updating user profile')
         }
     })
 };
@@ -136,7 +138,8 @@ exports.post_signin = function (req, res) {
                     social1: user.social1,
                     social2: user.social2,
                     social3: user.social3,
-                    isAdmin: user.isAdmin
+                    isAdmin: user.isAdmin,
+                    isMember: user.isMember
                 },
                 token: token
             });
@@ -150,4 +153,39 @@ exports.post_signin = function (req, res) {
 
 exports.get_auth = function (req, res, next) {
     res.sendStatus(200);
+};
+
+exports.update_membership = function (req, res) {
+
+    let updatedInfo = {
+        isMember: req.body.isMember,
+    }
+
+
+    User.findByIdAndUpdate(req.body._id, {$set: updatedInfo}, {new: true}, (err, doc) => {
+        if(!err){
+            res.send(doc)
+        }else{
+            console.log('Error while updating user profile')
+        }
+    })
+};
+
+exports.get_membership = function (req, res) {
+    let id = req.params.id;
+
+    try {
+        User.findById({ _id: id }).exec(function (err, user) {
+            if (user) {
+                res.send(user);
+            } 
+        });
+      } catch (error) {
+        if ([400, 403, 404].includes(error.code)) {
+          return res.status(error.code).send(error.message);
+        }
+    
+        console.error(error);
+        return res.status(500).send(error.message);
+      }
 };

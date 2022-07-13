@@ -16,7 +16,9 @@ exports.post_location = function (req,res) {
     let newLocation = new Location({
         city: req.body.city,
         address: req.body.address,
-        phoneNumber: req.body.phoneNumber
+        phoneNumber: req.body.phoneNumber,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude
     });
 
     newLocation.save();
@@ -25,7 +27,9 @@ exports.post_location = function (req,res) {
         data: {
             city: newLocation.city,
             address: newLocation.address,
-            phoneNumber: newLocation.phoneNumber
+            phoneNumber: newLocation.phoneNumber,
+            latitude: newLocation.latitude,
+            longitude: newLocation.longitude
         }
     });
 }
@@ -38,7 +42,9 @@ exports.edit_location = function (req,res) {
     let updatedLocation = {
         city: req.body.city,
         address: req.body.address,
-        phoneNumber: req.body.phoneNumber
+        phoneNumber: req.body.phoneNumber,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude
     }
 
     Location.findByIdAndUpdate(req.body._id, {$set: updatedLocation}, {new: true}, (err, doc) => {

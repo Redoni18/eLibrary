@@ -25,6 +25,11 @@ export const get_profile = ({ commit }, id ) => {
     return axios.get(`http://localhost:8000/api/userProfile/${id}`)
 }
 
+export const get_membership = ({ commit }, id ) => {
+    return axios.get(`http://localhost:8000/api/userMembership/${id}`)
+}
+
+
 
 
 export const signIn = ({ commit }, data ) => {

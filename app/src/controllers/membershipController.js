@@ -18,7 +18,6 @@ exports.post_membership = function (req,res) {
         duration: req.body.duration,
         price: req.body.price,
         description: req.body.description,
-        isPremium: req.body.isPremium
     });
 
     newMembership.save();
@@ -28,8 +27,7 @@ exports.post_membership = function (req,res) {
             userType: newMembership.userType,
             duration: newMembership.duration,
             price: newMembership.price,
-            description: newMembership.duration,
-            isPremium: newMembership.isPremium
+            description: newMembership.duration
         },
     });
 }
@@ -43,8 +41,7 @@ exports.edit_membership = function (req, res) {
         userType: req.body.userType,
         duration: req.body.duration,
         price: req.body.price,
-        description: req.body.description,
-        isPremium: req.body.isPremium
+        description: req.body.description
     }
 
     Membership.findByIdAndUpdate(req.body._id, {$set: updatedMembership}, {new: true}, (err, doc) => {

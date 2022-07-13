@@ -39,6 +39,26 @@
                                     </div>
 
                                     <div class="form-group row">
+                                        <label for="region" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Region: </label>
+                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                            <v-select v-model="selectedRegion" :options="allRegions" label="name">
+                                                <template #search="{attributes, events}">
+                                                    <input
+                                                    id="region" 
+                                                    name="region"
+                                                    :required="!selectedRegion"
+                                                    :placeholder="!selectedRegion ? 'Select a region...' : ''"
+                                                    class="vs__search"
+                                                    :class="{'region': true, 'is-invalid': errors.has('region') }"
+                                                    v-bind="attributes"
+                                                    v-on="events"
+                                                    />
+                                                </template>
+                                            </v-select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
                                         <label for="city" class="col-sm-3 col-md-3 col-lg-3 col-form-label">City: </label>
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <v-select v-model="selectedCity" :options="allCities" label="name">
@@ -75,7 +95,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="phoneNumber" name="phoneNumber" placeholder="Insert phone number"
                                                    v-model="locationPhoneNumber"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|numeric|max:20'"
                                                    :class="{'phoneNumber': true, 'is-invalid': errors.has('phoneNumber') }"/>
                                             <small v-show="errors.has('phoneNumber')" class="help is-danger">{{ errors.first('phoneNumber') }}</small>
                                         </div>
@@ -112,15 +132,20 @@
 
         data() {
             return {
-                cities: [],
-                selectedCity: '',
+                regions: [],
+                selectedRegion: '',
                 name: '',
                 countries: [],
                 selectedCountry: '',
                 locationAddress: '',
                 locationPhoneNumber: '',
+                region: '',
+                iso: '',
+                iso2: '',
+                cities: [],
                 city: '',
-                iso: ''
+                selectedCity: '',
+                details: [],
             }
         },
         mounted() {
@@ -130,13 +155,22 @@
             allCountries() {
                 return this.countries;
             },
+            allRegions(){
+                return this.regions
+            },
             allCities(){
                 return this.cities
             },
+            allDetails(){
+                return this.details
+            }
         },
         watch : {
                selectedCountry:function() {
-                  this.getCities()
+                  this.getRegions()
+               },
+               selectedRegion:function(){
+                this.getCities()
                }
             },
         methods: {
@@ -151,22 +185,41 @@
                 //     )
                 // }
             },
-            async getCities(){
+            async getRegions(){
                 console.log(this.selectedCountry.isoCountryCode)
-                const response = await fetch(`https://api.countrystatecity.in/v1/countries/${this.selectedCountry.isoCountryCode}/cities`,requestOptions)
+                const response = await fetch(`https://api.countrystatecity.in/v1/countries/${this.selectedCountry.isoCountryCode}/states`,requestOptions)
+                const allRegions = await response.json()
+                this.regions = allRegions
+                console.log("rajonet",this.regions)
+                console.log(this.regions.iso2)
+                // for(let i = 0;i<allCities.length;i++){
+                //     this.cities.push(allCities[i].name)
+                // }
+            },
+            async getCities(){
+                const response = await fetch(`https://api.countrystatecity.in/v1/countries/${this.selectedCountry.isoCountryCode}/states/${this.selectedRegion.iso2}/cities`,requestOptions)
                 const allCities = await response.json()
                 this.cities = allCities
                 console.log("qytetet",this.cities)
                 // for(let i = 0;i<allCities.length;i++){
                 //     this.cities.push(allCities[i].name)
                 // }
+                const response1 = await fetch(`https://api.countrystatecity.in/v1/countries/${this.selectedCountry.isoCountryCode}/states/${this.selectedRegion.iso2}`,requestOptions)
+                this.details = await response1.json()
+                console.log("detajet",this.details)
                 
                 console.log(allCities)
+                console.log(this.selectedCity)
             },
+            async getDetails(){
+                const response = await fetch(`https://api.countrystatecity.in/v1/countries/${this.selectedCountry.isoCountryCode}/states/${this.selectedRegion.iso2}`,requestOptions)
+                this.details = await response.json()
+                console.log("detajet",this.details)
+            },    
             async addLocation() {
                 this.$validator.validateAll().then( async (result) => {
                     if (result) {
-                        await axios.post("http://localhost:8000/api/addLocation", {city:this.selectedCity.name, address: this.locationAddress, phoneNumber: this.locationPhoneNumber})
+                        await axios.post("http://localhost:8000/api/addLocation", {city:this.selectedCity.name, address: this.locationAddress, phoneNumber: this.locationPhoneNumber, latitude: this.details.latitude,longitude: this.details.longitude})
                         this.selectedCity = null
                         this.locationAddress = null
                         this.locationPhoneNumber = null
@@ -188,8 +241,9 @@
                         });
 
                         return true;
+                        
                     }
-
+                        console.log(selectedCity)
                 });
             }, 
         },

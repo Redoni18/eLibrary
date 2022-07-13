@@ -47,6 +47,7 @@ router.put('/api/editProfile/:id', authController.edit_profile);
 router.put('/api/editUser/:id', authController.edit_user);
 router.delete('/api/users/deleteUser/:id', authController.delete_user);
 router.get('/api/userProfile/:id', authController.get_profile);
+router.get('/api/userMembership/:id', authController.get_membership);
 router.get('/api/user/auth', auth.verify, authController.get_auth);
 
 router.get('/api/books', bookController.get_books);
@@ -97,6 +98,7 @@ router.post('/api/addMembership', membershipController.post_membership);
 router.put('/api/editMembership/:id', membershipController.edit_membership);
 router.delete('/api/deleteMembership/:id', membershipController.delete_membership);
 router.get('/api/membership/:id', membershipController.get_membership);
+router.put('/api/updateMembership/:id', authController.update_membership)
 
 
 router.get('/api/faculties', facultyController.get_faculties);
