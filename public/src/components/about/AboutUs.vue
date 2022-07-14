@@ -14,6 +14,10 @@ The World Bank eLibrary is a subscription-based website for institutions and has
                 <img src="../../assets/8364.jpg" alt="" style="width: 500px;">
             </div>
         </div>
+
+        <div class="mb-3">
+            <router-link type="submit" class="btn btn-primary" :to="{path: '/contact-us'}">Get in touch</router-link>
+        </div> 
     </div>
 </template>
 

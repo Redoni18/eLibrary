@@ -20,9 +20,9 @@
                 <mdb-dropdown-item :to="{path: '/reservedBooks'}">Reserved Books</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
-        <router-link :to="({path: '/contact-us'})">
+        <!-- <router-link :to="({path: '/contact-us'})">
             <mdb-nav-item href="#">Contact Us</mdb-nav-item>
-        </router-link>
+        </router-link> -->
         <router-link :to="({path: '/allMemberships'})">
             <mdb-nav-item href="#">Membership</mdb-nav-item>
         </router-link>
