@@ -1,6 +1,6 @@
 <template>
 <b-container v-if="categories.length >= 1" fluid="md" class="categories__container">
-    <b-button v-if="user.data.isAdmin" style="margin-bottom: 20px;" variant="success" @click="generateRoute()">Add Category</b-button>
+    <b-button v-if="user.data.isAdmin" style="margin-bottom: 20px;" variant="primary" @click="generateRoute()">Add Category</b-button>
     <vue-good-table
             :columns="columns"
             :rows="categories"
