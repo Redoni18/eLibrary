@@ -26,7 +26,6 @@
         </b-card>
        <div style="margin-top: 20px;" v-if="user.data.isAdmin">
             <b-button variant="dark" @click="editForm('cancel')">Cancel</b-button>
-            <b-button variant="danger" @click.prevent="remove()">Delete</b-button>
             <b-button variant="info" @click="edit()">Edit</b-button>
        </div>
        <div v-else style="margin-top: 20px;">
@@ -90,27 +89,6 @@ export default {
                 }
             }
         },
-         async remove() {
-             await axios.delete(`http://localhost:8000/api/category/delete/${this.category._id}`)
-                 .then(response => {
-                this.$router.push('/categories')
-
-                this.$toast.success("Category deleted successfully", {
-                    position: "top-right",
-                    timeout: 5000,
-                    closeOnClick: true,
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    draggablePercent: 0.6,
-                    showCloseButtonOnHover: false,
-                    hideProgressBar: true,
-                    closeButton: "button",
-                    icon: true,
-                    rtl: false
-                });
-            })
-        }
     },
      props: {
         default: true

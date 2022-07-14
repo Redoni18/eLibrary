@@ -1,5 +1,17 @@
 const Messages = require('../models/Messages');
 var ObjectID = require('mongoose').Types.ObjectId
+const { body, validationResult } = require('express-validator/check')
+
+//validation method
+exports.validate = (method) => {
+  switch (method) {
+    case 'post_messages': {
+     return [ 
+            body('messageBody').exists().isLength({ min: 2, max: 500 }),
+       ]   
+    }
+  }
+}
 
 exports.get_messages = function (req, res) {
     Messages.find((err, docs) => {
@@ -18,6 +30,8 @@ exports.post_messages = function (req, res) {
     var now = today.toLocaleDateString('en-us');
     console.log(now);
 
+    const errors = validationResult(req)
+
     let newMessage = new Messages({
         messageBody: req.body.messageBody,
         user: req.body.user.id,
@@ -25,7 +39,10 @@ exports.post_messages = function (req, res) {
         date: now
     });
 
-    newMessage.save();
+    if(errors.isEmpty()){
+        newMessage.save();
+    }
+
 
 
     res.json({

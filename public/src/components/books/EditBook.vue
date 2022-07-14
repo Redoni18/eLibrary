@@ -83,7 +83,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <textarea type="text" class="form-control form-control-sm" id="imageUrl" name="imageUrl" placeholder="Or provide an image url"
                                                    v-model="selectedBook.imageUrl"
-                                                   v-validate="'required|min:2'"
+                                                   v-validate="'required|url'"
                                                    :class="{'imageUrl': true, 'is-invalid': errors.has('imageUrl') }"></textarea>
                                             <small v-show="errors.has('imageUrl')" class="help is-danger">{{ errors.first('imageUrl') }}</small>
                                         </div>
@@ -95,7 +95,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="number" class="form-control form-control-sm" id="isbn" name="isbn" placeholder="Enter ISBN number"
                                                    v-model="selectedBook.isbn"
-                                                   v-validate="'required|min:2|max:13'"
+                                                   v-validate="'required|min:13|max:13'"
                                                    :class="{'isbn': true, 'is-invalid': errors.has('isbn') }">
                                             <small v-show="errors.has('isbn')" class="help is-danger">{{ errors.first('isbn') }}</small>
                                         </div>

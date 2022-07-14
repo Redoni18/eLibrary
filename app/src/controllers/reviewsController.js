@@ -1,8 +1,33 @@
 const Review = require('../models/Review');
 var ObjectID = require('mongoose').Types.ObjectId;
+const { body, validationResult } = require('express-validator/check')
+
+exports.validate = (method) => {
+    switch (method) {
+      case 'post_review': {
+       return [ 
+              body('bookId').exists().isLength({ min: 2, max: 100 }),
+              body('book').exists().isLength({min: 2, max: 100}),
+              body('author').exists().isLength({min: 2, max: 1000}),
+              body('review').exists().isLength({min: 2, max: 1000}),
+              body('username').exists()
+         ]   
+      }
+      case 'edit_review': {
+          return [ 
+              body('bookId').exists().isLength({ min: 2, max: 100 }),
+              body('review').exists().isLength({min: 2, max: 1000}),
+            ]   
+         }
+    }
+  }
+
 
 
 exports.add_review = function (req, res) {
+
+    const errors = validationResult(req)
+
     const newReview = new Review({
         bookId: req.body.bookId,
         book: req.body.book,
@@ -10,7 +35,9 @@ exports.add_review = function (req, res) {
         review: req.body.review,
         username: req.body.username
     })
-    newReview.save();
+    if (errors.isEmpty) {
+        newReview.save();   
+    }
     res.json({
         data: {
             bookId: newReview.bookId,
@@ -55,8 +82,13 @@ exports.reviews = function (req, res) {
 };
 
 exports.edit_review = function (req, res) {
+    const errors = validationResult(req)
+
     if (!ObjectID.isValid(req.body.id)) {
         return res.status(400).send(`No record with given id:   ${req.body.id}`)
+    }
+    if (!errors.isEmpty()) {
+        return res.status(500).send(`Invalid Data`)
     }
     const updatedReview = {
         _id: req.body.id,

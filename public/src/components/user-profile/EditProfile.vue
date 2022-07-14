@@ -161,7 +161,7 @@ export default {
             },
         async saveProfile() {
             await this.$validator.validateAll().then((result) => {
-                    if (result && this.currentUser.userType !== null && (this.user.data.isAdmin || !this.currentUser.email.includes('eLibrary'))) {
+                    if (result && this.currentUser.userType !== null || (this.user.data.isAdmin && this.currentUser.userType === null) && (this.user.data.isAdmin || !this.currentUser.email.includes('eLibrary'))) {
                         this.editProfile({
                             _id: this.userId,
                             name: this.currentUser.name,

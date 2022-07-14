@@ -26,7 +26,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <textarea rows="4" cols="50" type="text" class="form-control form-control-sm" id="message" name="message" placeholder="Say something..."
                                                    v-model="messageBody"
-                                                   v-validate="'required|min:2|max:350'"
+                                                   v-validate="'required|min:2|max:500'"
                                                    :class="{'message': true, 'is-invalid': errors.has('message') }"></textarea>
                                             <small v-show="errors.has('message')" class="help is-danger">{{ errors.first('message') }}</small>
                                         </div>

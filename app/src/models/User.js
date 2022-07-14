@@ -59,7 +59,12 @@ const schema = new Schema({
     updatedAt: {
         type : Date,
         default : Date.now
-    }
+    },
+    books: [{ 
+        type: mongoose.Schema.Types.Mixed, 
+        ref: 'bookSchema' 
+    }]
+
 });
 
 

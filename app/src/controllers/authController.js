@@ -39,10 +39,6 @@ exports.post_signup = function (req, res) {
 
     const errors = validationResult(req)
 
-    if(errors.isEmpty()){
-        newBook.save();
-    }
-
     let user = new User({
         name: req.body.name,
         email: req.body.email,
@@ -52,7 +48,9 @@ exports.post_signup = function (req, res) {
         isMember: req.body.isMember
     });
 
-    user.save();
+    if(errors.isEmpty()){
+        user.save();
+    }
 
     let payload = { id: user.id };
     let token = auth.encode(payload);
@@ -217,6 +215,50 @@ exports.update_membership = function (req, res) {
 };
 
 exports.get_membership = function (req, res) {
+    let id = req.params.id;
+
+    try {
+        User.findById({ _id: id }).exec(function (err, user) {
+            if (user) {
+                res.send(user);
+            } 
+        });
+      } catch (error) {
+        if ([400, 403, 404].includes(error.code)) {
+          return res.status(error.code).send(error.message);
+        }
+    
+        console.error(error);
+        return res.status(500).send(error.message);
+      }
+};
+
+
+exports.borrow_books = function (req, res) {
+    let borrowedBooks = {
+        name: req.body.name,
+        email: req.body.email,
+        userType: req.body.userType,
+        bio: req.body.bio,
+        city: req.body.city,
+        birthday: req.body.birthday,
+        social1: req.body.social1,
+        social2: req.body.social2,
+        social3: req.body.social3,
+        isAdmin: req.body.isAdmin,
+        books: req.body.books
+    }
+
+    User.findByIdAndUpdate(req.body._id, {$set: borrowedBooks}, {new: true}, (err, doc) => {
+        if(!err){
+            res.send(doc)
+        }else{
+            console.log('Error while updating user profile')
+        }
+    })
+};
+
+exports.get_borrowed_books = function (req, res) {
     let id = req.params.id;
 
     try {

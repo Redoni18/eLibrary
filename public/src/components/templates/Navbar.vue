@@ -15,13 +15,14 @@
                 Books
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item :to="{path: '/'}">Books</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{path: '/'}">All Books</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{path: '/booksList/listing'}">Listing</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{path: '/reservedBooks'}">Reserved Books</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
-        <router-link :to="({path: '/contact-us'})">
+        <!-- <router-link :to="({path: '/contact-us'})">
             <mdb-nav-item href="#">Contact Us</mdb-nav-item>
-        </router-link>
+        </router-link> -->
         <router-link :to="({path: '/allMemberships'})">
             <mdb-nav-item href="#">Membership</mdb-nav-item>
         </router-link>
@@ -30,6 +31,9 @@
         </router-link>
         <router-link :to="({path: '/request'})">
             <mdb-nav-item>Request</mdb-nav-item>
+        </router-link>
+        <router-link :to="({path: '/about-us'})">
+            <mdb-nav-item>About Us</mdb-nav-item>
         </router-link>
       </mdb-navbar-nav>
       <mdb-navbar-nav right>
@@ -140,6 +144,13 @@
                 ><mdb-icon icon="clock" class="mr-3" /><p>Upcoming Books</p></mdb-list-group-item
                 >
             </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/reservedBooks'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="save" class="mr-3" /><p>Reserved Books</p></mdb-list-group-item
+                >
+            </router-link>
           </div>
         <mdb-list-group-item
             id="sidebar-item"
@@ -199,6 +210,15 @@
                 ><mdb-icon icon="school" class="mr-3" /><p>Faculties</p></mdb-list-group-item
                 >
             </router-link>
+
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/staff'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="briefcase" class="mr-3" /><p>Staff</p></mdb-list-group-item
+                >
+             </router-link>
+             
             <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/users'})">
                 <mdb-list-group-item
                 id="sidebar-item"
