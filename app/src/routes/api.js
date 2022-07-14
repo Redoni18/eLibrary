@@ -36,6 +36,7 @@ const facultyController = require('../controllers/facultyController')
 const countryController = require('../controllers/countryController')
 const requestsController = require('../controllers/requestsController');
 const upcomingController = require('../controllers/upcomingController');
+const eventController = require('../controllers/eventController')
 
 
 /**
@@ -124,5 +125,13 @@ router.get('/api/get/upcoming/:id', upcomingController.get_upcoming);
 router.get('/api/upcomings', upcomingController.get_upcomings);
 router.delete('/api/upcoming/delete/:id', upcomingController.delete_upcoming);
 router.put('/api/upcoming/edit', upcomingController.edit_upcoming);
+
+router.post('/api/createEvent', eventController.validate('post_event'),eventController.post_event);
+router.put('/api/editEvent/:id', eventController.validate('edit_event'), eventController.edit_event);
+router.get('/api/events', eventController.get_events);
+router.get('/api/events/currentEvents', eventController.get_current_events);
+router.get('/api/events/futureEvents', eventController.get_future_events);
+router.get('/api/event/:id', eventController.get_event);
+router.delete('/api/deleteEvent/:id', eventController.delete_event);
 
 module.exports = router;
