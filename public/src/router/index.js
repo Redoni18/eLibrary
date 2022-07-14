@@ -424,7 +424,8 @@ const router = new Router({
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }
-        }
+        },
+        {
             path: '/staff',
             name: 'StaffListing',
             component: StaffListing,

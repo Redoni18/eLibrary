@@ -218,6 +218,14 @@
                 ><mdb-icon icon="briefcase" class="mr-3" /><p>Staff</p></mdb-list-group-item
                 >
              </router-link>
+
+             <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/events/listing'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="calendar-check" class="mr-3" /><p>Events</p></mdb-list-group-item
+                >
+             </router-link>
              
             <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/users'})">
                 <mdb-list-group-item

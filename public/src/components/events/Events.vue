@@ -3,37 +3,32 @@
   <b-tabs content-class="mt-3">
     <b-tab title="Curent events" active>
             <li v-for="event in events"  :key="event.id"> 
-                <mdb-card>
-                    <mdb-card-body>
-                        <mdb-card-title>{{event.name}}</mdb-card-title>
-                        <mdb-card-text>{{event.description}} </mdb-card-text>
-                        <mdb-card-text>{{event.startDate}} / {{event.endDate}}</mdb-card-text>
-                        <div>
-                            <b-carousel
-                            id="carousel-1"
-                            v-model="slide"
-                            :interval="94000"
-                            controls
-                            indicators
-                            background="white"
-                            img-width="1024"
-                            img-height="600"
-                            style="text-shadow: 1px 1px 2px #333;"
-                            @sliding-start="onSlideStart"
-                            @sliding-end="onSlideEnd"
-                            >
-                            
-                            <b-carousel-slide img-blank img-alt="Blank image" v-for="book in event.books" :key="book.id">
-                                <div>
-                                    <Book  @changePage="changePage(book.id)" :title="book.title" :description="book.description" :year="book.year" :author="book.author" :imageUrl="book.imageUrl"/>
-                                </div>
-                            </b-carousel-slide>
-
-                            
-                            </b-carousel>
+                <div style="text-align: center;">
+                    <h3>{{event.name}}</h3>
+                <small style="margin-bottom: 10px;">{{event.startDate}} / {{event.endDate}}</small>
+                    <b-carousel
+                    id="carousel-1"
+                    v-model="slide"
+                    :interval="4000"
+                    controls
+                    indicators
+                    background="darkgray"
+                    img-width="1024"
+                    img-height="600"
+                    style="color: black;"
+                    @sliding-start="onSlideStart"
+                    @sliding-end="onSlideEnd"
+                    >
+                    
+                    <b-carousel-slide style="height:500px;" img-blank v-for="book in event.books" :key="book.id">
+                        <div class="mt-0">
+                            <Book  @changePage="changePage(book.id)" :title="book.title" :description="book.description" :year="book.year" :author="book.author" :imageUrl="book.imageUrl"/>
                         </div>
-                    </mdb-card-body>
-                </mdb-card>
+                    </b-carousel-slide>
+
+                    
+                    </b-carousel>
+                </div>
             </li>    
     </b-tab>          
     <b-tab title="Upcoming events">
