@@ -1,7 +1,7 @@
 <template>
-<div>
-  {{userBorrowedBooks}}
+<div class="books-table__container">
 <vue-good-table
+    :class="'books-table'"
     :columns="columns"
     :rows="books"
     :search-options="{
@@ -22,7 +22,7 @@
       <span v-if="props.column.field === 'author'">
         <span>{{props.row.author}}</span>
       </span>
-      <span v-if="props.column.field === 'description'">
+      <span v-if="props.column.field === 'description'" class="book-table__description">
         <span>{{props.row.description}}</span>
       </span>
       <span v-if="props.column.field === 'year'">
@@ -36,7 +36,7 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item :disabled="!isMember && userBorrowedBooks.length != 0" @click.native="borrowBook(props.row)"><mdb-icon icon="save" class="mr-3" />Reserve Book</mdb-dropdown-item>
+                <mdb-dropdown-item :disabled="!isMember && userBorrowedBooks.length != 0 || (isMember && userBorrowedBooks.length == 8)" @click.native="borrowBook(props.row)"><mdb-icon icon="save" class="mr-3" />Reserve Book</mdb-dropdown-item>
                 <mdb-dropdown-item v-if="user.data.isAdmin" @click.native="showModal=true;selectedBook=props.row;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
                 <mdb-dropdown-item v-if="user.data.isAdmin" :to="{name: 'editBook', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
             </mdb-dropdown-menu>
@@ -158,7 +158,20 @@ export default {
       }else {
         for(let i=0;i<this.userBorrowedBooks.length;i++){
           if(this.userBorrowedBooks[i]._id === books._id){
-            console.log('borrowed')
+            this.$toast.error("This book is already reserved by you", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
             return false
           }
         }
@@ -178,6 +191,21 @@ export default {
         social3: this.currentUser.data.social3,
         isAdmin: this.currentUser.data.isAdmin,
         books: this.userBorrowedBooks
+      });
+
+      this.$toast.success("Bood reserved successfully", {
+          position: "top-right",
+          timeout: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false
       });
 
 
@@ -208,23 +236,49 @@ export default {
 </script>
 
 <style scoped>
-.more-options{
-  transition: 0.3s;
+
+.books-table__container{
+  display: flex;
+  justify-content: center;
 }
 
-.more-options:hover{
-  border-radius: 5px;
-  background: rgb(230, 230, 230);
-  color:rgb(0, 0, 0);
-  transition: 0.3s;
+.books-table{
+  width: 1200px;
+
 }
 
 .title-cell{
-  font-weight: 600;
+    font-weight: 600;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
 }
 
 .title-cell:hover{
   cursor: pointer;
   color: #2d96e0;
 }
+
+.book-table__description{
+    font-weight: normal;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+@media only screen and (max-width: 1300px){
+
+    .books-table{
+      width: 900px;
+
+    }
+}
+
+
 </style>

@@ -26,27 +26,50 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item @click.native="removeCountry(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                <mdb-dropdown-item @click.native="showModal = true;selectedCountry=props.row;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
       </span>
   </template>
 </vue-good-table>
+<div>
+    <mdb-modal centered v-if="showModal" @close="showModal = false">
+    <mdb-modal-header>
+        <mdb-modal-title>Warning</mdb-modal-title>
+    </mdb-modal-header>
+    <mdb-modal-body>Are you sure you want to delete selected country?</mdb-modal-body>
+    <mdb-modal-footer>
+        <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
+        <mdb-btn color="danger" @click.native="removeCountry(selectedCountry)">Delete</mdb-btn>
+    </mdb-modal-footer>
+    </mdb-modal>
+</div>
 </div>
     
 </template>
 
 <script>
 import axios from 'axios'
-import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
+import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn } from 'mdbvue';
 export default {
-    name: "CountriesListing",
+    name: "LocationsListing",
     components: {
-      mdbDropdown,
-      mdbDropdownItem,
-      mdbDropdownMenu,
-      mdbDropdownToggle,
-      mdbIcon
+        mdbDropdown,
+        mdbDropdownItem,
+        mdbDropdownMenu,
+        mdbDropdownToggle,
+        mdbIcon,
+        mdbModal,
+        mdbModalHeader,
+        mdbModalTitle,
+        mdbModalBody,
+        mdbModalFooter,
+        mdbBtn
     },
     data() {
         return {
@@ -54,6 +77,8 @@ export default {
             toggleButtons: false,
             rowId: null,
             countries: null,
+            showModal: false,
+            selectedCountry: {},
             columns: [
                 {
                     label: 'Name',
@@ -96,9 +121,9 @@ export default {
                 }
             });
         },
-        async removeCountry(id) {
-            await axios.delete(`http://localhost:8000/api/deleteCountry/${id}`)
-            this.toggleButtons = false
+        async removeCountry(country) {
+            await axios.delete(`http://localhost:8000/api/deleteCountry/${country._id}`)
+            await this.fetchCountries()
 
 
             this.$toast.success("Country deleted successfully", {
@@ -115,6 +140,7 @@ export default {
                 icon: true,
                 rtl: false
             });
+            this.showModal = false
             await this.fetchCountries()
         },
         

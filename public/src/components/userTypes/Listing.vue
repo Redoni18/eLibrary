@@ -17,7 +17,6 @@
             perPageDropdown: [5, 7, 10],
             dropdownAllowAll: false,
         }"
-      
        >
     <template v-if="user.data.isAdmin" v-slot:table-row="props">
       <span v-if="user.data.isAdmin && props.column.field === 'actions'">
@@ -54,13 +53,15 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
     mdbModalHeader,
     mdbModalTitle,
     mdbModalBody,
     mdbModalFooter,
-    mdbBtn} from 'mdbvue';
+    mdbBtn } from 'mdbvue';
+
+import axios from 'axios'
+
 export default {
     name: "UserTypesListing",
     components: {
@@ -87,7 +88,6 @@ export default {
                 {
                     label: 'Type of user',
                     field: 'userType',
-                    tooltip: 'Click on a specific row that you want to edit or delete!',
                 },
                 {
                     label: '',
@@ -141,11 +141,11 @@ export default {
                 icon: true,
                 rtl: false
             });
-            this.showModal = false
             await this.fetchUserTypes()
         }
     }
 }
+
 </script>
 
 <style scoped>

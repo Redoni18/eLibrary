@@ -6,6 +6,8 @@ import Signup from '@/components/auth/Signup'
 import Signin from '@/components/auth/Signin'
 import Users from '@/components/users/Users'
 import Books from '../components/books/Books'
+import ReservedBooks from '../components/books/ReservedBooks'
+import ReservedListing from '../components/books/ReservedListing'
 import BooksListing from '@/components/books/Listing'
 import InsertBook from '@/components/books/InsertBook'
 import BookDetails from '@/components/books/BookDetails'
@@ -40,6 +42,9 @@ import AddCountry from '@/components/countries/AddCountry.vue'
 import CountriesListing from '@/components/countries/Listing'
 import Upcomings from '@/components/books/Upcoming'
 import RequestPage from '@/components/requests/RequestPage'
+import CreateStaff from '@/components/staff/CreateStaff'
+import StaffListing from '@/components/staff/Listing'
+import EditStaff from '@/components/staff/EditStaff'
 
 Vue.use(Router);
 
@@ -85,6 +90,22 @@ const router = new Router({
             path: '/books',
             name: 'books',
             component: Books,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/reservedBooks',
+            name: 'reserved',
+            component: ReservedBooks,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/reservedBooks/listing',
+            name: 'reservedListing',
+            component: ReservedListing,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
@@ -363,7 +384,31 @@ const router = new Router({
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }
-        }
+        },
+        {
+            path: '/staff',
+            name: 'StaffListing',
+            component: StaffListing,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/insertStaff',
+            name: 'InsertStaff',
+            component: CreateStaff,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/staff/editStaff/:id',
+            name: 'EditStaff',
+            component: EditStaff,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
 
     ]
 })

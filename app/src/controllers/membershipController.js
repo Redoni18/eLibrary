@@ -1,5 +1,27 @@
 const Membership = require('../models/Membership');
 var ObjectID = require('mongoose').Types.ObjectId;
+const { body, validationResult } = require('express-validator/check')
+
+exports.validate = (method) => {
+    switch (method) {
+      case 'post_membership': {
+       return [ 
+            body('userType').exists(),
+            body('duration').exists().isLength({min: 2, max: 20}),
+            body('price').exists().isNumeric(),
+            body('description').exists().isLength({min:2,max:150})
+            ]   
+      }
+      case 'edit_membership': {
+        return [ 
+            body('userType').exists(),
+            body('duration').exists().isLength({min: 2, max: 20}),
+            body('price').exists().isNumeric(),
+            body('description').exists().isLength({min:2,max:150})
+            ]   
+         }
+    }
+  }
 
 exports.get_memberships = function (req,res) {
     Membership.find((err,docs) => {
@@ -13,6 +35,8 @@ exports.get_memberships = function (req,res) {
 
 exports.post_membership = function (req,res) {
 
+    const errors = validationResult(req)
+
     let newMembership = new Membership ({
         userType: req.body.userType,
         duration: req.body.duration,
@@ -20,7 +44,9 @@ exports.post_membership = function (req,res) {
         description: req.body.description,
     });
 
-    newMembership.save();
+    if(errors.isEmpty()){
+        newMembership.save();
+    }
 
     res.json({
         data: {
@@ -33,8 +59,14 @@ exports.post_membership = function (req,res) {
 }
 
 exports.edit_membership = function (req, res) {
+
+    const errors = validationResult(req)
+
     if(!ObjectID.isValid(req.body._id)){
         return res.status(400).send(`No record with given id:   ${req.body._id}`)
+    }
+    if(!errors.isEmpty()){
+        return res.status(500).send(`Invalid Data`)
     }
 
     let updatedMembership = {

@@ -1,4 +1,4 @@
-Faculties-Listing.vue
+
 
 <template>
 <div>
@@ -57,6 +57,7 @@ Faculties-Listing.vue
 </template>
 
 <script>
+
 import axios from 'axios'
 import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
     mdbModalHeader,
@@ -68,6 +69,7 @@ import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIc
 
 export default {
     name: "FacultiesListing",
+
     components: {
       mdbDropdown,
       mdbDropdownItem,
@@ -81,6 +83,7 @@ export default {
       mdbModalFooter,
       mdbBtn
     },
+
     data() {
         return {
             showModal: false,
@@ -127,42 +130,37 @@ export default {
                 }
             });
         },
+
         async removeFaculty(id) {
           await axios.delete(`http://localhost:8000/api/deleteFaculty/${id}`)
           
-         this.$toast.success("Faculty deleted successfully", {
-            position: "top-right",
-            timeout: 5000,
-            closeOnClick: true,
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            draggable: true,
-            draggablePercent: 0.6,
-            showCloseButtonOnHover: false,
-            hideProgressBar: true,
-            closeButton: "button",
-            icon: true,
-            rtl: false
-            });
+           this.$toast.success("Faculty deleted successfully", {
+              position: "top-right",
+              timeout: 5000,
+              closeOnClick: true,
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              draggable: true,
+              draggablePercent: 0.6,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: "button",
+              icon: true,
+              rtl: false
+              });
 
-            this.showModal = false
-            await this.fetchFaculties()
+              this.showModal = false
+
+              await this.fetchFaculties()
           }
         }
-    }
+
+  }
+
+
 </script>
 
 <style scoped>
 
-.more-options{
-  transition: 0.3s;
-}
-
-.more-options:hover{
-  border-radius: 5px;
-  background: rgb(230, 230, 230);
-  color:rgb(0, 0, 0);
-  transition: 0.3s;
-}
 
 </style>

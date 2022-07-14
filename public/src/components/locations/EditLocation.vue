@@ -31,7 +31,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="address" name="address" placeholder="Add new address"
                                                    v-model="locationAddress"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|min:2|max:50'"
                                                    :class="{'address': true, 'is-invalid': errors.has('address') }"/>
                                             <small v-show="errors.has('address')" class="help is-danger">{{ errors.first('address') }}</small>
                                         </div>
