@@ -25,9 +25,9 @@
             perPageDropdown: [5, 7, 10],
             dropdownAllowAll: false,
         }"
-           >
-    <template v-slot:table-row="props">
-      <span v-if="user.data.isAdmin && props.column.field === 'actions'">
+      >
+    <template v-if="user.data.isAdmin" v-slot:table-row="props">
+      <span v-if="props.column.field === 'actions'">
         <mdb-dropdown end tag="li" class="nav-item">
             <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
                 <template #button-content>
@@ -35,32 +35,55 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item @click.native="removeStaff(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                <mdb-dropdown-item @click.native="showModal = true;staff=props.row._id;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{name: 'EditStaff', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
       </span>
-  </template>
+    </template>
 </vue-good-table>
 
-    
+<div>
+    <mdb-modal centered v-if="showModal" @close="showModal = false">
+      <mdb-modal-header>
+        <mdb-modal-title>Warning</mdb-modal-title>
+      </mdb-modal-header>
+      <mdb-modal-body>Are you sure you want to delete selected membership?</mdb-modal-body>
+      <mdb-modal-footer>
+        <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
+        <mdb-btn color="danger" @click.native="removeStaff(staff)">Delete</mdb-btn>
+      </mdb-modal-footer>
+    </mdb-modal>
+  </div>
 </div>
+
 
 </template>
 
 <script>
 
-import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
+import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn } from 'mdbvue';
 
 import axios from 'axios'
 export default {
     name: "StaffListing",
     components: {
-      mdbDropdown,
-      mdbDropdownItem,
-      mdbDropdownMenu,
-      mdbDropdownToggle,
-      mdbIcon
+        mdbDropdown,
+        mdbDropdownItem,
+        mdbDropdownMenu,
+        mdbDropdownToggle,
+        mdbIcon,
+        mdbModal,
+        mdbModalHeader,
+        mdbModalTitle,
+        mdbModalBody,
+        mdbModalFooter,
+        mdbBtn
     },
     data() {
         return {
@@ -128,7 +151,8 @@ export default {
                     icon: true,
                     rtl: false
                 });
-            await this.fetchStaff()
+                this.showModal = false
+                await this.fetchStaff()
         }
     }  
 }
