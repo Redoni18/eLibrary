@@ -19,48 +19,34 @@
         }"
       
        >
-    <template v-if="user.data.isAdmin" v-slot:table-row="props">
-      <span v-if="props.column.field === 'actions'">
-        <div class="more-options">
-          <b-dropdown id="dropdown-right" right text="Right align" variant="link" toggle-class="text-decoration-none text-secondary" no-caret class="m-2">
-        <template #button-content>
-            <b-icon icon="three-dots"></b-icon>
-          </template>
-        <b-dropdown-item
-          @click="showModal=true; selectedUserType = props.row;"
-        >
-         <span
-            class="d-flex align-items-center"
-          >
-            <b-icon icon="trash"></b-icon>
-            <p class="p-0 m-0 ml-3">Delete</p>
-          </span>
-        </b-dropdown-item>
-        <b-dropdown-item
-            :to="{name: 'EditUserType', params: {id: props.row._id}}"
-        >
-            <span
-              class="d-flex align-items-center"
-            >
-              <b-icon icon="pen"></b-icon>
-              <p class="p-0 m-0 ml-3">Edit</p>
-            </span>
-          </b-dropdown-item>
-      </b-dropdown>
-        </div>
+    <template v-slot:table-row="props">
+      <span v-if="props.column.field === 'userType'" class="title-cell">
+        <span @click="fetchUserTypes(props)">{{props.row.userType}}</span>
+      </span>
+      <span v-if="user.data.isAdmin && props.column.field === 'actions'">
+        <mdb-dropdown end tag="li" class="nav-item">
+            <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
+                <template #button-content>
+                    <mdb-icon icon="ellipsis-h" class="mr-3" />
+                </template>
+            </mdb-dropdown-toggle>
+            <mdb-dropdown-menu>
+                <mdb-dropdown-item @click.native="showModal=true; userTypes=props.row._id;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{name: 'EditUserType', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
+            </mdb-dropdown-menu>
+        </mdb-dropdown> 
       </span>
   </template>
 </vue-good-table>
 
+
+
 <div>
     <mdb-modal centered v-if="showModal" @close="showModal = false">
-    <mdb-modal-header>
-        <mdb-modal-title>Warning</mdb-modal-title>
-    </mdb-modal-header>
     <mdb-modal-body>Are you sure you want to delete selected user type?</mdb-modal-body>
     <mdb-modal-footer>
         <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
-        <mdb-btn color="danger" @click.native="removeUserType(selectedUserType)">Delete</mdb-btn>
+        <mdb-btn color="danger" @click.native="removeUserType(userTypes)">Delete</mdb-btn>
     </mdb-modal-footer>
     </mdb-modal>
 </div>
@@ -142,8 +128,8 @@ export default {
                 }
             });
         },
-        async removeUserType(book) {
-            await axios.delete(`http://localhost:8000/api/deleteUserType/${book._id}`)
+        async removeUserType(id) {
+            await axios.delete(`http://localhost:8000/api/deleteUserType/${id}`)
             this.$toast.success("User type deleted successfully", {
                 position: "top-right",
                 timeout: 5000,
