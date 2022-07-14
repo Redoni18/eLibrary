@@ -48,7 +48,10 @@ router.put('/api/editUser/:id', authController.validate('edit_user'),authControl
 router.delete('/api/users/deleteUser/:id', authController.delete_user);
 router.get('/api/userProfile/:id', authController.get_profile);
 router.get('/api/userMembership/:id', authController.get_membership);
+router.post('/api/user/borrow/:id', authController.borrow_books);
+router.get('/api/user/getBorrowed/:id', authController.get_borrowed_books);
 router.get('/api/user/auth', auth.verify, authController.get_auth);
+
 
 router.get('/api/books', bookController.get_books);
 router.get('/api/books/:id', bookController.get_book);

@@ -1,5 +1,6 @@
 <template>
 <div>
+  {{userBorrowedBooks}}
 <vue-good-table
     :columns="columns"
     :rows="books"
@@ -27,7 +28,7 @@
       <span v-if="props.column.field === 'year'">
         <span>{{props.row.year}}</span>
       </span>
-      <span v-if="user.data.isAdmin && props.column.field === 'actions'">
+      <span v-if="props.column.field === 'actions'">
         <mdb-dropdown end tag="li" class="nav-item">
             <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
                 <template #button-content>
@@ -35,8 +36,9 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item @click.native="showModal=true;selectedBook=props.row;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
-                <mdb-dropdown-item :to="{name: 'editBook', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
+                <mdb-dropdown-item :disabled="!isMember && userBorrowedBooks.length != 0" @click.native="borrowBook(props.row)"><mdb-icon icon="save" class="mr-3" />Reserve Book</mdb-dropdown-item>
+                <mdb-dropdown-item v-if="user.data.isAdmin" @click.native="showModal=true;selectedBook=props.row;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                <mdb-dropdown-item v-if="user.data.isAdmin" :to="{name: 'editBook', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
 
@@ -61,7 +63,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
     mdbModalHeader,
     mdbModalTitle,
@@ -89,6 +91,8 @@ export default {
       return {
         showModal: false,
         selectedBook: {},
+        userBorrowedBooks: [],
+        isMember: false,
         user: JSON.parse(window.localStorage.getItem('user')),
         columns: [
           {
@@ -120,6 +124,7 @@ export default {
   methods: {
     ...mapActions({
         getBooks: 'getBooks',
+        saveBook: 'saveBook'
     }),
     
     async removeBook(book) {
@@ -145,17 +150,59 @@ export default {
     
     getBook(params){
       this.$router.push({name: 'bookDetails', params: {id: params.row._id}})
+    },
+
+    async borrowBook(books){
+      if(!this.userBorrowedBooks.length){
+        this.userBorrowedBooks.push(...books, books)
+      }else {
+        for(let i=0;i<this.userBorrowedBooks.length;i++){
+          if(this.userBorrowedBooks[i]._id === books._id){
+            console.log('borrowed')
+            return false
+          }
+        }
+
+        this.userBorrowedBooks.push(...books, books)
+      }
+      await this.saveBook({
+        _id: this.currentUser.data.id,
+        name: this.currentUser.data.name,
+        email: this.currentUser.data.email,
+        userType: this.currentUser.data.userType,
+        bio: this.currentUser.data.bio,
+        city: this.currentUser.data.city,
+        birthday: this.currentUser.data.birthday,
+        social1: this.currentUser.data.social1,
+        social2: this.currentUser.data.social2,
+        social3: this.currentUser.data.social3,
+        isAdmin: this.currentUser.data.isAdmin,
+        books: this.userBorrowedBooks
+      });
+
+
+      await this.getUserBooks()
+    },
+
+    async getUserBooks(){
+      const response = await axios.get(`http://localhost:8000/api/user/getBorrowed/${this.currentUser.data.id}`)
+      this.isMember = response.data.isMember
+      this.userBorrowedBooks = response.data.books
     }
   },
 
     mounted() {
       this.getBooks();
+      this.getUserBooks()
     },
 
     computed: {
         books() {
           return this.$store.state.books.books
-        }
+        },
+        ...mapGetters({
+          currentUser: 'getUser'
+        })
     },
 }
 </script>

@@ -16,6 +16,10 @@ export const editProfile = ({ commit }, data ) => {
     })
 }
 
+export const saveBook = ({ commit }, data ) => {
+    return axios.post('http://localhost:8000/api/user/borrow/:id', data)
+}
+
 export const editUser = ({ commit }, data ) => {
     return axios.put('http://localhost:8000/api/editUser/:id', data)
 }
