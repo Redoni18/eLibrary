@@ -26,6 +26,9 @@
         <router-link :to="({path: '/allMemberships'})">
             <mdb-nav-item href="#">Membership</mdb-nav-item>
         </router-link>
+        <router-link :to="({path: '/events'})">
+            <mdb-nav-item href="#">Events</mdb-nav-item>
+        </router-link>
         <router-link :to="({path: '/request'})">
             <mdb-nav-item>Request</mdb-nav-item>
         </router-link>

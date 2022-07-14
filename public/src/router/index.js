@@ -42,6 +42,12 @@ import AddCountry from '@/components/countries/AddCountry.vue'
 import CountriesListing from '@/components/countries/Listing'
 import Upcomings from '@/components/books/Upcoming'
 import RequestPage from '@/components/requests/RequestPage'
+
+import AddEvent from '@/components/events/AddEvent'
+import EventsListing from '@/components/events/Listing'
+import EditEvent from '@/components/events/EditEvent'
+import Events from '@/components/events/Events'
+
 import CreateStaff from '@/components/staff/CreateStaff'
 import StaffListing from '@/components/staff/Listing'
 import EditStaff from '@/components/staff/EditStaff'
@@ -304,7 +310,8 @@ const router = new Router({
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }
-        },{
+        },
+        {
             path: '/allMemberships',
             name: 'Memberships',
             component: Memberships,
@@ -387,6 +394,37 @@ const router = new Router({
             }
         },
         {
+            path: '/events/addEvent',
+            name: 'AddEvent',
+            component: AddEvent,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/events/listing',
+            name: 'EventsListing',
+            component: EventsListing,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/events/editEvent/:id',
+            name: 'EditEvent',
+            component: EditEvent ,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },
+        {
+            path: '/events',
+            name: 'Events',
+            component: Events ,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        }
             path: '/staff',
             name: 'StaffListing',
             component: StaffListing,
@@ -418,7 +456,6 @@ const router = new Router({
                 beforeEnter.authenticate(to, from, next)
             }
         },
-
     ]
 })
 

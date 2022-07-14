@@ -8,7 +8,7 @@
         tag="article"
         img-height="250"
         style="max-width: 15rem;min-width: 15rem;object-fit: contain;"
-        class="mb-2 img-thumbnail"
+        class="mb-2 img-thumbnail m-auto"
       >
 
         <b-card-text class="title-book">

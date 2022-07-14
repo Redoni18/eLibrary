@@ -36,6 +36,7 @@ const facultyController = require('../controllers/facultyController')
 const countryController = require('../controllers/countryController')
 const requestsController = require('../controllers/requestsController');
 const upcomingController = require('../controllers/upcomingController');
+const eventController = require('../controllers/eventController')
 const staffController = require('../controllers/staffController');
 
 
@@ -134,5 +135,13 @@ router.post('/api/createStaff', staffController.post_staff);
 router.get('/api/staff/:id', staffController.get_staff);
 router.put('/api/editStaff/:id', staffController.edit_staff);
 router.delete('/api/staff/delete/:id', staffController.delete_staff);
+
+router.post('/api/createEvent', eventController.validate('post_event'),eventController.post_event);
+router.put('/api/editEvent/:id', eventController.validate('edit_event'), eventController.edit_event);
+router.get('/api/events', eventController.get_events);
+router.get('/api/events/currentEvents', eventController.get_current_events);
+router.get('/api/events/futureEvents', eventController.get_future_events);
+router.get('/api/event/:id', eventController.get_event);
+router.delete('/api/deleteEvent/:id', eventController.delete_event);
 
 module.exports = router;
