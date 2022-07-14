@@ -1,8 +1,27 @@
 const Upcoming = require('../models/Upcoming');
 var ObjectID = require('mongoose').Types.ObjectId;
+const { body, validationResult } = require('express-validator/check')
 
 
+exports.validate = (method) => {
+    switch (method) {
+      case 'add_upcoming': {
+       return [ 
+              body('title').exists().isLength({ min: 2, max: 100 }),
+              body('author').exists().isLength({min: 2, max: 100}),
+              body('date').exists().isLength({min: 2, max: 100}),
 
+         ]   
+      }
+      case 'edit_upcoming': {
+          return [ 
+            body('title').exists().isLength({ min: 2, max: 100 }),
+            body('author').exists().isLength({min: 2, max: 100}),
+            body('date').exists().isLength({min: 2, max: 100}),
+            ]   
+         }
+    }
+  }
 
 exports.get_upcomings = function (req, res) {
     Upcoming.find().exec(function (err, upcoming) {
@@ -35,12 +54,15 @@ exports.get_upcoming = function (req, res) {
 
 
 exports.add_upcoming = function (req, res) {
+    const errors = validationResult(req)
     const newUpcoming = new Upcoming({
         title: req.body.title,
         author: req.body.author,
         date: req.body.date
     });
-    newUpcoming.save();
+    if (errors.isEmpty()) {
+        newUpcoming.save();
+    }
 };
 
 exports.delete_upcoming = function (req, res) {
@@ -58,6 +80,7 @@ exports.delete_upcoming = function (req, res) {
 };
 
 exports.edit_upcoming = function (req, res) {
+    const errors = validationResult(req)
     if (!ObjectID.isValid(req.body.id)) {
         return res.status(400).send(`No record with given id:   ${req.body.id}`)
     }
@@ -67,7 +90,9 @@ exports.edit_upcoming = function (req, res) {
         author: req.body.author,
         date: req.body.date,
     }
-
+    if (!errors.isEmpty()) {
+        res.status(500).send('Invalid Edit of Upcoming Books')
+    }
     Upcoming.findByIdAndUpdate(req.body.id, { $set: updatedUpcoming }, { new: true }, (err, doc) => {
         if (!err) {
             res.send(doc)
