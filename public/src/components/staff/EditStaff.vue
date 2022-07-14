@@ -35,7 +35,7 @@
 
                                         <label for="email" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Staff email: </label>
                                         <div class="col-sm-9 col-md-9 col-lg-9">
-                                            <input type="text" class="form-control form-control-sm" id="email" name="email" placeholder="Insert new user type"
+                                            <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Insert new user type"
                                                    v-model="staffEmail"
                                                    v-validate="'required|min:2|max:20'"
                                                    :class="{'email': true, 'is-invalid': errors.has('email') }"/>
@@ -106,7 +106,21 @@
                         this.staffEmail = null
                         this.staffPosition = null
                         this.$router.push({path:"/staff"})
-                        return true;
+
+                        this.$toast.success("Staff updated successfully", {
+                            position: "top-right",
+                            timeout: 5000,
+                            closeOnClick: true,
+                            pauseOnFocusLoss: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            draggablePercent: 0.6,
+                            showCloseButtonOnHover: false,
+                            hideProgressBar: true,
+                            closeButton: "button",
+                            icon: true,
+                            rtl: false
+                        });
                     }
                 });
             },

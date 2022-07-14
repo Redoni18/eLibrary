@@ -27,15 +27,6 @@
         }"
            >
     <template v-slot:table-row="props">
-      <span v-if="props.column.field === 'staffName'" class="title-cell">
-        <span @click="fetchStaff(props)">{{props.row.staffName}}</span>
-      </span>
-      <span v-if="props.column.field === 'staffEmail'">
-        <span>{{props.row.staffEmail}}</span>
-      </span>
-      <span v-if="props.column.field === 'position'">
-        <span>{{props.row.position}}</span>
-      </span>
       <span v-if="user.data.isAdmin && props.column.field === 'actions'">
         <mdb-dropdown end tag="li" class="nav-item">
             <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
@@ -74,7 +65,6 @@ export default {
     data() {
         return {
             user: JSON.parse(window.localStorage.getItem('user')),
-            toggleButtons: false,
             rowId: null,
             staff: null,
             columns: [
@@ -113,13 +103,6 @@ export default {
         await this.fetchStaff()
     },
     methods: {
-        onRowClick(params){
-            if(this.user.data.isAdmin){
-                this.toggleButtons = !this.toggleButtons
-                this.rowId = params.row._id
-            }
-            return
-        },
         async fetchStaff(){
             this.$validator.validateAll().then( async (result) => {
                 if (result) {
@@ -131,23 +114,20 @@ export default {
         
         async removeStaff(id) {
             await axios.delete(`http://localhost:8000/api/staff/delete/${id}`)
-                if(window.confirm("Are you sure you want to delete this staff?")){
-                    
-                    this.$toast.success("Staff deleted successfully", {
-                        position: "top-right",
-                        timeout: 5000,
-                        closeOnClick: true,
-                        pauseOnFocusLoss: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        draggablePercent: 0.6,
-                        showCloseButtonOnHover: false,
-                        hideProgressBar: true,
-                        closeButton: "button",
-                        icon: true,
-                        rtl: false
-                    });
-                }
+                this.$toast.success("Staff deleted successfully", {
+                    position: "top-right",
+                    timeout: 5000,
+                    closeOnClick: true,
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    draggablePercent: 0.6,
+                    showCloseButtonOnHover: false,
+                    hideProgressBar: true,
+                    closeButton: "button",
+                    icon: true,
+                    rtl: false
+                });
             await this.fetchStaff()
         }
     }  
