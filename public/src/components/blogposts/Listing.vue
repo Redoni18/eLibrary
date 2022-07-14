@@ -147,17 +147,6 @@ export default {
 </script>
 
 <style scoped>
-.more-options{
-  transition: 0.3s;
-}
-
-.more-options:hover{
-  border-radius: 5px;
-  background: rgb(230, 230, 230);
-  color:rgb(0, 0, 0);
-  transition: 0.3s;
-}
-
 .title-cell{
   font-weight: 600;
 }

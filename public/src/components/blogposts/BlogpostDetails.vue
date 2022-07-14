@@ -1,28 +1,26 @@
 <template>
 
-<div class="book-details__page">
-    <div class="book-details">
-        <div class="book-details__container">
+<div class="blog-details__page">
+    <div class="blog-details">
+        <div class="blog-details__container">
             <div class="title-abstract__container">
-                <h2 class="book-title">{{selectedBlogpost.title}}</h2>
+                <h2 class="blog-title">{{selectedBlogpost.title}}</h2>
                 <hr class="content-seperator">
                 <p class="abstract">Abstract: </p>
-                <div class="book-abstract">
+                <div class="blog-abstract">
                     {{selectedBlogpost.description}}
                 </div>
             </div>
 
             <div class="quick-info__card">
                 <div class="quick-info__row">
-                    <div class="book-cover__container">
-                        <img :src="selectedBlogpost.imageUrl" class="book-cover">
+                    <div class="blog-cover__container">
+                        <img :src="selectedBlogpost.imageUrl" class="blog-cover">
                     </div>
                 </div>
                 <hr class="card-seperator">
             </div>
         </div>
-    </div>
-
     </div>
 </div>
 
@@ -74,20 +72,20 @@ export default {
 
 <style scoped>
 
-.book-details__page{
+.blog-details__page{
     width: 800px;
    display: flex;
     flex-direction: column; 
     margin: auto;
 }
 
-.book-details{
+.blog-details{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.book-details__container{
+.blog-details__container{
     width: 800px;
     display: flex;
     justify-content: space-between;
@@ -97,7 +95,7 @@ export default {
     width: 100%;
 }
 
-.book-title{
+.blog-title{
     width: calc(100% - 40px);
     word-break: break-word;
     color: #2d96e0;
@@ -108,7 +106,7 @@ export default {
     font-weight: 800;
 }
 
-.book-abstract{
+.blog-abstract{
     width: calc(100% - 20px);
 }
 
@@ -133,86 +131,30 @@ export default {
     justify-content: space-between;
 }
 
-.book-cover_container{
-    width: fit-content;
-}
 
-.book-cover{
+.blog-cover{
     object-fit: contain;
     width: 130px;
 }
 
-.book-metadata{
-    width: 130px;
-}
 
-.book-metadata, p{
+.blog-metadata, p{
     font-weight: 700;
-}
-
-.book-details_reviews{
-    width: 100%;
-    margin: auto;
-}
-
-.reviews-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.single-review{
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid rgb(223, 223, 223);
-    margin-bottom: 10px;
-}
-
-.review-body{
-    display: flex;
-    word-break: break-word;
-}
-
-
-.user-avatar{
-    height: 100%;
-    margin-top: 0;
-}
-
-.review-content{
-    height: 100%;
-    margin-left: 10px;
-}
-
-.review-content small{
-    font-weight: bold;
-    color: #4094cf;
-}
-
-.review-paragraph{
-    font-weight: normal;
-    width: 100%;
-    padding-right: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* number of lines to show */
-    -webkit-box-orient: vertical;
 }
 
 
 @media only screen and (max-width: 850px){
 
-    .book-details__page {
+    .blog-details__page {
         width: 500px;
     }
 
-    .book-details__container{
+    .blog-details__container{
         display: flex;
         flex-direction: column;
     }
 
-    .book-abstract{
+    .blog-abstract{
         width: 100%
     }
 
@@ -236,41 +178,20 @@ export default {
         width: 100%;
         justify-content: flex-start;
     }
-
-    .book-metadata{
-        margin-left: 20px;
-        width: 100%;
-    }
-
-    .book-categories{
-        margin-right: auto;
-
-    }
-
-    .book-details_reviews{
-        width: 100%;
-    }
 }
 
 @media only screen and (max-width: 500px){
-    .book-details__page{
+    .blog-details__page{
         width: 300px;
     }
     .quick-info__card{
         display: none;
     }
 
-    .book-abstract{
+    .blog-abstract{
         width: 100%
     }
 
-    .reviews-text{
-        display: none;
-    }
-
-    .single-review{
-        display: none;
-    }
 }
 
 </style>

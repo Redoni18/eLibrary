@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="offset-5">
-                                Insert a new blogpost
+                                Insert a new Blogpost
                             </div>
                         </div>
                     </div>

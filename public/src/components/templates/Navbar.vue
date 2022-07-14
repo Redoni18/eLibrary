@@ -20,6 +20,16 @@
             </mdb-dropdown-menu>
         </mdb-dropdown>
 
+         <mdb-dropdown start tag="li" class="nav-item">
+            <mdb-dropdown-toggle tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
+                Blogposts
+            </mdb-dropdown-toggle>
+            <mdb-dropdown-menu>
+                <mdb-dropdown-item :to="{path: '/'}">Blogposts</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{path: '/blogpostsList/Listing'}">Listing</mdb-dropdown-item>
+            </mdb-dropdown-menu>
+        </mdb-dropdown>
+
         <router-link :to="({path: '/contact-us'})">
             <mdb-nav-item href="#">Contact Us</mdb-nav-item>
         </router-link>
@@ -138,8 +148,34 @@
                 ><mdb-icon icon="clock" class="mr-3" /><p>Upcoming Books</p></mdb-list-group-item
                 >
             </router-link>
-            
           </div>
+            
+          <div>
+          <mdb-list-group-item
+            id="sidebar-item"
+            :action="true"
+            v-if="user.authenticated"
+            @click.native="activeItem = 3; showBlogpostsDropdown = !showBlogpostsDropdown;"
+            :class="activeItem === 3 && 'active'"
+            ><mdb-icon icon="news" class="mr-3" /><p>Blogpost</p>
+        </mdb-list-group-item>
+        <div v-if="showBlogpostsDropdown" class="sidebar-submenu">
+            <router-link v-if="user.authenticated" :to="{path: '/blogpostsList/Listing'}">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="list" class="mr-3" /><p>Listing</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/blogposts/create'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="plus" class="mr-3" /><p>Insert Blogpost</p></mdb-list-group-item
+                >
+            </router-link>
+        </div>
+        </div>
         <mdb-list-group-item
             id="sidebar-item"
             v-if="user.authenticated && user.data.isAdmin"
