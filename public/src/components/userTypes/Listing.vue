@@ -55,15 +55,15 @@
 </template>
 
 <script>
-import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
-
-import axios from 'axios'
 import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
     mdbModalHeader,
     mdbModalTitle,
     mdbModalBody,
     mdbModalFooter,
-    mdbBtn} from 'mdbvue';
+    mdbBtn } from 'mdbvue';
+
+import axios from 'axios'
+
 export default {
     name: "UserTypesListing",
     components: {
