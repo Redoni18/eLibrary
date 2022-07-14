@@ -1,6 +1,6 @@
 <template>
     <div class="users_container container">
-        <div class="mb-3">
+        <div class="mb-3" v-if="userBorrowedBooks.length">
             <router-link type="submit" class="btn btn-primary" :to="{path: '/reservedBooks/listing'}">Switch to table view</router-link>
         </div>
         <div class="row" v-if="userBorrowedBooks.length">
@@ -13,8 +13,9 @@
                 
                 
                 <div class="no-books__content">
-                    <h3>Oops...looks like you don't have any books reserved at the moment</h3>
-                    <b-button variant="primary" @click="goToListing">Reserve Books</b-button>
+                    <h3>Oops...looks like you don't have any books reserved at the moment!</h3>
+                    <h4>Make sure to purchase a membership before reserving a book!</h4>
+                    <b-button variant="primary" @click="goToMembership">Become a member</b-button>
                 </div>
         </div>
     </div>
@@ -46,8 +47,8 @@
             changePage(id){
                 this.$router.push({name: 'bookDetails', params: {id: id}})
             },
-            goToListing(){
-                this.$router.push({path: '/booksList/listing'})
+            goToMembership(){
+                this.$router.push({path: '/allMemberships'})
             },
             async getUserBooks(){
                 const response = await axios.get(`http://localhost:8000/api/user/getBorrowed/${this.currentUser.data.id}`)

@@ -36,7 +36,7 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item :disabled="!isMember && userBorrowedBooks.length != 0 || (isMember && userBorrowedBooks.length == 8)" @click.native="borrowBook(props.row)"><mdb-icon icon="save" class="mr-3" />Reserve Book</mdb-dropdown-item>
+                <mdb-dropdown-item :disabled="!isMember || isMember && userBorrowedBooks.length == 8" @click.native="borrowBook(props.row)"><mdb-icon icon="save" class="mr-3" />Reserve Book</mdb-dropdown-item>
                 <mdb-dropdown-item v-if="user.data.isAdmin" @click.native="showModal=true;selectedBook=props.row;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
                 <mdb-dropdown-item v-if="user.data.isAdmin" :to="{name: 'editBook', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
             </mdb-dropdown-menu>
