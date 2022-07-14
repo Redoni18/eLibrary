@@ -19,6 +19,7 @@
                 <mdb-dropdown-item :to="{path: '/booksList/listing'}">Listing</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
+
         <router-link :to="({path: '/contact-us'})">
             <mdb-nav-item href="#">Contact Us</mdb-nav-item>
         </router-link>
@@ -137,6 +138,7 @@
                 ><mdb-icon icon="clock" class="mr-3" /><p>Upcoming Books</p></mdb-list-group-item
                 >
             </router-link>
+            
           </div>
         <mdb-list-group-item
             id="sidebar-item"

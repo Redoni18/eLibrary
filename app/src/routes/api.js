@@ -51,6 +51,7 @@ router.get('/api/userMembership/:id', authController.get_membership);
 router.post('/api/user/borrow/:id', authController.borrow_books);
 router.get('/api/user/getBorrowed/:id', authController.get_borrowed_books);
 router.get('/api/user/auth', auth.verify, authController.get_auth);
+const blogpostController = require('../controllers/blogpostController');
 
 
 router.get('/api/books', bookController.get_books);
@@ -127,5 +128,12 @@ router.get('/api/get/upcoming/:id', upcomingController.get_upcoming);
 router.get('/api/upcomings', upcomingController.get_upcomings);
 router.delete('/api/upcoming/delete/:id', upcomingController.delete_upcoming);
 router.put('/api/upcoming/edit', upcomingController.edit_upcoming);
+
+router.get('/api/blogposts', blogpostController.get_blogposts);
+router.get('/api/blogpost/:id', blogpostController.get_blogpost);
+router.post('/api/createBlogposts', blogpostController.validate('post_blogpost'), uploadFile.single('blogpostImage'), blogpostController.post_blogpost);
+router.put('/api/editBlogpost/:id', blogpostController.validate('edit_blogpost'), blogpostController.edit_blogpost);
+router.delete('/api/blogposts/delete/:id', blogpostController.delete_blogpost);
+
 
 module.exports = router;
