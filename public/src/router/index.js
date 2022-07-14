@@ -6,6 +6,8 @@ import Signup from '@/components/auth/Signup'
 import Signin from '@/components/auth/Signin'
 import Users from '@/components/users/Users'
 import Books from '../components/books/Books'
+import ReservedBooks from '../components/books/ReservedBooks'
+import ReservedListing from '../components/books/ReservedListing'
 import BooksListing from '@/components/books/Listing'
 import InsertBook from '@/components/books/InsertBook'
 import BookDetails from '@/components/books/BookDetails'
@@ -14,6 +16,7 @@ import ContactUs from '@/components/contact/ContactUs'
 import MessagesListing from '@/components/contact/Listing'
 import UserProfile from '@/components/user-profile/UserProfile'
 import EditProfile from '@/components/user-profile/EditProfile'
+import EditUser from '@/components/users/EditUser'
 import NotFound from '@/components/NotFound'
 import AddReview from '@/components/reviews/AddReview.vue'
 import Reviews from '@/components/reviews/Reviews.vue'
@@ -30,6 +33,7 @@ import Category from '@/components/categories/Category.vue'
 import MembershipsListing from '@/components/memberships/Listing.vue'
 import AddMembership from '@/components/memberships/AddMembership.vue'
 import EditMembership from '@/components/memberships/EditMembership.vue'
+import Memberships from '@/components/memberships/Memberships.vue'
 import FacultiesListing from '@/components/faculties/Listing.vue'
 import InsertFaculty from '@/components/faculties/CreateFaculty.vue'
 import EditFaculty from '@/components/faculties/EditFaculty.vue'
@@ -86,6 +90,22 @@ const router = new Router({
             path: '/books',
             name: 'books',
             component: Books,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/reservedBooks',
+            name: 'reserved',
+            component: ReservedBooks,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/reservedBooks/listing',
+            name: 'reservedListing',
+            component: ReservedListing,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
@@ -151,6 +171,14 @@ const router = new Router({
             path: '/editProfile/:id',
             name: 'editprofile',
             component: EditProfile,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/editUser/:id',
+            name: 'editUser',
+            component: EditUser,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
@@ -270,8 +298,15 @@ const router = new Router({
         },
         {
             path: '/memberships',
-            name: 'Memberships',
+            name: 'MembershipsListing',
             component: MembershipsListing,
+            beforeEnter: (to, from, next) => {
+                    beforeEnter.authenticate(to,from,next)
+            }
+        },{
+            path: '/allMemberships',
+            name: 'Memberships',
+            component: Memberships,
             beforeEnter: (to, from, next) => {
                     beforeEnter.authenticate(to,from,next)
             }

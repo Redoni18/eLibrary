@@ -1,13 +1,5 @@
 <template>
 <div>
-    <div class="form-group row" v-if="toggleButtons">
-    <div class="col-sm-10 offset-sm-0 offset-md-0 offset-md-9">
-        <router-link :to="{name: 'EditUserType', params: {id: rowId}}"> <button type="submit" class="btn btn-primary">Edit User Type</button></router-link>
-    <button type="submit" class="btn btn-danger" @click="removeUserType(rowId)">Delete User Type</button>
-
-    </div>
-  </div>
-
     <div class="mb-3">
         <router-link type="submit" class="btn btn-primary" :to="{path: 'insertUserType'}">Insert new user type</router-link>
 
@@ -25,12 +17,9 @@
             perPageDropdown: [5, 7, 10],
             dropdownAllowAll: false,
         }"
-      
-            >
+       >
+       
     <template v-slot:table-row="props">
-      <span v-if="props.column.field === 'userType'" class="title-cell">
-        <span @click="fetchUserTypes(props)">{{props.row.userType}}</span>
-      </span>
       <span v-if="user.data.isAdmin && props.column.field === 'actions'">
         <mdb-dropdown end tag="li" class="nav-item">
             <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
@@ -46,6 +35,19 @@
       </span>
   </template>
 </vue-good-table>
+
+<div>
+    <mdb-modal centered v-if="showModal" @close="showModal = false">
+    <mdb-modal-header>
+        <mdb-modal-title>Warning</mdb-modal-title>
+    </mdb-modal-header>
+    <mdb-modal-body>Are you sure you want to delete selected user type?</mdb-modal-body>
+    <mdb-modal-footer>
+        <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
+        <mdb-btn color="danger" @click.native="removeUserType(selectedUserType)">Delete</mdb-btn>
+    </mdb-modal-footer>
+    </mdb-modal>
+</div>
             
     
 </div>
@@ -56,6 +58,12 @@
 import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon } from 'mdbvue';
 
 import axios from 'axios'
+import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn} from 'mdbvue';
 export default {
     name: "UserTypesListing",
     components: {
@@ -63,14 +71,21 @@ export default {
       mdbDropdownItem,
       mdbDropdownMenu,
       mdbDropdownToggle,
-      mdbIcon
+      mdbIcon,
+      mdbModal,
+      mdbModalHeader,
+      mdbModalTitle,
+      mdbModalBody,
+      mdbModalFooter,
+      mdbBtn
     },
     data() {
         return {
+            selectedUserType: {},
             user: JSON.parse(window.localStorage.getItem('user')),
-            toggleButtons: false,
             rowId: null,
             userTypes: null,
+            showModal: false,
             columns: [
                 {
                     label: 'Type of user',
@@ -112,26 +127,23 @@ export default {
                 }
             });
         },
-        
-        async removeUserType(id) {
-                await axios.delete(`http://localhost:8000/api/deleteUserType/${id}`)
-                if(window.confirm("Are you sure you want to delete this type of user?")){    
-                
-                this.$toast.success("Type of User deleted successfully", {
-                    position: "top-right",
-                    timeout: 5000,
-                    closeOnClick: true,
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    draggablePercent: 0.6,
-                    showCloseButtonOnHover: false,
-                    hideProgressBar: true,
-                    closeButton: "button",
-                    icon: true,
-                    rtl: false
-                });
-            }
+
+        async removeUserType(book) {
+            await axios.delete(`http://localhost:8000/api/deleteUserType/${book._id}`)
+            this.$toast.success("User type deleted successfully", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
             await this.fetchUserTypes()
         }
     }

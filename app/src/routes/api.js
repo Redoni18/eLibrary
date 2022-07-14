@@ -42,11 +42,17 @@ const staffController = require('../controllers/staffController');
 /**
  * Routes
  */
-router.post('/api/signup', authController.post_signup);
+router.post('/api/signup', authController.validate('post_signup'),authController.post_signup);
 router.post('/api/signin', authController.post_signin);
-router.post('/api/editProfile/:id', authController.edit_profile);
+router.put('/api/editProfile/:id', authController.validate('edit_profile'),authController.edit_profile);
+router.put('/api/editUser/:id', authController.validate('edit_user'),authController.edit_user);
+router.delete('/api/users/deleteUser/:id', authController.delete_user);
 router.get('/api/userProfile/:id', authController.get_profile);
+router.get('/api/userMembership/:id', authController.get_membership);
+router.post('/api/user/borrow/:id', authController.borrow_books);
+router.get('/api/user/getBorrowed/:id', authController.get_borrowed_books);
 router.get('/api/user/auth', auth.verify, authController.get_auth);
+
 
 router.get('/api/books', bookController.get_books);
 router.get('/api/books/:id', bookController.get_book);
@@ -56,7 +62,7 @@ router.delete('/api/books/delete/:id', bookController.delete_book);
 
 
 router.get('/api/messages', messageController.get_messages)
-router.post('/api/postMessage', messageController.post_messages)
+router.post('/api/postMessage', messageController.validate('post_messages'),messageController.post_messages)
 router.get('/api/messages/:id', messageController.get_message)
 router.delete('/api/messages/delete/:id', messageController.delete_message);
 
@@ -96,6 +102,7 @@ router.post('/api/addMembership', membershipController.post_membership);
 router.put('/api/editMembership/:id', membershipController.edit_membership);
 router.delete('/api/deleteMembership/:id', membershipController.delete_membership);
 router.get('/api/membership/:id', membershipController.get_membership);
+router.put('/api/updateMembership/:id', authController.update_membership)
 
 
 router.get('/api/faculties', facultyController.get_faculties);

@@ -3,7 +3,7 @@
         <b-card v-if="toggleButtons" :title="currentUpComing.title" :sub-title="`Published By ${currentUpComing.author} in ${currentUpComing.date}`" style="margin-bottom: 40px;">
             <b-card v-if="!editing" style="height: 200px; display: flex; flex-direction: row; justify-content: space-between;">
                 <b-button variant="dark" class="upcoming-books__buttons" @click="cancelChanges()">Cancel Changes</b-button>
-                <b-button variant="danger" class="upcoming-books__buttons" @click="remove(currentUpComing.id)">Remove up-coming Book</b-button>
+                <b-button variant="danger" class="upcoming-books__buttons" @click="showModal = true">Remove up-coming Book</b-button>
                 <b-button variant="info" class="upcoming-books__buttons" @click="edit()">Edit up-coming Book Details</b-button>
                 <b-button variant="success" class="upcoming-books__buttons" @click="add(currentUpComing)">Release up-coming Book</b-button>
             </b-card>
@@ -30,14 +30,47 @@
         }"
         @on-row-click="onRowClick"
          />
+
+         <div>
+            <mdb-modal centered v-if="showModal" @close="showModal = false">
+            <mdb-modal-header>
+                <mdb-modal-title>Warning</mdb-modal-title>
+            </mdb-modal-header>
+            <mdb-modal-body>Are you sure you want to delete selected book?</mdb-modal-body>
+            <mdb-modal-footer>
+                <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
+                <mdb-btn color="danger" @click.native="remove(currentUpComing.id)">Delete</mdb-btn>
+            </mdb-modal-footer>
+            </mdb-modal>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn} from 'mdbvue';
 export default {
+    components: {
+        mdbDropdown,
+        mdbDropdownItem,
+        mdbDropdownMenu,
+        mdbDropdownToggle,
+        mdbIcon,
+        mdbModal,
+        mdbModalHeader,
+        mdbModalTitle,
+        mdbModalBody,
+        mdbModalFooter,
+        mdbBtn
+    },
     data() {
         return {
+            showModal: false,
             upcomings: [],
             toggleButtons: false,
             rowId: null,
@@ -109,7 +142,23 @@ export default {
                    this.editing = false
                    this.toggleButtons = false
                     this.refresh()
+                    this.showModal = false;
                 })
+
+                this.$toast.success("Upcoming book deleted successfully", {
+                    position: "top-right",
+                    timeout: 5000,
+                    closeOnClick: true,
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    draggablePercent: 0.6,
+                    showCloseButtonOnHover: false,
+                    hideProgressBar: true,
+                    closeButton: "button",
+                    icon: true,
+                    rtl: false
+                });
         },
         add(book) {
             const date = book.date

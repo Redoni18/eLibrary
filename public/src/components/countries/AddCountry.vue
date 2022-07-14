@@ -101,7 +101,7 @@
                         console.log(this.selectedCountry.name)
                         this.$router.push({path:"/countries/listing"})
 
-                        this.$toast.success("Countrie added successfully", {
+                        this.$toast.success("Country added successfully", {
                             position: "top-right",
                             timeout: 5000,
                             closeOnClick: true,

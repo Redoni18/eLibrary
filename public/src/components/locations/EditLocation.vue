@@ -43,7 +43,7 @@
                                         <div class="col-sm-9 col-md-9 col-lg-9">
                                             <input type="text" class="form-control form-control-sm" id="phoneNumber" name="phoneNumber" placeholder="Insert new phone number"
                                                    v-model="locationPhoneNumber"
-                                                   v-validate="'required|min:2|max:20'"
+                                                   v-validate="'required|numeric|max:20'"
                                                    :class="{'phoneNumber': true, 'is-invalid': errors.has('phoneNumber') }"/>
                                             <small v-show="errors.has('phoneNumber')" class="help is-danger">{{ errors.first('phoneNumber') }}</small>
                                         </div>
@@ -91,11 +91,13 @@
                 this.city = response.data.city
                 this.locationAddress = response.data.address
                 this.locationPhoneNumber = response.data.phoneNumber
+                this.latitude = response.data.latitude
+                this.longitude = response.data.longitude
             },
             async editLocation() {
                 this.$validator.validateAll().then( async (result) => {
                     if (result) {
-                        await axios.put(`http://localhost:8000/api/editLocation/${this.locationId}`, {_id: this.locationId,city:this.city, address: this.locationAddress, phoneNumber: this.locationPhoneNumber})
+                        await axios.put(`http://localhost:8000/api/editLocation/${this.locationId}`, {_id: this.locationId,city:this.city, address: this.locationAddress, phoneNumber: this.locationPhoneNumber,latitude: this.latitude, longitude:this.longitude})
                         this.locationAddress = null
                         this.locationPhoneNumber = null
                         this.$router.push({path:"/locations/listing"})

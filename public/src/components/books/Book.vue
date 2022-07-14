@@ -14,8 +14,8 @@
         <b-card-text class="title-book">
           <h6>{{title}}</h6>
         </b-card-text>
-
-        <b-button href="#" variant="primary">Read More</b-button>
+      
+        <b-button size="md" variant="primary">Read More</b-button>  
       </b-card>
     </div>
 </template>

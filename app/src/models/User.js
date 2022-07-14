@@ -24,6 +24,10 @@ const schema = new Schema({
         type: Boolean,
         default: false
     },
+    isMember: {
+        type: Boolean,
+        default:false
+    },
     bio:{
         type: String,
         required: false,
@@ -55,7 +59,12 @@ const schema = new Schema({
     updatedAt: {
         type : Date,
         default : Date.now
-    }
+    },
+    books: [{ 
+        type: mongoose.Schema.Types.Mixed, 
+        ref: 'bookSchema' 
+    }]
+
 });
 
 

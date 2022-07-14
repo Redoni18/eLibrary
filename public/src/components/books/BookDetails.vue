@@ -276,6 +276,17 @@ export default {
     -webkit-box-orient: vertical;
 }
 
+@media only screen and (min-width: 1400px){
+
+    .book-details__page {
+        width: 1000px;
+    }
+
+    .book-details__container{
+        width: 100%;
+    }
+}
+
 
 @media only screen and (max-width: 850px){
 
