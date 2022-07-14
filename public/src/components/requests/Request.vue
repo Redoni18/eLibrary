@@ -24,7 +24,7 @@
                     </mdb-dropdown-toggle>
                     <mdb-dropdown-menu>
                         <mdb-dropdown-item @click.native="showModal=true;currentRequest=props.row;"><mdb-icon icon="trash" class="mr-3" />Deny</mdb-dropdown-item>
-                        <mdb-dropdown-item @click.native="accept(props.row)"><mdb-icon icon="pen" class="mr-3" />Accept {{props.row}}</mdb-dropdown-item>
+                        <mdb-dropdown-item @click.native="accept(props.row)"><mdb-icon icon="pen" class="mr-3" />Accept</mdb-dropdown-item>
                     </mdb-dropdown-menu>
                 </mdb-dropdown>
 
@@ -37,7 +37,7 @@
             <mdb-modal-header>
                 <mdb-modal-title>Warning</mdb-modal-title>
             </mdb-modal-header>
-            <mdb-modal-body>Are you sure you want to Deny The Request</mdb-modal-body>
+            <mdb-modal-body>Are you sure you want to deny this request</mdb-modal-body>
             <mdb-modal-footer>
                 <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
                 <mdb-btn color="danger" @click.native="deny(currentRequest._id)">Deny</mdb-btn>

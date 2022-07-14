@@ -23,8 +23,8 @@
                         </template>
                     </mdb-dropdown-toggle>
                     <mdb-dropdown-menu>
-                        <mdb-dropdown-item @click.native="showModal=true;currentUpComing=props.row;"><mdb-icon icon="trash" class="mr-3" />Deny</mdb-dropdown-item>
-                        <mdb-dropdown-item @click="add(props.row)"><mdb-icon icon="pen" class="mr-3" />Accept</mdb-dropdown-item>
+                        <mdb-dropdown-item @click.native="showModal=true;currentUpComing=props.row;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                        <mdb-dropdown-item @click="add(props.row)"><mdb-icon icon="pen" class="mr-3" />Publish</mdb-dropdown-item>
                     </mdb-dropdown-menu>
                 </mdb-dropdown>
 
@@ -38,7 +38,7 @@
             <mdb-modal-header>
                 <mdb-modal-title>Warning</mdb-modal-title>
             </mdb-modal-header>
-            <mdb-modal-body>Are you sure you want to Remove The Up Coming Book</mdb-modal-body>
+            <mdb-modal-body>Are you sure you want to delete upcoming book</mdb-modal-body>
             <mdb-modal-footer>
                 <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
                 <mdb-btn color="danger" @click.native="remove(currentUpComing._id)">Delete</mdb-btn>
