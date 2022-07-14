@@ -45,6 +45,7 @@ import RequestPage from '@/components/requests/RequestPage'
 import CreateStaff from '@/components/staff/CreateStaff'
 import StaffListing from '@/components/staff/Listing'
 import EditStaff from '@/components/staff/EditStaff'
+import AboutUs from '@/components/about/AboutUs'
 
 Vue.use(Router);
 
@@ -405,6 +406,14 @@ const router = new Router({
             path: '/staff/editStaff/:id',
             name: 'EditStaff',
             component: EditStaff,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/about-us',
+            name: 'AboutUs',
+            component: AboutUs,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
