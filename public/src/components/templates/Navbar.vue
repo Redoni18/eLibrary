@@ -204,6 +204,15 @@
                 ><mdb-icon icon="school" class="mr-3" /><p>Faculties</p></mdb-list-group-item
                 >
             </router-link>
+
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/staff'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="school" class="mr-3" /><p>Staffs</p></mdb-list-group-item
+                >
+             </router-link>
+             
             <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/users'})">
                 <mdb-list-group-item
                 id="sidebar-item"

@@ -36,6 +36,7 @@ const facultyController = require('../controllers/facultyController')
 const countryController = require('../controllers/countryController')
 const requestsController = require('../controllers/requestsController');
 const upcomingController = require('../controllers/upcomingController');
+const staffController = require('../controllers/staffController');
 
 
 /**
@@ -127,5 +128,11 @@ router.get('/api/get/upcoming/:id', upcomingController.get_upcoming);
 router.get('/api/upcomings', upcomingController.get_upcomings);
 router.delete('/api/upcoming/delete/:id', upcomingController.delete_upcoming);
 router.put('/api/upcoming/edit', upcomingController.edit_upcoming);
+
+router.get('/api/staff', staffController.get_staffs);
+router.post('/api/createStaff', staffController.post_staff);
+router.get('/api/staff/:id', staffController.get_staff);
+router.put('/api/editStaff/:id', staffController.edit_staff);
+router.delete('/api/staff/delete/:id', staffController.delete_staff);
 
 module.exports = router;
