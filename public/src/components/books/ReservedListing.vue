@@ -49,25 +49,25 @@
       </template>
     </vue-good-table>
     </div>
-    <!-- <div>
+    <div>
     <mdb-modal centered v-if="showModal" @close="showModal = false">
       <mdb-modal-header>
         <mdb-modal-title>Warning</mdb-modal-title>
       </mdb-modal-header>
-      <mdb-modal-body>Are you sure you want to delete selected book?</mdb-modal-body>
+      <mdb-modal-body>Are you sure you want to delete reserved book?</mdb-modal-body>
       <mdb-modal-footer>
         <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
         <mdb-btn color="danger" @click.native="removeBook(selectedBook)">Delete</mdb-btn>
       </mdb-modal-footer>
     </mdb-modal>
-  </div> -->
+  </div>
 
 </div>
      
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
     mdbModalHeader,
     mdbModalTitle,
@@ -97,6 +97,7 @@ export default {
         showModal: false,
         selectedBook: {},
         userBorrowedBooks: [],
+        updatedBorrowedBooks: [],
         isMember: false,
         user: JSON.parse(window.localStorage.getItem('user')),
         columns: [
@@ -127,6 +128,9 @@ export default {
       };
   },
   methods: {
+        ...mapActions({
+            saveBook: 'saveBook'
+        }),
 
         getBook(params){
             this.$router.push({name: 'bookDetails', params: {id: params.row._id}})
@@ -138,7 +142,46 @@ export default {
         async getUserBooks(){
             const response = await axios.get(`http://localhost:8000/api/user/getBorrowed/${this.currentUser.data.id}`)
             this.userBorrowedBooks = response.data.books
-        }
+        },
+
+        async removeBook(book){
+          console.log(book)
+          this.updatedBorrowedBooks = this.userBorrowedBooks.filter(el => el._id !== book._id)
+          console.log(this.updatedBorrowedBooks)
+
+          await this.saveBook({
+            _id: this.currentUser.data.id,
+            name: this.currentUser.data.name,
+            email: this.currentUser.data.email,
+            userType: this.currentUser.data.userType,
+            bio: this.currentUser.data.bio,
+            city: this.currentUser.data.city,
+            birthday: this.currentUser.data.birthday,
+            social1: this.currentUser.data.social1,
+            social2: this.currentUser.data.social2,
+            social3: this.currentUser.data.social3,
+            isAdmin: this.currentUser.data.isAdmin,
+            books: this.updatedBorrowedBooks
+          });
+
+          this.$toast.success("Bood removed successfully", {
+              position: "top-right",
+              timeout: 5000,
+              closeOnClick: true,
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              draggable: true,
+              draggablePercent: 0.6,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: "button",
+              icon: true,
+              rtl: false
+          });
+
+          this.showModal = false
+          await this.getUserBooks()
+        },
     },
 
     mounted() {
