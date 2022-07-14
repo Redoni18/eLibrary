@@ -79,9 +79,9 @@ router.get('/api/users', userController.get_users);
 router.get('/api/unique/:email', userController.get_unique);
 
 
-router.post('/api/addReview', reviewsController.add_review);
+router.post('/api/addReview', reviewsController.validate('post_review'), reviewsController.add_review);
 router.get('/api/reviews/:id', reviewsController.reviews);
-router.put('/api/editReview/:id', reviewsController.edit_review);
+router.put('/api/editReview/:id', reviewsController.validate('edit_review'), reviewsController.edit_review);
 router.delete('/api/review/delete/:id', reviewsController.delete_review);
 router.get('/api/review/:id', reviewsController.get_review)
 
@@ -91,10 +91,10 @@ router.put('/api/editLocation/:id', locationController.validate('edit_location')
 router.delete('/api/deleteLocation/:id', locationController.delete_location)
 router.get('/api/location/:id', locationController.get_location)
 
-router.post('/api/category/add', categoriesController.add_categories);
+router.post('/api/category/add', categoriesController.validate('add_categories'),categoriesController.add_categories);
 router.get('/api/categories', categoriesController.get_categories);
 router.get('/api/category/:id', categoriesController.get_category);
-router.put('/api/category/edit/:id', categoriesController.edit_category);
+router.put('/api/category/edit/:id',categoriesController.validate('edit_categories') ,categoriesController.edit_category);
 router.delete('/api/category/delete/:id', categoriesController.delete_category);
 
 router.get('/api/memberships', membershipController.get_memberships);
@@ -117,17 +117,17 @@ router.post('/api/addCountry', countryController.validate('post_country'), count
 router.delete('/api/deleteCountry/:id', countryController.delete_country);
 router.get('/api/country/:id', countryController.get_country);
 
-router.post('/api/request/add', requestsController.add_request);
+router.post('/api/request/add', requestsController.validate('add_request'), requestsController.add_request);
 router.get('/api/requests/:id', requestsController.get_request);
 router.get('/api/requests', requestsController.get_requests);
 router.delete('/api/requests/delete/:id', requestsController.delete_request);
-router.put('/api/requests/edit', requestsController.edit_request);
+router.put('/api/requests/edit', requestsController.validate('edit_request'), requestsController.edit_request);
 
-router.post('/api/upcoming/add', upcomingController.add_upcoming);
+router.post('/api/upcoming/add' ,upcomingController.validate('add_upcoming'), upcomingController.add_upcoming);
 router.get('/api/get/upcoming/:id', upcomingController.get_upcoming);
 router.get('/api/upcomings', upcomingController.get_upcomings);
 router.delete('/api/upcoming/delete/:id', upcomingController.delete_upcoming);
-router.put('/api/upcoming/edit', upcomingController.edit_upcoming);
+router.put('/api/upcoming/edit', upcomingController.validate('edit_upcoming') ,upcomingController.edit_upcoming);
 
 router.get('/api/staff', staffController.get_staffs);
 router.post('/api/createStaff', staffController.post_staff);
