@@ -1,5 +1,16 @@
 const Country = require('../models/Country');
 var ObjectID = require('mongoose').Types.ObjectId
+const { body, validationResult } = require('express-validator/check')
+
+exports.validate = (method) => {
+    switch (method) {
+        case 'post_country': {
+         return [ 
+                body('name').exists()
+           ]   
+        }
+      }
+}
 
 exports.get_countries = function (req,res) {
     Country.find((err, docs) => {
@@ -13,12 +24,16 @@ exports.get_countries = function (req,res) {
 
 exports.post_country = function (req,res) {
 
+    const errors = validationResult(req)
+
     let newCountry = new Country({
         name: req.body.name,
         isoCountryCode: req.body.isoCountryCode
     });
 
-    newCountry.save();
+    if(errors.isEmpty()){
+        newCountry.save();
+    }
 
     res.json({
         data: {
@@ -26,25 +41,6 @@ exports.post_country = function (req,res) {
             isoCountryCode: newCountry.isoCountryCode
         }
     });
-}
-
-exports.edit_country = function (req,res) {
-    if(!ObjectID.isValid(req.body._id)){
-        return res.status(400).send(`No record with given id:   ${req.body._id}`)
-    }
-
-    let updatedCountry = {
-        name: req.body.name,
-        isoCountryCode: req.body.isoCountryCode
-    }
-
-    Country.findByIdAndUpdate(req.body._id, {$set: updatedCountry}, {new: true}, (err, doc) => {
-        if(!err){
-            res.send(doc)
-        }else{
-            console.log('Error while updating country')
-        }
-    })
 }
 
 exports.delete_country = function (req,res) {

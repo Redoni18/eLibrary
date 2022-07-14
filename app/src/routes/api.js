@@ -86,8 +86,8 @@ router.delete('/api/review/delete/:id', reviewsController.delete_review);
 router.get('/api/review/:id', reviewsController.get_review)
 
 router.get('/api/locations', locationController.get_locations)
-router.post('/api/addLocation', locationController.post_location)
-router.put('/api/editLocation/:id', locationController.edit_location)
+router.post('/api/addLocation', locationController.validate('post_location'),locationController.post_location);
+router.put('/api/editLocation/:id', locationController.validate('edit_location'), locationController.edit_location);
 router.delete('/api/deleteLocation/:id', locationController.delete_location)
 router.get('/api/location/:id', locationController.get_location)
 
@@ -98,8 +98,8 @@ router.put('/api/category/edit/:id', categoriesController.edit_category);
 router.delete('/api/category/delete/:id', categoriesController.delete_category);
 
 router.get('/api/memberships', membershipController.get_memberships);
-router.post('/api/addMembership', membershipController.post_membership);
-router.put('/api/editMembership/:id', membershipController.edit_membership);
+router.post('/api/addMembership', membershipController.validate('post_membership'),membershipController.post_membership);
+router.put('/api/editMembership/:id', membershipController.validate('edit_membership'), membershipController.edit_membership);
 router.delete('/api/deleteMembership/:id', membershipController.delete_membership);
 router.get('/api/membership/:id', membershipController.get_membership);
 router.put('/api/updateMembership/:id', authController.update_membership)
@@ -113,7 +113,7 @@ router.get('/api/faculty/:id', facultyController.get_faculty);
 
 
 router.get('/api/countries', countryController.get_countries);
-router.post('/api/addCountry', countryController.post_country);
+router.post('/api/addCountry', countryController.validate('post_country'), countryController.post_country);
 router.delete('/api/deleteCountry/:id', countryController.delete_country);
 router.get('/api/country/:id', countryController.get_country);
 
