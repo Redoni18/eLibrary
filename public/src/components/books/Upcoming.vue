@@ -1,45 +1,47 @@
 <template>
     <div class="upcoming-books__container">
-        <b-card v-if="toggleButtons" :title="currentUpComing.title" :sub-title="`Published By ${currentUpComing.author} in ${currentUpComing.date}`" style="margin-bottom: 40px;">
-            <b-card v-if="!editing" style="height: 200px; display: flex; flex-direction: row; justify-content: space-between;">
-                <b-button variant="dark" class="upcoming-books__buttons" @click="cancelChanges()">Cancel Changes</b-button>
-                <b-button variant="danger" class="upcoming-books__buttons" @click="showModal = true">Remove up-coming Book</b-button>
-                <b-button variant="info" class="upcoming-books__buttons" @click="edit()">Edit up-coming Book Details</b-button>
-                <b-button variant="success" class="upcoming-books__buttons" @click="add(currentUpComing)">Release up-coming Book</b-button>
-            </b-card>
-                <b-card v-if="editing">
-                   Enter the title <b-form-input  :state="currentUpComing.title.length > 2" v-model="currentUpComing.title" type="text"  :placeholder="currentUpComing.title"/>
-                    Enter the author <b-form-input  :state="currentUpComing.author.length > 2"   v-model="currentUpComing.author" type="text" :placeholder="currentUpComing.author" />
-                   Enter the published date <b-form-input :state="currentUpComing.date < Date.now"  v-model="currentUpComing.date" type="date" />
-                    <b-button variant="dark" class="upcoming-books__buttons" @click="cancelChanges()">Cancel Changes</b-button>
-                    <b-button variant="success" class="upcoming-books__buttons" @click="saveChanges()">Save Changes</b-button>
-                </b-card>
-         </b-card>
-           <vue-good-table
-        :columns="columns"
-        :rows="upComingsFiltered()"
-        :search-options="{
-            enabled: true
-        }"
-        :line-numbers="true"
-        :pagination-options="{
-            enabled: true,
-            perPage: 7,
-            perPageDropdown: [5, 7, 10],
-            dropdownAllowAll: false,
-        }"
-        @on-row-click="onRowClick"
-         />
+         <vue-good-table
+            :columns="columns"
+            :rows="upComingsFiltered()"
+            :search-options="{
+                enabled: true
+            }"
+            :line-numbers="true"
+            :pagination-options="{
+                enabled: true,
+                perPage: 7,
+                perPageDropdown: [5, 7, 10],
+                dropdownAllowAll: false,
+            }"
+            >
+             <template v-slot:table-row="props">
+            <span v-if="user.data.isAdmin && props.column.field === 'actions'">
+                <mdb-dropdown end tag="li" class="nav-item">
+                    <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
+                        <template #button-content>
+                            <mdb-icon icon="ellipsis-h" class="mr-3" />
+                        </template>
+                    </mdb-dropdown-toggle>
+                    <mdb-dropdown-menu>
+                        <mdb-dropdown-item @click.native="showModal=true;currentUpComing=props.row;"><mdb-icon icon="trash" class="mr-3" />Deny</mdb-dropdown-item>
+                        <mdb-dropdown-item @click="add(props.row)"><mdb-icon icon="pen" class="mr-3" />Accept</mdb-dropdown-item>
+                    </mdb-dropdown-menu>
+                </mdb-dropdown>
+
+            </span>
+        </template>
+         
+         </vue-good-table>
 
          <div>
             <mdb-modal centered v-if="showModal" @close="showModal = false">
             <mdb-modal-header>
                 <mdb-modal-title>Warning</mdb-modal-title>
             </mdb-modal-header>
-            <mdb-modal-body>Are you sure you want to delete selected book?</mdb-modal-body>
+            <mdb-modal-body>Are you sure you want to Remove The Up Coming Book</mdb-modal-body>
             <mdb-modal-footer>
                 <mdb-btn color="primary" @click.native="showModal = false">Close</mdb-btn>
-                <mdb-btn color="danger" @click.native="remove(currentUpComing.id)">Delete</mdb-btn>
+                <mdb-btn color="danger" @click.native="remove(currentUpComing._id)">Delete</mdb-btn>
             </mdb-modal-footer>
             </mdb-modal>
         </div>
@@ -48,13 +50,22 @@
 
 <script>
 import axios from 'axios'
-import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIcon, mdbModal,
+import { mapActions, mapGetters } from 'vuex'
+import {
+    mdbDropdown,
+    mdbDropdownItem,
+    mdbDropdownMenu,
+    mdbDropdownToggle,
+    mdbIcon,
+    mdbModal,
     mdbModalHeader,
     mdbModalTitle,
     mdbModalBody,
     mdbModalFooter,
-    mdbBtn} from 'mdbvue';
-export default {
+    mdbBtn
+    } from 'mdbvue';
+    
+    export default {
     components: {
         mdbDropdown,
         mdbDropdownItem,
@@ -91,25 +102,17 @@ export default {
                     label: 'Date Published',
                     field: 'date',
                     tooltip: 'Click on a specific row that you want to edit or delete!',
+                 },
+                   {
+                        label: '',
+                        field: 'actions',
+                        sortable: false,
+                        width: '50px',
                 },
             ],
         }
     },
     methods: {
-        onRowClick(params) {
-            if (this.toggleButtons) {
-                this.currentUpComing = null
-            } else { 
-                for (let i = 0; i < this.upcomings.length; i++){
-                    if (this.upcomings[i]._id === params.row._id) {
-                        this.currentUpComing = { id : this.upcomings[i]._id , title : this.upcomings[i].title, author: this.upcomings[i].author, date: this.upcomings[i].date }
-                    }
-                }
-            }
-                this.toggleButtons = !this.toggleButtons
-                this.rowId = params.row._id
-            return
-        },
         upComingsFiltered() {
             const filtered = this.upcomings
             for (let i = 0; i < filtered.length; i++){
@@ -170,7 +173,11 @@ export default {
      async mounted() {
         const upcomings = await axios.get('http://localhost:8000/api/upcomings').then(response => {this.upcomings = response.data})
     },
-    computed: {}
+    computed: {
+        ...mapGetters({
+                user: 'getUser'
+            }),
+    }
  }
 </script>
 
@@ -178,6 +185,6 @@ export default {
 .upcoming-books__buttons{
     max-width: 43%;
     margin: 20px;
-    font-size: 1.4vw;
+    font-size: 1vw;
 }
 </style>
