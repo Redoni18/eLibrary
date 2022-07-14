@@ -26,7 +26,7 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item @click.native="removeLocation(props.row._id)"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
+                <mdb-dropdown-item @click.native="showModal = true;selectedLocation=props.row;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{name: 'editLocation', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
@@ -56,7 +56,7 @@ import { mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle, mdbIc
     mdbModalTitle,
     mdbModalBody,
     mdbModalFooter,
-    mdbBtn} from 'mdbvue';
+    mdbBtn } from 'mdbvue';
 export default {
     name: "LocationsListing",
     components: {
@@ -127,7 +127,7 @@ export default {
         },
         async removeLocation(location) {
             await axios.delete(`http://localhost:8000/api/deleteLocation/${location._id}`)
-            this.toggleButtons = false
+            await this.fetchLocations()
 
             this.$toast.success("Location deleted successfully", {
                 position: "top-right",

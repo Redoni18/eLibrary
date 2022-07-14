@@ -1,5 +1,29 @@
 const Location = require('../models/Location');
 var ObjectID = require('mongoose').Types.ObjectId
+const { body, validationResult } = require('express-validator/check')
+
+exports.validate = (method) => {
+    switch (method) {
+      case 'post_location': {
+       return [ 
+            body('city').exists(),
+            body('address').exists().isLength({min: 2, max: 50}),
+            body('phoneNumber').exists().isInt().isLength({max: 20 }),
+            body('latitude').exists(),
+            body('longitude').exists()
+         ]   
+      }
+      case 'edit_location': {
+        return [ 
+            body('city').exists(),
+            body('address').exists().isLength({min: 2, max: 50}),
+            body('phoneNumber').exists().isInt().isLength({max: 20 }),
+            body('latitude').exists(),
+            body('longitude').exists()
+            ]   
+         }
+    }
+  }
 
 exports.get_locations = function (req,res) {
     Location.find((err, docs) => {
@@ -13,6 +37,8 @@ exports.get_locations = function (req,res) {
 
 exports.post_location = function (req,res) {
 
+    const errors = validationResult(req)
+
     let newLocation = new Location({
         city: req.body.city,
         address: req.body.address,
@@ -21,7 +47,9 @@ exports.post_location = function (req,res) {
         longitude: req.body.longitude
     });
 
-    newLocation.save();
+    if(errors.isEmpty()){
+        newLocation.save();
+    }
 
     res.json({
         data: {
@@ -35,10 +63,15 @@ exports.post_location = function (req,res) {
 }
 
 exports.edit_location = function (req,res) {
+
+    const errors = validationResult(req)
+
     if(!ObjectID.isValid(req.body._id)){
         return res.status(400).send(`No record with given id:   ${req.body._id}`)
     }
-
+    if(!errors.isEmpty()){
+        return res.status(500).send(`Invalid Data`)
+    }
     let updatedLocation = {
         city: req.body.city,
         address: req.body.address,
