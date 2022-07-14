@@ -29,6 +29,9 @@
         <router-link :to="({path: '/request'})">
             <mdb-nav-item>Request</mdb-nav-item>
         </router-link>
+        <router-link :to="({path: '/about-us'})">
+            <mdb-nav-item>About Us</mdb-nav-item>
+        </router-link>
       </mdb-navbar-nav>
       <mdb-navbar-nav right>
         <mdb-dropdown end tag="li" class="nav-item">
