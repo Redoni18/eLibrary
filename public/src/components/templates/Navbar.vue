@@ -15,8 +15,9 @@
                 Books
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item :to="{path: '/'}">Books</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{path: '/'}">All Books</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{path: '/booksList/listing'}">Listing</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{path: '/reservedBooks'}">Reserved Books</mdb-dropdown-item>
             </mdb-dropdown-menu>
         </mdb-dropdown>
         <router-link :to="({path: '/contact-us'})">
@@ -135,6 +136,13 @@
                 id="sidebar-item"
                 :action="true"
                 ><mdb-icon icon="clock" class="mr-3" /><p>Upcoming Books</p></mdb-list-group-item
+                >
+            </router-link>
+            <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/reservedBooks'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="save" class="mr-3" /><p>Reserved Books</p></mdb-list-group-item
                 >
             </router-link>
           </div>

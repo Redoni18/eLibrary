@@ -6,6 +6,8 @@ import Signup from '@/components/auth/Signup'
 import Signin from '@/components/auth/Signin'
 import Users from '@/components/users/Users'
 import Books from '../components/books/Books'
+import ReservedBooks from '../components/books/ReservedBooks'
+import ReservedListing from '../components/books/ReservedListing'
 import BooksListing from '@/components/books/Listing'
 import InsertBook from '@/components/books/InsertBook'
 import BookDetails from '@/components/books/BookDetails'
@@ -85,6 +87,22 @@ const router = new Router({
             path: '/books',
             name: 'books',
             component: Books,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/reservedBooks',
+            name: 'reserved',
+            component: ReservedBooks,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/reservedBooks/listing',
+            name: 'reservedListing',
+            component: ReservedListing,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
