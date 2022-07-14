@@ -1,6 +1,7 @@
 <template>
-<div>
+<div class="books-table__container">
 <vue-good-table
+    :class="'books-table'"
     :columns="columns"
     :rows="books"
     :search-options="{
@@ -235,15 +236,15 @@ export default {
 </script>
 
 <style scoped>
-.more-options{
-  transition: 0.3s;
+
+.books-table__container{
+  display: flex;
+  justify-content: center;
 }
 
-.more-options:hover{
-  border-radius: 5px;
-  background: rgb(230, 230, 230);
-  color:rgb(0, 0, 0);
-  transition: 0.3s;
+.books-table{
+  width: 1200px;
+
 }
 
 .title-cell{
@@ -270,5 +271,14 @@ export default {
     -webkit-line-clamp: 3; /* number of lines to show */
     -webkit-box-orient: vertical;
 }
+
+@media only screen and (max-width: 1300px){
+
+    .books-table{
+      width: 900px;
+
+    }
+}
+
 
 </style>

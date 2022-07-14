@@ -1,50 +1,54 @@
 <template>
-<div>
-    <div class="mb-3">
+<div class="books-table__container">
+    <div class="mb-3 reserved_button">
             <router-link type="submit" class="btn btn-primary" :to="{path: '/reservedBooks'}">Switch to card view</router-link>
         </div>
-<vue-good-table
-    :columns="columns"
-    :rows="userBorrowedBooks"
-    :search-options="{
-        enabled: true
-    }"
-    :line-numbers="true"
-    :pagination-options="{
-        enabled: true,
-        perPage: 7,
-        perPageDropdown: [5, 7, 10],
-        dropdownAllowAll: false,
-    }"
-    >
-    <template v-slot:table-row="props">
-      <span v-if="props.column.field === 'title'" class="title-cell">
-        <span @click="getBook(props)">{{props.row.title}}</span>
-      </span>
-      <span v-if="props.column.field === 'author'">
-        <span>{{props.row.author}}</span>
-      </span>
-      <span v-if="props.column.field === 'description'" class="book-table__description">
-        <span>{{props.row.description}}</span>
-      </span>
-      <span v-if="props.column.field === 'year'">
-        <span>{{props.row.year}}</span>
-      </span>
-      <span v-if="props.column.field === 'actions'">
-        <mdb-dropdown end tag="li" class="nav-item">
-            <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
-                <template #button-content>
-                    <mdb-icon icon="ellipsis-h" class="mr-3" />
-                </template>
-            </mdb-dropdown-toggle>
-            <mdb-dropdown-menu>
-                <mdb-dropdown-item v-if="currentUser.data.id == user.data.id" @click.native="showModal=true;selectedBook=props.row;"><mdb-icon icon="trash" class="mr-3" />Remove</mdb-dropdown-item>
-            </mdb-dropdown-menu>
-        </mdb-dropdown>
+    <div>
 
-      </span>
-  </template>
-</vue-good-table>
+    <vue-good-table
+        :class="'books-table'"
+        :columns="columns"
+        :rows="userBorrowedBooks"
+        :search-options="{
+            enabled: true
+        }"
+        :line-numbers="true"
+        :pagination-options="{
+            enabled: true,
+            perPage: 7,
+            perPageDropdown: [5, 7, 10],
+            dropdownAllowAll: false,
+        }"
+        >
+        <template v-slot:table-row="props">
+          <span v-if="props.column.field === 'title'" class="title-cell">
+            <span @click="getBook(props)">{{props.row.title}}</span>
+          </span>
+          <span v-if="props.column.field === 'author'">
+            <span>{{props.row.author}}</span>
+          </span>
+          <span v-if="props.column.field === 'description'" class="book-table__description">
+            <span>{{props.row.description}}</span>
+          </span>
+          <span v-if="props.column.field === 'year'">
+            <span>{{props.row.year}}</span>
+          </span>
+          <span v-if="props.column.field === 'actions'">
+            <mdb-dropdown end tag="li" class="nav-item">
+                <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
+                    <template #button-content>
+                        <mdb-icon icon="ellipsis-h" class="mr-3" />
+                    </template>
+                </mdb-dropdown-toggle>
+                <mdb-dropdown-menu>
+                    <mdb-dropdown-item v-if="currentUser.data.id == user.data.id" @click.native="showModal=true;selectedBook=props.row;"><mdb-icon icon="trash" class="mr-3" />Remove</mdb-dropdown-item>
+                </mdb-dropdown-menu>
+            </mdb-dropdown>
+
+          </span>
+      </template>
+    </vue-good-table>
+    </div>
     <!-- <div>
     <mdb-modal centered v-if="showModal" @close="showModal = false">
       <mdb-modal-header>
@@ -150,16 +154,28 @@ export default {
 </script>
 
 <style scoped>
-.more-options{
-  transition: 0.3s;
+
+.books-table__container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.more-options:hover{
-  border-radius: 5px;
-  background: rgb(230, 230, 230);
-  color:rgb(0, 0, 0);
-  transition: 0.3s;
+
+.books-table{
+  width: 1200px;
+
 }
+
+@media only screen and (max-width: 1300px){
+
+    .books-table{
+      width: 900px;
+
+    }
+}
+
 
 .title-cell{
     font-weight: 600;
