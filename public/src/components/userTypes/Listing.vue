@@ -19,10 +19,7 @@
         }"
       
        >
-    <template v-slot:table-row="props">
-      <span v-if="props.column.field === 'userType'" class="title-cell">
-        <span @click="fetchUserTypes(props)">{{props.row.userType}}</span>
-      </span>
+    <template v-if="user.data.isAdmin" v-slot:table-row="props">
       <span v-if="user.data.isAdmin && props.column.field === 'actions'">
         <mdb-dropdown end tag="li" class="nav-item">
             <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>

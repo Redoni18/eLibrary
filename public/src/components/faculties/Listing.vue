@@ -21,13 +21,7 @@ Faculties-Listing.vue
             dropdownAllowAll: false,
         }"
        >
-    <template v-slot:table-row="props">
-      <span v-if="props.column.field === 'emri'" class="title-cell">
-        <span @click="fetchFaculties(props)">{{props.row.emri}}</span>
-      </span>
-      <span v-if="props.column.field === 'drejtimi'">
-        <span>{{props.row.drejtimi}}</span>
-      </span>
+    <template v-if="user.data.isAdmin" v-slot:table-row="props">
       <span v-if="user.data.isAdmin && props.column.field === 'actions'">
         <mdb-dropdown end tag="li" class="nav-item">
             <mdb-dropdown-toggle right tag="a" navLink color="secondary-color-dark" slot="toggle" waves-fixed>
