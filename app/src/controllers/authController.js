@@ -7,33 +7,36 @@ const { body, validationResult } = require('express-validator/check')
 
 //validation method
 exports.validate = (method) => {
-  switch (method) {
-    case 'post_signup': {
-     return [ 
-            body('name').exists().isLength({ min: 2, max: 50 }),
-            body('email').isEmail(),
-            body('userType').exists()
-       ]   
+    switch (method) {
+        case 'post_signup':
+            {
+                return [
+                    body('name').exists().isLength({ min: 2, max: 50 }),
+                    body('email').isEmail(),
+                    body('userType').exists()
+                ]
+            }
+        case 'edit_profile':
+            {
+                return [
+                    body('name').exists().isLength({ min: 2, max: 50 }),
+                    body('email').isEmail(),
+                ]
+            }
+        case 'edit_user':
+            {
+                return [
+                    body('email').isEmail()
+                ]
+            }
+
     }
-    case 'edit_profile': {
-        return [ 
-            body('name').exists().isLength({ min: 2, max: 50 }),
-            body('email').isEmail(),
-        ]   
-    }
-    case 'edit_user': {
-        return [ 
-            body('email').isEmail()
-        ]   
-    }
-       
-  }
 }
 
 
 
 
-exports.post_signup = function (req, res) {
+exports.post_signup = function(req, res) {
 
     let hash_password = bcrypt.hash(req.body.password);
 
@@ -48,7 +51,7 @@ exports.post_signup = function (req, res) {
         isMember: req.body.isMember
     });
 
-    if(errors.isEmpty()){
+    if (errors.isEmpty()) {
         user.save();
     }
 
@@ -68,11 +71,11 @@ exports.post_signup = function (req, res) {
     });
 };
 
-exports.edit_profile = function (req, res) {
+exports.edit_profile = function(req, res) {
 
     const errors = validationResult(req)
 
-    if(!errors.isEmpty()){
+    if (!errors.isEmpty()) {
         return res.status(500).send(`Invalid Data`)
     }
 
@@ -90,20 +93,20 @@ exports.edit_profile = function (req, res) {
     }
 
 
-    User.findByIdAndUpdate(req.body._id, {$set: updatedInfo}, {new: true}, (err, doc) => {
-        if(!err){
+    User.findByIdAndUpdate(req.body._id, { $set: updatedInfo }, { new: true }, (err, doc) => {
+        if (!err) {
             res.send(doc)
-        }else{
+        } else {
             console.log('Error while updating user profile')
         }
     })
 };
 
-exports.edit_user = function (req, res) {
+exports.edit_user = function(req, res) {
 
     const errors = validationResult(req)
 
-    if(!errors.isEmpty()){
+    if (!errors.isEmpty()) {
         return res.status(500).send(`Invalid Data`)
     }
 
@@ -112,61 +115,60 @@ exports.edit_user = function (req, res) {
         isAdmin: req.body.email.includes('@eLibrary') ? true : false
     }
 
-    User.findByIdAndUpdate(req.body._id, {$set: updatedInfo}, {new: true}, (err, doc) => {
-        if(!err){
+    User.findByIdAndUpdate(req.body._id, { $set: updatedInfo }, { new: true }, (err, doc) => {
+        if (!err) {
             res.send(doc)
-        }else{
+        } else {
             console.log('Error while updating user')
         }
     })
 };
 
-exports.delete_user = function (req, res) {
-    if(!ObjectID.isValid(req.params.id)){
+exports.delete_user = function(req, res) {
+    if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send(`No record with given id: ${req.params.id}`)
     }
 
     User.findByIdAndRemove(req.params.id, (err, docs) => {
-        if(!err){
+        if (!err) {
             res.send(docs)
-        }else{
+        } else {
             console.log('Error while deleting record')
         }
     })
 };
 
 
-exports.get_profile = function (req, res) {
+exports.get_profile = function(req, res) {
     let id = req.params.id;
 
     try {
-        User.findById({ _id: id }).exec(function (err, user) {
+        User.findById({ _id: id }).exec(function(err, user) {
             if (user) {
                 res.send(user);
-            } 
+            }
         });
-      } catch (error) {
+    } catch (error) {
         if ([400, 403, 404].includes(error.code)) {
-          return res.status(error.code).send(error.message);
+            return res.status(error.code).send(error.message);
         }
-    
+
         console.error(error);
         return res.status(500).send(error.message);
-      }
+    }
 };
 
 
-exports.post_signin = function (req, res) {
+exports.post_signin = function(req, res) {
 
     var email = req.body.email;
     var password = req.body.password;
 
-    User.findOne({ email: email }).exec(function (err, user) {
+    User.findOne({ email: email }).exec(function(err, user) {
         if (user === null) {
 
             res.sendStatus(401);
-        }
-        else if (bcrypt.compare(password, user.password)) {
+        } else if (bcrypt.compare(password, user.password)) {
             let payload = { id: user.id };
             let token = auth.encode(payload);
 
@@ -194,47 +196,47 @@ exports.post_signin = function (req, res) {
 
 
 
-exports.get_auth = function (req, res, next) {
+exports.get_auth = function(req, res, next) {
     res.sendStatus(200);
 };
 
-exports.update_membership = function (req, res) {
+exports.update_membership = function(req, res) {
 
     let updatedInfo = {
         isMember: req.body.isMember,
     }
 
 
-    User.findByIdAndUpdate(req.body._id, {$set: updatedInfo}, {new: true}, (err, doc) => {
-        if(!err){
+    User.findByIdAndUpdate(req.body._id, { $set: updatedInfo }, { new: true }, (err, doc) => {
+        if (!err) {
             res.send(doc)
-        }else{
+        } else {
             console.log('Error while updating user profile')
         }
     })
 };
 
-exports.get_membership = function (req, res) {
+exports.get_membership = function(req, res) {
     let id = req.params.id;
 
     try {
-        User.findById({ _id: id }).exec(function (err, user) {
+        User.findById({ _id: id }).exec(function(err, user) {
             if (user) {
                 res.send(user);
-            } 
+            }
         });
-      } catch (error) {
+    } catch (error) {
         if ([400, 403, 404].includes(error.code)) {
-          return res.status(error.code).send(error.message);
+            return res.status(error.code).send(error.message);
         }
-    
+
         console.error(error);
         return res.status(500).send(error.message);
-      }
+    }
 };
 
 
-exports.borrow_books = function (req, res) {
+exports.borrow_books = function(req, res) {
     let borrowedBooks = {
         name: req.body.name,
         email: req.body.email,
@@ -249,30 +251,74 @@ exports.borrow_books = function (req, res) {
         books: req.body.books
     }
 
-    User.findByIdAndUpdate(req.body._id, {$set: borrowedBooks}, {new: true}, (err, doc) => {
-        if(!err){
+    User.findByIdAndUpdate(req.body._id, { $set: borrowedBooks }, { new: true }, (err, doc) => {
+        if (!err) {
             res.send(doc)
-        }else{
+        } else {
             console.log('Error while updating user profile')
         }
     })
 };
 
-exports.get_borrowed_books = function (req, res) {
+exports.get_borrowed_books = function(req, res) {
     let id = req.params.id;
 
     try {
-        User.findById({ _id: id }).exec(function (err, user) {
+        User.findById({ _id: id }).exec(function(err, user) {
             if (user) {
                 res.send(user);
-            } 
+            }
         });
-      } catch (error) {
+    } catch (error) {
         if ([400, 403, 404].includes(error.code)) {
-          return res.status(error.code).send(error.message);
+            return res.status(error.code).send(error.message);
         }
-    
+
         console.error(error);
         return res.status(500).send(error.message);
-      }
+    }
+};
+
+exports.favourite_books = function(req, res) {
+    let favouriteBooks = {
+        name: req.body.name,
+        email: req.body.email,
+        userType: req.body.userType,
+        bio: req.body.bio,
+        city: req.body.city,
+        birthday: req.body.birthday,
+        social1: req.body.social1,
+        social2: req.body.social2,
+        social3: req.body.social3,
+        isAdmin: req.body.isAdmin,
+        books: req.body.books,
+        favouriteBooks: req.body.favouriteBooks
+    }
+
+    User.findByIdAndUpdate(req.body._id, { $set: favouriteBooks }, { new: true }, (err, doc) => {
+        if (!err) {
+            res.send(doc)
+        } else {
+            console.log('Error while updating user profile')
+        }
+    })
+};
+
+exports.get_favourited_books = function(req, res) {
+    let id = req.params.id;
+
+    try {
+        User.findById({ _id: id }).exec(function(err, user) {
+            if (user) {
+                res.send(user);
+            }
+        });
+    } catch (error) {
+        if ([400, 403, 404].includes(error.code)) {
+            return res.status(error.code).send(error.message);
+        }
+
+        console.error(error);
+        return res.status(500).send(error.message);
+    }
 };

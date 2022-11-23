@@ -1,11 +1,11 @@
 <template>
     <div class="users_container container">
-        <div class="mb-3" v-if="userBorrowedBooks.length">
-            <router-link type="submit" class="btn btn-primary" :to="{path: '/reservedBooks/listing'}">Switch to table view</router-link>
+        <div class="mb-3" v-if="userFavouritedBooks.length">
+            <router-link type="submit" class="btn btn-primary" :to="{path: '/favouriteBooks/listing'}">Switch to table view</router-link>
         </div>
-        <div class="row" v-if="userBorrowedBooks.length">
+        <div class="row" v-if="userFavouritedBooks.length">
                 
-                <book class="single-book" @changePage="changePage(book._id)" v-for="book in userBorrowedBooks" :key="book._id" :title="book.title" :description="book.description" :author="book.author" :year="book.year" :imageUrl="book.imageUrl">
+                <book class="single-book" @changePage="changePage(book._id)" v-for="book in userFavouritedBooks" :key="book._id" :title="book.title" :description="book.description" :author="book.author" :year="book.year" :imageUrl="book.imageUrl">
 
                 </book>
         </div>
@@ -13,7 +13,7 @@
                 
                 
                 <div class="no-books__content">
-                    <h3>Oops...looks like you don't have any books reserved at the moment!</h3>
+                    <h3>Oops...looks like you don't have any books favourite books at the moment!</h3>
                     <h4>Make sure to purchase a membership before reserving a book!</h4>
                     <b-button variant="primary" @click="goToMembership">Become a member</b-button>
                 </div>
@@ -34,7 +34,7 @@
         props: ['pageTitle'],
         data(){
             return {
-                userBorrowedBooks: [] //userFavouritedBooks
+                userFavouritedBooks: [] //userFavouritedBooks
             }
         },
         computed: {
@@ -50,14 +50,14 @@
             goToMembership(){
                 this.$router.push({path: '/allMemberships'})
             },
-            async getUserBooks(){ //
-                const response = await axios.get(`http://localhost:8000/api/user/getBorrowed/${this.currentUser.data.id}`)
-                this.userBorrowedBooks = response.data.favouriteBooks //favouriteBooks
+            async getFavourite(){ 
+                const response = await axios.get(`http://localhost:8000/api/user/getFavourite/${this.currentUser.data.id}`)
+                this.userFavouritedBooks = response.data.favouriteBooks 
             }
         },
 
         mounted() {
-            this.getUserBooks();
+            this.getFavourite();
         },
     }
 </script>

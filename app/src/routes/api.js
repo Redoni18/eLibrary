@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const auth = require("../helper/auth");
@@ -7,17 +6,17 @@ const multer = require('multer')
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "../../../uploads");
+        cb(null, "../../../uploads");
     },
     filename: (req, file, cb) => {
-      console.log(file.originalname);
-      cb(null, file.originalname);
+        console.log(file.originalname);
+        cb(null, file.originalname);
     },
-  });
-  
-  let uploadFile = multer({
+});
+
+let uploadFile = multer({
     storage: storage,
-  })
+})
 
 
 /**
@@ -43,15 +42,17 @@ const staffController = require('../controllers/staffController');
 /**
  * Routes
  */
-router.post('/api/signup', authController.validate('post_signup'),authController.post_signup);
+router.post('/api/signup', authController.validate('post_signup'), authController.post_signup);
 router.post('/api/signin', authController.post_signin);
-router.put('/api/editProfile/:id', authController.validate('edit_profile'),authController.edit_profile);
-router.put('/api/editUser/:id', authController.validate('edit_user'),authController.edit_user);
+router.put('/api/editProfile/:id', authController.validate('edit_profile'), authController.edit_profile);
+router.put('/api/editUser/:id', authController.validate('edit_user'), authController.edit_user);
 router.delete('/api/users/deleteUser/:id', authController.delete_user);
 router.get('/api/userProfile/:id', authController.get_profile);
 router.get('/api/userMembership/:id', authController.get_membership);
 router.post('/api/user/borrow/:id', authController.borrow_books);
 router.get('/api/user/getBorrowed/:id', authController.get_borrowed_books);
+router.post('/api/user/favourite/:id', authController.favourite_books);
+router.get('/api/user/getFavourite/:id', authController.get_favourited_books);
 router.get('/api/user/auth', auth.verify, authController.get_auth);
 
 
@@ -63,7 +64,7 @@ router.delete('/api/books/delete/:id', bookController.delete_book);
 
 
 router.get('/api/messages', messageController.get_messages)
-router.post('/api/postMessage', messageController.validate('post_messages'),messageController.post_messages)
+router.post('/api/postMessage', messageController.validate('post_messages'), messageController.post_messages)
 router.get('/api/messages/:id', messageController.get_message)
 router.delete('/api/messages/delete/:id', messageController.delete_message);
 
@@ -87,19 +88,19 @@ router.delete('/api/review/delete/:id', reviewsController.delete_review);
 router.get('/api/review/:id', reviewsController.get_review)
 
 router.get('/api/locations', locationController.get_locations)
-router.post('/api/addLocation', locationController.validate('post_location'),locationController.post_location);
+router.post('/api/addLocation', locationController.validate('post_location'), locationController.post_location);
 router.put('/api/editLocation/:id', locationController.validate('edit_location'), locationController.edit_location);
 router.delete('/api/deleteLocation/:id', locationController.delete_location)
 router.get('/api/location/:id', locationController.get_location)
 
-router.post('/api/category/add', categoriesController.validate('add_categories'),categoriesController.add_categories);
+router.post('/api/category/add', categoriesController.validate('add_categories'), categoriesController.add_categories);
 router.get('/api/categories', categoriesController.get_categories);
 router.get('/api/category/:id', categoriesController.get_category);
-router.put('/api/category/edit/:id',categoriesController.validate('edit_categories') ,categoriesController.edit_category);
+router.put('/api/category/edit/:id', categoriesController.validate('edit_categories'), categoriesController.edit_category);
 router.delete('/api/category/delete/:id', categoriesController.delete_category);
 
 router.get('/api/memberships', membershipController.get_memberships);
-router.post('/api/addMembership', membershipController.validate('post_membership'),membershipController.post_membership);
+router.post('/api/addMembership', membershipController.validate('post_membership'), membershipController.post_membership);
 router.put('/api/editMembership/:id', membershipController.validate('edit_membership'), membershipController.edit_membership);
 router.delete('/api/deleteMembership/:id', membershipController.delete_membership);
 router.get('/api/membership/:id', membershipController.get_membership);
@@ -124,11 +125,11 @@ router.get('/api/requests', requestsController.get_requests);
 router.delete('/api/requests/delete/:id', requestsController.delete_request);
 router.put('/api/requests/edit', requestsController.validate('edit_request'), requestsController.edit_request);
 
-router.post('/api/upcoming/add' ,upcomingController.validate('add_upcoming'), upcomingController.add_upcoming);
+router.post('/api/upcoming/add', upcomingController.validate('add_upcoming'), upcomingController.add_upcoming);
 router.get('/api/get/upcoming/:id', upcomingController.get_upcoming);
 router.get('/api/upcomings', upcomingController.get_upcomings);
 router.delete('/api/upcoming/delete/:id', upcomingController.delete_upcoming);
-router.put('/api/upcoming/edit', upcomingController.validate('edit_upcoming') ,upcomingController.edit_upcoming);
+router.put('/api/upcoming/edit', upcomingController.validate('edit_upcoming'), upcomingController.edit_upcoming);
 
 router.get('/api/staff', staffController.get_staffs);
 router.post('/api/createStaff', staffController.post_staff);
@@ -136,7 +137,7 @@ router.get('/api/staff/:id', staffController.get_staff);
 router.put('/api/editStaff/:id', staffController.edit_staff);
 router.delete('/api/staff/delete/:id', staffController.delete_staff);
 
-router.post('/api/createEvent', eventController.validate('post_event'),eventController.post_event);
+router.post('/api/createEvent', eventController.validate('post_event'), eventController.post_event);
 router.put('/api/editEvent/:id', eventController.validate('edit_event'), eventController.edit_event);
 router.get('/api/events', eventController.get_events);
 router.get('/api/events/currentEvents', eventController.get_current_events);

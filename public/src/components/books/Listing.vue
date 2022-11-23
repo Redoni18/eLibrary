@@ -36,7 +36,9 @@
                 </template>
             </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
-                <mdb-dropdown-item :disabled="!isMember || isMember && userBorrowedBooks.length == 8" @click.native="borrowBook(props.row)"><mdb-icon icon="save" class="mr-3" />Reserve Book</mdb-dropdown-item>
+                <mdb-dropdown-item :disabled="!isMember " @click.native="borrowBook(props.row)"><mdb-icon icon="save" class="mr-3" />Reserve Book</mdb-dropdown-item>
+                <mdb-dropdown-item :disabled="!isMember " @click.native="setFavouriteBook(props.row)"><mdb-icon icon="save" class="mr-3" />Favourite Book</mdb-dropdown-item>
+
                 <mdb-dropdown-item v-if="user.data.isAdmin" @click.native="showModal=true;selectedBook=props.row;"><mdb-icon icon="trash" class="mr-3" />Delete</mdb-dropdown-item>
                 <mdb-dropdown-item v-if="user.data.isAdmin" :to="{name: 'editBook', params: {id: props.row._id}}"><mdb-icon icon="pen" class="mr-3" />Edit</mdb-dropdown-item>
             </mdb-dropdown-menu>
@@ -92,6 +94,7 @@ export default {
         showModal: false,
         selectedBook: {},
         userBorrowedBooks: [],
+        userFavouritedBooks: [],
         isMember: false,
         user: JSON.parse(window.localStorage.getItem('user')),
         columns: [
@@ -124,7 +127,8 @@ export default {
   methods: {
     ...mapActions({
         getBooks: 'getBooks',
-        saveBook: 'saveBook'
+        saveBook: 'saveBook',
+        favouriteBook: 'favouriteBook'
     }),
     
     async removeBook(book) {
@@ -212,16 +216,85 @@ export default {
       await this.getUserBooks()
     },
 
+async setFavouriteBook(books){
+      if(!this.userFavouritedBooks.length){
+        this.userFavouritedBooks.push(...books, books)
+      }else {
+        for(let i=0;i<this.userFavouritedBooks.length;i++){
+          if(this.userFavouritedBooks[i]._id === books._id){
+            this.$toast.error("This book is already favourited by you", {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+            });
+            return false
+          }
+        }
+
+        this.userFavouritedBooks.push(...books, books)
+      }
+      await this.favouriteBook({
+        _id: this.currentUser.data.id,
+        name: this.currentUser.data.name,
+        email: this.currentUser.data.email,
+        userType: this.currentUser.data.userType,
+        bio: this.currentUser.data.bio,
+        city: this.currentUser.data.city,
+        birthday: this.currentUser.data.birthday,
+        social1: this.currentUser.data.social1,
+        social2: this.currentUser.data.social2,
+        social3: this.currentUser.data.social3,
+        isAdmin: this.currentUser.data.isAdmin,
+        favouriteBooks: this.userFavouritedBooks
+      });
+
+      this.$toast.success("Book favourited successfully", {
+          position: "top-right",
+          timeout: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false
+      });
+
+
+      await this.getUserFavouriteBooks()
+
+    },
+
     async getUserBooks(){
       const response = await axios.get(`http://localhost:8000/api/user/getBorrowed/${this.currentUser.data.id}`)
       this.isMember = response.data.isMember
+      console.log(response)
       this.userBorrowedBooks = response.data.books
+    },
+
+    async getUserFavouriteBooks(){
+      const response = await axios.get(`http://localhost:8000/api/user/getFavourite/${this.currentUser.data.id}`)
+      this.isMember = response.data.isMember
+      this.userFavouriteBooks = response.data.favouriteBooks
     }
   },
 
     mounted() {
       this.getBooks();
-      this.getUserBooks()
+      this.getUserBooks();
+      this.getUserFavouriteBooks();
     },
 
     computed: {

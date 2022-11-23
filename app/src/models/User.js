@@ -12,13 +12,13 @@ const schema = new Schema({
         required: true,
         unique: true
     },
-    userType: { 
-        type: mongoose.Schema.Types.Mixed, 
-        ref: 'userTypeSchema' 
+    userType: {
+        type: mongoose.Schema.Types.Mixed,
+        ref: 'userTypeSchema'
     },
     password: {
-        type : String,
-        required : true
+        type: String,
+        required: true
     },
     isAdmin: {
         type: Boolean,
@@ -26,9 +26,9 @@ const schema = new Schema({
     },
     isMember: {
         type: Boolean,
-        default:false
+        default: false
     },
-    bio:{
+    bio: {
         type: String,
         required: false,
     },
@@ -53,18 +53,21 @@ const schema = new Schema({
         required: false
     },
     createdAt: {
-        type : Date,
-        default : Date.now
+        type: Date,
+        default: Date.now
     },
     updatedAt: {
-        type : Date,
-        default : Date.now
+        type: Date,
+        default: Date.now
     },
-    books: [{ 
-        type: mongoose.Schema.Types.Mixed, 
-        ref: 'bookSchema' 
+    books: [{
+        type: mongoose.Schema.Types.Mixed,
+        ref: 'bookSchema'
+    }],
+    favouriteBooks: [{
+        type: mongoose.Schema.Types.Mixed,
+        ref: 'bookSchema'
     }]
-
 });
 
 

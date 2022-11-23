@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as auth from '../../../helper/auth'
 
 
-export const signUp = ({ commit }, data ) => {
+export const signUp = ({ commit }, data) => {
     return axios.post('http://localhost:8000/api/signup', data).then((response) => {
         commit('storeUser', response.data)
 
@@ -10,33 +10,37 @@ export const signUp = ({ commit }, data ) => {
     })
 }
 
-export const editProfile = ({ commit }, data ) => {
+export const editProfile = ({ commit }, data) => {
     return axios.put('http://localhost:8000/api/editProfile/:id', data).then((response) => {
         commit('storeUser', response.data)
     })
 }
 
-export const saveBook = ({ commit }, data ) => {
+export const saveBook = ({ commit }, data) => {
     return axios.post('http://localhost:8000/api/user/borrow/:id', data)
 }
 
-export const editUser = ({ commit }, data ) => {
+export const favouriteBook = ({ commit }, data) => {
+    return axios.post('http://localhost:8000/api/user/favourite/:id', data)
+}
+
+export const editUser = ({ commit }, data) => {
     return axios.put('http://localhost:8000/api/editUser/:id', data)
 }
 
 
-export const get_profile = ({ commit }, id ) => {
+export const get_profile = ({ commit }, id) => {
     return axios.get(`http://localhost:8000/api/userProfile/${id}`)
 }
 
-export const get_membership = ({ commit }, id ) => {
+export const get_membership = ({ commit }, id) => {
     return axios.get(`http://localhost:8000/api/userMembership/${id}`)
 }
 
 
 
 
-export const signIn = ({ commit }, data ) => {
+export const signIn = ({ commit }, data) => {
     return axios.post('http://localhost:8000/api/signin', data).then((response) => {
         commit('storeUser', response.data)
 
@@ -45,14 +49,14 @@ export const signIn = ({ commit }, data ) => {
 }
 
 
-export const signOut = ({ commit } ) => {
+export const signOut = ({ commit }) => {
     commit('removeUser');
 
     return Promise.resolve();
 }
 
 
-export const getUsers = ({ commit } ) => {
+export const getUsers = ({ commit }) => {
     return axios.get('http://localhost:8000/api/users').then((response) => {
         commit('storeUsers', response.data)
 
@@ -61,7 +65,7 @@ export const getUsers = ({ commit } ) => {
 }
 
 
-export const authenticateUser = ({ commit } ) => {
+export const authenticateUser = ({ commit }) => {
     auth.setHttpToken();
     return axios.get('http://localhost:8000/api/user/auth');
 }
