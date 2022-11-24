@@ -8,6 +8,8 @@ import Users from '@/components/users/Users'
 import Books from '../components/books/Books'
 import ReservedBooks from '../components/books/ReservedBooks'
 import ReservedListing from '../components/books/ReservedListing'
+import FavouriteBooks from '../components/books/FavouriteBooks'
+import FavouritesListing from '../components/books/FavouritesListing'
 import BooksListing from '@/components/books/Listing'
 import InsertBook from '@/components/books/InsertBook'
 import BookDetails from '@/components/books/BookDetails'
@@ -60,8 +62,7 @@ import * as beforeEnter from './beforeEnter'
 
 
 const router = new Router({
-    routes: [
-        {
+    routes: [{
             path: '/',
             name: 'home',
             component: Home,
@@ -97,6 +98,22 @@ const router = new Router({
             path: '/books',
             name: 'books',
             component: Books,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/favouriteBooks',
+            name: 'favouriteBooks',
+            component: FavouriteBooks,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/favouriteBooks/listing',
+            name: 'favouriteListing',
+            component: FavouritesListing,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
@@ -155,7 +172,7 @@ const router = new Router({
             name: 'Upcomings',
             component: Upcomings,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -222,7 +239,7 @@ const router = new Router({
             component: Review,
             props: true,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -230,7 +247,7 @@ const router = new Router({
             name: 'UserTypes',
             component: UserTypesListing,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -238,7 +255,7 @@ const router = new Router({
             name: 'InsertUserType',
             component: CreateUserType,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -246,7 +263,7 @@ const router = new Router({
             name: 'EditUserType',
             component: EditUserType,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -254,7 +271,7 @@ const router = new Router({
             name: 'Locations',
             component: LocationsListing,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -262,15 +279,15 @@ const router = new Router({
             name: 'AddLocation',
             component: AddLocation,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
             path: '/locations/editLocation/:id',
             name: 'editLocation',
-            component: EditLocation ,
+            component: EditLocation,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -283,7 +300,7 @@ const router = new Router({
             name: 'Categories',
             component: Categories,
             beforeEnter: (to, from, next) => {
-                beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -291,7 +308,7 @@ const router = new Router({
             name: 'AddCategories',
             component: AddCategories,
             beforeEnter: (to, from, next) => {
-                beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -300,7 +317,7 @@ const router = new Router({
             component: Category,
             props: true,
             beforeEnter: (to, from, next) => {
-                beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -308,7 +325,7 @@ const router = new Router({
             name: 'MembershipsListing',
             component: MembershipsListing,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -316,7 +333,7 @@ const router = new Router({
             name: 'Memberships',
             component: Memberships,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -324,15 +341,15 @@ const router = new Router({
             name: 'AddMembership',
             component: AddMembership,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
             path: '/memberships/editMembership/:id',
             name: 'EditMembership',
-            component: EditMembership ,
+            component: EditMembership,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -341,7 +358,7 @@ const router = new Router({
             name: 'Faculties',
             component: FacultiesListing,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -349,7 +366,7 @@ const router = new Router({
             name: 'InsertFaculty',
             component: InsertFaculty,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -357,7 +374,7 @@ const router = new Router({
             name: 'AddCountry',
             component: AddCountry,
             beforeEnter: (to, from, next) => {
-                beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -365,7 +382,7 @@ const router = new Router({
             name: 'Countries',
             component: CountriesListing,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -374,7 +391,7 @@ const router = new Router({
             name: 'EditFaculty',
             component: EditFaculty,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -382,7 +399,7 @@ const router = new Router({
             name: 'Request',
             component: Request,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -390,7 +407,7 @@ const router = new Router({
             name: 'RequestPage',
             component: RequestPage,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -398,7 +415,7 @@ const router = new Router({
             name: 'AddEvent',
             component: AddEvent,
             beforeEnter: (to, from, next) => {
-                beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
@@ -406,23 +423,23 @@ const router = new Router({
             name: 'EventsListing',
             component: EventsListing,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
             path: '/events/editEvent/:id',
             name: 'EditEvent',
-            component: EditEvent ,
+            component: EditEvent,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
             path: '/events',
             name: 'Events',
-            component: Events ,
+            component: Events,
             beforeEnter: (to, from, next) => {
-                    beforeEnter.authenticate(to,from,next)
+                beforeEnter.authenticate(to, from, next)
             }
         },
         {
