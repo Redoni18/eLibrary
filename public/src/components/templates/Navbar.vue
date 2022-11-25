@@ -18,7 +18,8 @@
                 <mdb-dropdown-item :to="{path: '/'}">All Books</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{path: '/booksList/listing'}">Listing</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{path: '/reservedBooks'}">Reserved Books</mdb-dropdown-item>
-                <mdb-dropdown-item :to="{path: '/favouriteBooks'}">Favourite Books</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{path: '/favouriteBooks'}">favourite Books</mdb-dropdown-item>
+                
             </mdb-dropdown-menu>
         </mdb-dropdown>
         <!-- <router-link :to="({path: '/contact-us'})">
@@ -35,6 +36,9 @@
         </router-link>
         <router-link :to="({path: '/about-us'})">
             <mdb-nav-item>About Us</mdb-nav-item>
+        </router-link>
+        <router-link :to="({path: '/cartBooks'})">
+            <mdb-nav-item>My Cart</mdb-nav-item>
         </router-link>
       </mdb-navbar-nav>
       <mdb-navbar-nav right>

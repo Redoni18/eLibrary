@@ -23,6 +23,9 @@ export const saveBook = ({ commit }, data) => {
 export const favouriteBook = ({ commit }, data) => {
     return axios.post('http://localhost:8000/api/user/favourite/:id', data)
 }
+export const cartBook = ({ commit }, data) => {
+    return axios.post('http://localhost:8000/api/user/cart/:id', data)
+}
 
 export const editUser = ({ commit }, data) => {
     return axios.put('http://localhost:8000/api/editUser/:id', data)

@@ -10,6 +10,8 @@ import ReservedBooks from '../components/books/ReservedBooks'
 import ReservedListing from '../components/books/ReservedListing'
 import FavouriteBooks from '../components/books/FavouriteBooks'
 import FavouritesListing from '../components/books/FavouritesListing'
+import CartBooks from '../components/cart/CartBooks'
+import CartsListing from '../components/cart/CartsListing'
 import BooksListing from '@/components/books/Listing'
 import InsertBook from '@/components/books/InsertBook'
 import BookDetails from '@/components/books/BookDetails'
@@ -114,6 +116,22 @@ const router = new Router({
             path: '/favouriteBooks/listing',
             name: 'favouriteListing',
             component: FavouritesListing,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/cartBooks',
+            name: 'cartBooks',
+            component: CartBooks,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/cartBooks/listing',
+            name: 'cartListing',
+            component: CartsListing,
             beforeEnter: (to, from, next) => {
                 beforeEnter.authenticate(to, from, next)
             }
@@ -474,6 +492,7 @@ const router = new Router({
                 beforeEnter.authenticate(to, from, next)
             }
         },
+
     ]
 })
 

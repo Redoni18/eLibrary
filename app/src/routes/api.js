@@ -39,6 +39,7 @@ const eventController = require('../controllers/eventController')
 const staffController = require('../controllers/staffController');
 
 
+
 /**
  * Routes
  */
@@ -53,6 +54,8 @@ router.post('/api/user/borrow/:id', authController.borrow_books);
 router.get('/api/user/getBorrowed/:id', authController.get_borrowed_books);
 router.post('/api/user/favourite/:id', authController.favourite_books);
 router.get('/api/user/getFavourite/:id', authController.get_favourited_books);
+router.post('/api/user/cart/:id', authController.cart_books);
+router.get('/api/user/getCart/:id', authController.get_cart_books);
 router.get('/api/user/auth', auth.verify, authController.get_auth);
 
 
