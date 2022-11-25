@@ -55,6 +55,10 @@ import Events from '@/components/events/Events'
 import CreateStaff from '@/components/staff/CreateStaff'
 import StaffListing from '@/components/staff/Listing'
 import EditStaff from '@/components/staff/EditStaff'
+
+import CreateTopic from '@/components/topic/CreateTopic'
+import TopicListing from '@/components/topic/Listing'
+import EditTopic from '@/components/topic/EditTopic'
 import AboutUs from '@/components/about/AboutUs'
 
 Vue.use(Router);
@@ -484,6 +488,33 @@ const router = new Router({
                 beforeEnter.authenticate(to, from, next)
             }
         },
+
+
+        {
+            path: '/topic',
+            name: 'TopicListing',
+            component: TopicListing,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/insertTopic',
+            name: 'InsertTopic',
+            component: CreateTopic,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/topic/editTopic/:id',
+            name: 'EditTopic',
+            component: EditTopic,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+
         {
             path: '/about-us',
             name: 'AboutUs',

@@ -37,6 +37,8 @@ const requestsController = require('../controllers/requestsController');
 const upcomingController = require('../controllers/upcomingController');
 const eventController = require('../controllers/eventController')
 const staffController = require('../controllers/staffController');
+const topicController = require('../controllers/topicController');
+
 
 
 
@@ -139,6 +141,14 @@ router.post('/api/createStaff', staffController.post_staff);
 router.get('/api/staff/:id', staffController.get_staff);
 router.put('/api/editStaff/:id', staffController.edit_staff);
 router.delete('/api/staff/delete/:id', staffController.delete_staff);
+
+router.get('/api/topic', topicController.get_topics);
+router.post('/api/createTopic', topicController.post_topic);
+router.get('/api/topic/:id', topicController.get_topic);
+router.put('/api/editTopic/:id', topicController.edit_topic);
+router.delete('/api/topic/delete/:id', topicController.delete_topic);
+
+
 
 router.post('/api/createEvent', eventController.validate('post_event'), eventController.post_event);
 router.put('/api/editEvent/:id', eventController.validate('edit_event'), eventController.edit_event);
