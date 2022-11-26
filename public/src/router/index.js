@@ -59,6 +59,10 @@ import EditStaff from '@/components/staff/EditStaff'
 import CreateTopic from '@/components/topic/CreateTopic'
 import TopicListing from '@/components/topic/Listing'
 import EditTopic from '@/components/topic/EditTopic'
+
+import LanguageListing from '@/components/languages/Listing'
+import CreateLanguage from '@/components/languages/CreateLanguage'
+
 import AboutUs from '@/components/about/AboutUs'
 
 Vue.use(Router);
@@ -472,6 +476,24 @@ const router = new Router({
                 beforeEnter.authenticate(to, from, next)
             }
         },
+
+        {
+            path: '/language',
+            name: 'LanguageListing',
+            component: LanguageListing,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+        {
+            path: '/insertLanguage',
+            name: 'InsertLanguage',
+            component: CreateLanguage,
+            beforeEnter: (to, from, next) => {
+                beforeEnter.authenticate(to, from, next)
+            }
+        },
+
         {
             path: '/insertStaff',
             name: 'InsertStaff',

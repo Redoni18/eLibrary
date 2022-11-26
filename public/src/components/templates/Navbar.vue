@@ -224,11 +224,19 @@
                 >
              </router-link>
 
+             <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/language'})">
+                <mdb-list-group-item
+                id="sidebar-item"
+                :action="true"
+                ><mdb-icon icon="briefcase" class="mr-3" /><p>Language</p></mdb-list-group-item
+                >
+             </router-link>
+
              <router-link v-if="user.authenticated && user.data.isAdmin" :to="({path: '/topic'})">
                 <mdb-list-group-item
                 id="sidebar-item"
                 :action="true"
-                ><mdb-icon icon="briefcase" class="mr-3" /><p>Topics</p></mdb-list-group-item
+                ><mdb-icon icon="puzzle-piece" class="mr-3" /><p>Topics</p></mdb-list-group-item
                 >
              </router-link>
 

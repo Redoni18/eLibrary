@@ -38,6 +38,7 @@ const upcomingController = require('../controllers/upcomingController');
 const eventController = require('../controllers/eventController')
 const staffController = require('../controllers/staffController');
 const topicController = require('../controllers/topicController');
+const languageController = require('../controllers/languageController');
 
 
 
@@ -157,5 +158,10 @@ router.get('/api/events/currentEvents', eventController.get_current_events);
 router.get('/api/events/futureEvents', eventController.get_future_events);
 router.get('/api/event/:id', eventController.get_event);
 router.delete('/api/deleteEvent/:id', eventController.delete_event);
+
+router.get('/api/language', languageController.get_languages);
+router.post('/api/createLanguage', languageController.post_language);
+router.get('/api/language/:id', languageController.get_language);
+router.delete('/api/language/delete/:id', languageController.delete_language);
 
 module.exports = router;
