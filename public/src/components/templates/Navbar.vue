@@ -18,7 +18,7 @@
                 <mdb-dropdown-item :to="{path: '/'}">All Books</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{path: '/booksList/listing'}">Listing</mdb-dropdown-item>
                 <mdb-dropdown-item :to="{path: '/reservedBooks'}">Reserved Books</mdb-dropdown-item>
-                <mdb-dropdown-item :to="{path: '/favouriteBooks'}">favourite Books</mdb-dropdown-item>
+                <mdb-dropdown-item :to="{path: '/favouriteBooks'}">Favourites</mdb-dropdown-item>
                 
             </mdb-dropdown-menu>
         </mdb-dropdown>

@@ -67,6 +67,10 @@ const schema = new Schema({
     favouriteBooks: [{
         type: mongoose.Schema.Types.Mixed,
         ref: 'bookSchema'
+    }],
+    cartBooks: [{
+        type: mongoose.Schema.Types.Mixed,
+        ref: 'bookSchema'
     }]
 });
 

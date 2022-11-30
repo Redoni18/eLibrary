@@ -34,7 +34,7 @@
         props: ['pageTitle'],
         data(){
             return {
-                userCartedBooks: [] //userFavouritedBooks
+                userCartedBooks: [] 
             }
         },
         computed: {
